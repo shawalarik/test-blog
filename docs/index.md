@@ -7,7 +7,7 @@ hero:
   text: "一个VitePress网站"
   tagline: 个人博客，全栈分享。 后端包括：SSM，SpringBoot，微服务，Maven，设计模式，数据库，Linux，Docker，Redis，多线程，中间件等技术。前端包括：h5，css3，js，vue。
   image:
-    src: ./static/logo.svg
+    src: /logo.svg
     alt: VitePress
   actions:
     - theme: brand
