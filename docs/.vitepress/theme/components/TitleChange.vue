@@ -1,3 +1,6 @@
+<template>
+</template>
+
 <script setup lang="ts">
 import { ref, onBeforeUnmount, onMounted } from 'vue'
 import { useEventListener } from 'vitepress-theme-teek'

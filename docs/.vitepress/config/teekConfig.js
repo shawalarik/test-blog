@@ -1,39 +1,5 @@
 import { defineTeekConfig } from "vitepress-theme-teek/config";
-
-// 首页壁纸
-const wallpaper = [
-  "/home/bg1.webp",
-  "/home/bg2.webp",
-  "/home/bg3.webp",
-  "/home/bg4.webp",
-  "/home/bg5.webp",
-  "/home/bg6.webp",
-  "/home/bg7.webp",
-  "/home/bg8.webp",
-  "/home/bg9.webp",
-  "/home/bg10.webp",
-  "/home/bg11.webp",
-  "/home/bg12.webp",
-  "/home/bg13.webp",
-  "/home/bg14.webp",
-  "/home/bg15.webp",
-  "/home/bg16.webp",
-  "/home/bg17.webp",
-  "/home/bg18.webp",
-  "/home/bg19.webp",
-  "/home/bg20.webp",
-  "/home/bg21.webp",
-  "/home/bg22.webp",
-  "/home/bg23.webp",
-  "/home/bg24.webp",
-  "/home/bg25.webp",
-  "/home/bg26.webp",
-  "/home/bg27.webp",
-  "/home/bg28.webp",
-  "/home/bg29.webp",
-  "/home/bg30.webp",
-  "/home/bg31.webp",
-];
+import wallpaperImages from "./utils/wallpaperSelector";
 
 const typewriter = [
   "愿每个人都有属于自己的一片星空",
@@ -125,7 +91,7 @@ export const teekConfig = defineTeekConfig({
     //name: "Teek", // Banner 标题，默认读取 vitepress 的 title 属性
     bgStyle: "fullImg", // Banner 背景风格：pure 为纯色背景，partImg 为局部图片背景，fullImg 为全屏图片背景
     //pureBgColor: "#28282d", // Banner 背景色，bgStyle 为 pure 时生效
-    imgSrc: wallpaper, // Banner 图片链接。bgStyle 为 partImg 或 fullImg 时生效
+    imgSrc: wallpaperImages, // Banner 图片链接。bgStyle 为 partImg 或 fullImg 时生效
     imgInterval: 15000, // 当多张图片时（imgSrc 为数组），设置切换时间，单位：毫秒
     imgShuffle: false, // 图片是否随机切换，为 false 时按顺序切换，bgStyle 为 partImg 或 fullImg 时生效
     imgWaves: true, // 是否开启 Banner 图片波浪纹，bgStyle 为 fullImg 时生效

@@ -87,7 +87,7 @@ onMounted(async () => {
                 index: 10,
             },
         ],
-        dockedPosition: "left", // 停靠位置，left/right/
+        dockedPosition: "right", // 停靠位置，left/right/
         initialStatus: "active", // 用于控制组件在浏览器中以当前地址首次访问时的初始状态是否处于睡眠状态或活动状态,
         primaryColor: "#ffbfbc", // 主色调
         sayHello: true, // 是否在初始化阶段打印项目信息
@@ -286,7 +286,7 @@ onMounted(async () => {
         oml2d.stopTipsIdle(); //停止空闲消息播放器
 
         oml2d.tipsMessage(
-            `欢迎访问Hyde Blog  当前版本:${oml2d.version}`, 5000, 10
+            `欢迎访问威威 Blog  当前版本:${oml2d.version}`, 5000, 10
         );
     })
 
@@ -308,4 +308,8 @@ export default { name: 'oh-my-live2d' }
     <div class="oh-my-live2d"></div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+
+
+
+</style>
