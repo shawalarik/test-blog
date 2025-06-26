@@ -1,9 +1,11 @@
 import { defineConfig } from 'vitepress'
 import { defineTeekConfig } from "vitepress-theme-teek/config";
 import { Nav } from "./config/Nav.js"; // 导入Nav模块
-import teekConfig from "./teekConfig.js";
-
-
+import {teekConfig} from "./teekConfig.js";
+import {
+  groupIconMdPlugin,
+  groupIconVitePlugin,
+} from "vitepress-plugin-group-icons"; // 导入代码组图标插件
 
 
 // https://vitepress.dev/reference/site-config
@@ -37,7 +39,6 @@ export default defineConfig({
     },*/
     // https://vitepress.dev/reference/default-theme-config
     nav: Nav,
-
     sidebar: [
       {
         text: 'Examples',
@@ -56,5 +57,10 @@ export default defineConfig({
       copyright: 'Copyright © 2025-present Evan You'
     }
 
-  }
+  },
+  vite: {
+    plugins: [
+      groupIconVitePlugin(), //代码组图标
+    ],
+  },
 })

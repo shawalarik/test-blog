@@ -18,10 +18,16 @@ import "vitepress-theme-teek/theme-chalk/tk-banner-desc-gradient.css"; // Banner
 // 主题增强样式
 import "vitepress-theme-teek/theme-chalk/tk-nav-blur.css"; // 导航栏毛玻璃样式
 import "vitepress-theme-teek/tk-plus/banner-full-img-scale.scss"; // Banner 全屏图片放大样式
+//import "vitepress-theme-teek/vp-plus/container-flow.scss"; // Markdown 容器流体样式
+
+// 引入Demo\docs-base\.vitepress\theme\style\index.scss全局样式
+import "./style/index.scss";
+import "virtual:group-icons.css"; //代码组图标样式
 
 import MNavLinks from "./components/MNavLinks.vue"; // 引入导航组件
 import confetti from "./components/Confetti.vue"; //导入五彩纸屑组件
 import NavIcon from "./components/NavIcon.vue"; //导入导航栏图标
+import TitleChange from "./components/TitleChange.vue"; //导入导航栏图标
 
 export default {
     extends: Teek,
@@ -30,5 +36,6 @@ export default {
         app.component("MNavLinks", MNavLinks); // 注册导航组件
         app.component("confetti", confetti); // 注册五彩纸屑组件
         app.component("NavIcon", NavIcon); //导航栏图标
+        app.component("TitleChange", TitleChange); //导航栏图标
     },
 };

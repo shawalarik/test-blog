@@ -47,7 +47,7 @@ const typewriter = [
 ]
 
 // Teek 主题配置
-const teekConfig = defineTeekConfig({
+export const teekConfig = defineTeekConfig({
   banner: {
     enabled: true,
     //features: [], //用于在首页展示一些功能介绍,也就是首页三个功能块

@@ -29,6 +29,7 @@ export const Nav = [
   {
     text: "📖笔记专栏",
     items: [
+      { text: "测试", link: "/" },
       {
         component: "NavIcon",
         props: TeekIcon,
