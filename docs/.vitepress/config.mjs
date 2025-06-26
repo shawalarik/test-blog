@@ -8,6 +8,8 @@ import {
 } from "vitepress-plugin-group-icons"; // 导入代码组图标插件
 import { visualizer } from "rollup-plugin-visualizer"; // 导入可视化分析插件
 //import viteImagemin from "vite-plugin-imagemin"; // 导入图片压缩插件
+import compress from 'vite-plugin-compression';
+
 
 // 是否为开发模式
 const isDev = process.argv.includes('dev');
@@ -25,6 +27,9 @@ export default defineConfig({
   lang: 'en-US',
   outDir: '../dist',
   title: "威威 Blog",
+  head: [
+    ['link', { rel: 'icon', href: '/favicon.ico' }]
+  ],
   description: "A VitePress Site",
   cleanUrls: true,
   // 当设置为 true 时，将页面元数据提取到单独的 JavaScript 块中，而不是内联在初始 HTML 中。
@@ -92,6 +97,10 @@ export default defineConfig({
 
   },
   vite: {
+    ssr: {
+      // 标记 APlayer 为外部依赖，不在 SSR 中处理
+      external: []
+    },
     plugins: [
       groupIconVitePlugin(), //代码组图标
       visualizer({
@@ -99,6 +108,13 @@ export default defineConfig({
         open: !isDev, // 打包后自动打开报告
         gzipSize: true, // 压缩大小
         brotliSize: true,
+      }),
+      compress({
+        verbose: false, // 是否在控制台输出压缩结果
+        disable: false, // 是否禁用压缩
+        threshold: 10240, // 文件大小超过此值时进行压缩，单位为字节
+        algorithm: 'gzip', // 压缩算法，可选 'gzip' 或 'brotli'
+        ext: '.gz', // 压缩后的文件扩展名
       }),
       /*viteImagemin({
         gifsicle: {

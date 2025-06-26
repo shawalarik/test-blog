@@ -74,19 +74,6 @@ const handleConfigSwitch = (config: TeekConfig, style: string) => {
 };*/
 </script>
 
-<!--<template>
-  <Teek.Layout>
-    <template #layout-top>
-      &lt;!&ndash; 顶部滚动条组件 &ndash;&gt;
-      <ScrollProgressBar />
-
-      &lt;!&ndash; 网页标题切换组件 &ndash;&gt;
-      <TitleChange />
-
-    </template>
-  </Teek.Layout>
-</template>-->
-
 <template>
   <Teek.Layout>
     <template #layout-top>
@@ -124,16 +111,16 @@ const handleConfigSwitch = (config: TeekConfig, style: string) => {
     <template #teek-notice-content>
       &lt;!&ndash; 公告组件 &ndash;&gt;
       <NoticeContent />
-    </template>
+    </template>-->
 
     <template #teek-home-banner-feature-after>
-      &lt;!&ndash; 横幅图片箭头组件 &ndash;&gt;
+      <!-- 横幅图片箭头组件 -->
       <BannerImgArrow />
     </template>
 
     <template #teek-home-banner-after>
       <InformationCard />
-    </template>-->
+    </template>
   </Teek.Layout>
 </template>
 

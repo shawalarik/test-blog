@@ -1,6 +1,8 @@
 <script setup lang="ts" name="BannerImgArrow">
 import { TkIcon } from "vitepress-theme-teek";
-import arrowSvg from "../icon/arrow";
+// 新方式（直接导入SVG作为组件）
+import ArrowSvg from "/svg/arrow.svg?raw";
+
 import { useData } from "vitepress";
 import { ref } from "vue";
 
@@ -28,7 +30,7 @@ const isMobile = ref(false);
 
 <template>
   <div v-if="!isMobile" :class="`${namespace}-arrow tk-wallpaper-outside`">
-    <TkIcon :icon="arrowSvg" size="50px" color="#ffffff" :class="`${namespace}-arrow__icon`"
+    <TkIcon :icon="ArrowSvg" size="50px" color="#ffffff" :class="`${namespace}-arrow__icon`"
       @click="handleClickArrow" />
   </div>
 </template>

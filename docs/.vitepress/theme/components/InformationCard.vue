@@ -64,7 +64,7 @@ const init = async () => {
 };
 
 // 新增：控制显示选项
-const isConfigOpen = ref(false);
+const isConfigOpen = ref(true);
 const showFPS = ref(true);
 const showWeather = ref(true);
 const showDate = ref(true);
@@ -108,70 +108,55 @@ onMounted(() => {
 
 <template>
   <!-- 修改：欢迎卡片，包含天气信息和新功能 -->
-  <ElCard class="info-card animate__animated animate__fadeIn welcome-card mobile-card" shadow="hover">
+  <div class="info-card animate__animated animate__fadeIn welcome-card mobile-card" shadow="hover" v-if="isConfigOpen">
     <div class="welcome-content">
       <!-- 新增：FPS显示 -->
       <div v-if="showFPS" class="fps-display">FPS: {{ fps }}</div>
 
-      <!-- 新增：配置开关 -->
-      <El-Switch v-model="isConfigOpen" class="config-switch" active-color="#13ce66" inactive-color="#ff4949"></El-Switch>
-
-      <!-- 配置面板 -->
-      <div v-if="isConfigOpen" class="config-panel">
-        <ElCheckbox v-model="showFPS">显示 FPS</ElCheckbox>
-        <ElCheckbox v-model="showWeather">显示天气</ElCheckbox>
-        <ElCheckbox v-model="showDate">显示日期</ElCheckbox>
-        <ElCheckbox v-model="showTemperature">显示温度</ElCheckbox>
-        <ElCheckbox v-model="showWeek">显示星期</ElCheckbox>
-        <ElCheckbox v-model="showgetDiary">显示舔狗</ElCheckbox>
-      </div>
-
       <!-- 欢迎信息 -->
-      <template v-else>
-        <h2 v-if="!error && weatherData.city" class="greeting">
-          欢迎来自
-          <span class="highlight">{{ weatherData.city }}</span>
-          的小伙伴！🎉🎉🎉
-        </h2>
-        <div class="info-container">
-          <div v-if="showTemperature" class="info-item">
-            <i class="el-icon-sunny"></i>
-            <span v-if="!error && weatherData.city">
+      <h2 v-if="!error && weatherData.city" class="greeting">
+        欢迎来自
+        <span class="highlight">{{ weatherData.city }}</span>
+        的小伙伴！🎉🎉🎉
+      </h2>
+      <div class="info-container">
+        <div v-if="showTemperature" class="info-item">
+          <i class="el-icon-sunny"></i>
+          <span v-if="!error && weatherData.city">
               今日温度：
               <span class="highlight">{{ weatherData.temperature }}</span>
             </span>
-          </div>
-          <div v-if="showWeather" class="info-item">
-            <i class="el-icon-cloudy"></i>
-            <span v-if="!error && weatherData.city">
+        </div>
+        <div v-if="showWeather" class="info-item">
+          <i class="el-icon-cloudy"></i>
+          <span v-if="!error && weatherData.city">
               天气：
               <span class="highlight">{{ weatherData.type }}</span>
             </span>
-          </div>
-          <div v-if="showDate" class="info-item">
-            <i class="el-icon-date"></i>
-            <span v-if="!error && weatherData.city">
+        </div>
+        <div v-if="showDate" class="info-item">
+          <i class="el-icon-date"></i>
+          <span v-if="!error && weatherData.city">
               日期：
               <span class="highlight">{{ weatherData.date }}</span>
             </span>
-          </div>
-          <div v-if="showWeek" class="info-item">
-            <i class="el-icon-calendar"></i>
-            <span v-if="!error && weatherData.city">
+        </div>
+        <div v-if="showWeek" class="info-item">
+          <i class="el-icon-calendar"></i>
+          <span v-if="!error && weatherData.city">
               星期：
               <span class="highlight">{{ weatherData.week }}</span>
             </span>
-          </div>
-          <div v-if="showgetDiary" class="info-item">
-            <i class="el-icon-calendar"></i>
-            <h1 class="vertical-title">舔狗日记：</h1>
-            <p v-if="diaryContent" class="diary-content">{{ diaryContent }}</p>
-            <p v-else class="diary-content">加载中...</p>
-          </div>
         </div>
-      </template>
+        <div v-if="showgetDiary" class="info-item">
+          <i class="el-icon-calendar"></i>
+          <h1 class="vertical-title">舔狗日记：</h1>
+          <p v-if="diaryContent" class="diary-content">{{ diaryContent }}</p>
+          <p v-else class="diary-content">加载中...</p>
+        </div>
+      </div>
     </div>
-  </ElCard>
+  </div>
 </template>
 
 <style lang="scss" scoped>

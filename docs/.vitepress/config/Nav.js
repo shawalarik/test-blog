@@ -22,10 +22,7 @@ import {
 export const Nav = [
   {
     text: "🏡首页",
-    items: [
-      { text: "首页", link: "/" },
-      { text: "起始页", link: "https://hyde.seasir.top/" },
-    ],
+    link: "/"
   },
   {
     text: "📖笔记专栏",
