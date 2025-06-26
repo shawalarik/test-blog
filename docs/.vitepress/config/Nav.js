@@ -18,6 +18,7 @@ import {
   SiteAnalyticsIcon,
   StatusIcon,
 } from "../resource/icon/NavIcon";
+
 export const Nav = [
   {
     text: "🏡首页",
@@ -29,7 +30,6 @@ export const Nav = [
   {
     text: "📖笔记专栏",
     items: [
-      { text: "测试", link: "/" },
       {
         component: "NavIcon",
         props: TeekIcon,
@@ -73,7 +73,7 @@ export const Nav = [
       },
     ],
   },
-  {
+/*  {
     text: "🏙️生活娱乐",
     items: [
       {
@@ -90,7 +90,7 @@ export const Nav = [
       },
     ],
   },
-  { text: "👂畅所欲言", link: "/message-area/" },
+  { text: "👂畅所欲言", link: "/message-area/" },*/
   {
     text: "👏文章索引",
     items: [
