@@ -1,5 +1,8 @@
 import Teek from "vitepress-theme-teek";
 import "vitepress-theme-teek/index.css";
+import { defineComponent, h } from "vue";
+import { useData } from "vitepress";
+
 
 // Teek 在线主题包引用（需安装 Teek 在线版本）
 import "vitepress-theme-teek/index.css"; // 引入主题样式
@@ -27,10 +30,26 @@ import "virtual:group-icons.css"; //代码组图标样式
 import MNavLinks from "./components/MNavLinks.vue"; // 引入导航组件
 import confetti from "./components/Confetti.vue"; //导入五彩纸屑组件
 import NavIcon from "./components/NavIcon.vue"; //导入导航栏图标
-import TitleChange from "./components/TitleChange.vue"; //导入导航栏图标
+import TitleChange from "./components/TitleChange.vue";
+import TeekLayoutProvider from "./components/TeekLayoutProvider.vue"; //导入导航栏图标
 
 export default {
     extends: Teek,
+    Layout: defineComponent({
+        name: "LayoutProvider",
+        setup() {
+            const props = {};
+            const { frontmatter } = useData();
+
+            // 添加自定义 class 逻辑
+            if (frontmatter.value?.layoutClass) {
+                props.class = frontmatter.value.layoutClass;
+            }
+
+            return () => h(TeekLayoutProvider, props);
+        },
+    }),
+    //Layout: '',
     async enhanceApp({ app, router }) {
         // 注册组件
         app.component("MNavLinks", MNavLinks); // 注册导航组件

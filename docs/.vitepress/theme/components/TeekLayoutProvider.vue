@@ -3,7 +3,7 @@ import type { TeekConfig } from "vitepress-theme-teek";
 import Teek, { teekConfigContext, clockIcon } from "vitepress-theme-teek";
 import { useData } from "vitepress";
 import { watch, nextTick, ref, provide } from "vue";
-import { teekBlogCardConfig } from "../../config/teekConfig";
+//import { teekBlogCardConfig } from "../../config/teekConfig";
 /*import { useRibbon } from "../composables/useRibbon";
 import { useRuntime } from "../composables/useRuntime";*/
 // @ts-ignore
@@ -28,14 +28,16 @@ import ScrollProgressBar from "./ScrollProgressBar.vue" //导入顶部滚动条�
 import BackToTop from "./BackToTop.vue";  //导入返回顶部组件
 // @ts-ignore
 import InformationCard from "./InformationCard.vue";
+import APlayerComponent from "./APlayerComponent.vue";
+
 
 const ns = "layout-provider";
 const { frontmatter } = useData();
 
 // 默认卡片风
 const currentStyle = ref("blog-card");
-const teekConfig = ref(teekBlogCardConfig);
-provide(teekConfigContext, teekConfig);
+/*const teekConfig = ref(teekBlogCardConfig);
+provide(teekConfigContext, teekConfig);*/
 // const currentStyle = ref("doc");
 // const teekConfig = ref(teekDocConfig);
 // provide(teekConfigContext, teekConfig);
@@ -72,31 +74,36 @@ const handleConfigSwitch = (config: TeekConfig, style: string) => {
 };*/
 </script>
 
-<template>
-  <Teek.Layout>
-    <template #layout-top>
-      <!-- 顶部滚动条组件 -->
-      <ScrollProgressBar />
-    </template>
-    其他组件...
-  </Teek.Layout>
-</template>
-
 <!--<template>
   <Teek.Layout>
     <template #layout-top>
-      &lt;!&ndash; 全局问候组件 &ndash;&gt;
-      <GlobalGreet />
-      &lt;!&ndash; 看板娘组件 &ndash;&gt;
-      <OhMyLive2D />
       &lt;!&ndash; 顶部滚动条组件 &ndash;&gt;
       <ScrollProgressBar />
-      &lt;!&ndash;网页标题切换组件  &ndash;&gt;
+
+      &lt;!&ndash; 网页标题切换组件 &ndash;&gt;
       <TitleChange />
-      &lt;!&ndash; 返回顶部组件 &ndash;&gt;
-      <BackToTop />
+
     </template>
-&lt;!&ndash;    <template #teek-theme-enhance-bottom>
+  </Teek.Layout>
+</template>-->
+
+<template>
+  <Teek.Layout>
+    <template #layout-top>
+      <!-- 全局问候组件 -->
+      <GlobalGreet />
+      <!-- 看板娘组件 -->
+      <OhMyLive2D />
+      <!-- 顶部滚动条组件 -->
+      <ScrollProgressBar />
+      <!--网页标题切换组件  -->
+      <TitleChange />
+      <!-- 返回顶部组件 -->
+      <BackToTop />
+
+      <APlayerComponent />
+    </template>
+<!--    <template #teek-theme-enhance-bottom>
       <div :class="[ns, 'flx-align-center']">
         <ConfigSwitch v-model="currentStyle" @switch="handleConfigSwitch" />
       </div>
@@ -104,7 +111,7 @@ const handleConfigSwitch = (config: TeekConfig, style: string) => {
 
     <template #nav-screen-content-after>
       <ConfigSwitch v-model="currentStyle" @switch="handleConfigSwitch" />
-    </template>&ndash;&gt;
+    </template>
 
     <template #teek-archives-top-before>
       <ContributeChart />
@@ -126,9 +133,9 @@ const handleConfigSwitch = (config: TeekConfig, style: string) => {
 
     <template #teek-home-banner-after>
       <InformationCard />
-    </template>
+    </template>-->
   </Teek.Layout>
-</template>-->
+</template>
 
 <style lang="scss">
 .tk-my.is-circle-bg {
