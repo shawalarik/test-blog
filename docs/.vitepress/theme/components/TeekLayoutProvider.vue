@@ -25,8 +25,6 @@ import OhMyLive2D from "./OhMyLive2D.vue"  //导入看板娘组件
 // @ts-ignore
 import ScrollProgressBar from "./ScrollProgressBar.vue" //导入顶部滚动条组件
 // @ts-ignore
-import BackToTop from "./BackToTop.vue";  //导入返回顶部组件
-// @ts-ignore
 import InformationCard from "./InformationCard.vue";
 import APlayerComponent from "./APlayerComponent.vue";
 
@@ -85,9 +83,7 @@ const handleConfigSwitch = (config: TeekConfig, style: string) => {
       <ScrollProgressBar />
       <!--网页标题切换组件  -->
       <TitleChange />
-      <!-- 返回顶部组件 -->
-      <BackToTop />
-
+      <!--音乐播放器组件-->
       <APlayerComponent />
     </template>
 <!--    <template #teek-theme-enhance-bottom>

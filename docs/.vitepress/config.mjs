@@ -9,6 +9,7 @@ import {
 import { visualizer } from "rollup-plugin-visualizer"; // 导入可视化分析插件
 //import viteImagemin from "vite-plugin-imagemin"; // 导入图片压缩插件
 import compress from 'vite-plugin-compression';
+import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
 
 
 // 是否为开发模式
@@ -97,6 +98,16 @@ export default defineConfig({
 
   },
   vite: {
+    build: {
+      minify: 'terser', // 或 'esbuild'
+      terserOptions: {
+        compress: {
+          dead_code: true, // 移除死代码
+          drop_console: true, // 移除 console
+          drop_debugger: true // 移除 debugger
+        }
+      }
+    },
     ssr: {
       // 标记 APlayer 为外部依赖，不在 SSR 中处理
       external: []
@@ -105,7 +116,7 @@ export default defineConfig({
       groupIconVitePlugin(), //代码组图标
       visualizer({
         filename: "stats.html",
-        open: !isDev, // 打包后自动打开报告
+        open: false, // 打包后自动打开报告
         gzipSize: true, // 压缩大小
         brotliSize: true,
       }),
@@ -115,6 +126,12 @@ export default defineConfig({
         threshold: 10240, // 文件大小超过此值时进行压缩，单位为字节
         algorithm: 'gzip', // 压缩算法，可选 'gzip' 或 'brotli'
         ext: '.gz', // 压缩后的文件扩展名
+      }),
+      ViteImageOptimizer({
+        png: { quality: 80 },
+        jpeg: { quality: 75 },
+        webp: { quality: 75 },
+        svg: { multipass: true },
       }),
       /*viteImagemin({
         gifsicle: {
