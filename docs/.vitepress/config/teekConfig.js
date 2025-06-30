@@ -1,5 +1,5 @@
 import { defineTeekConfig } from "vitepress-theme-teek/config";
-import wallpaperImages from "./utils/wallpaperSelector";
+import wallpaperImages from "../theme/utils/wallpaperSelector";
 
 const typewriter = [
   "愿每个人都有属于自己的一片星空",

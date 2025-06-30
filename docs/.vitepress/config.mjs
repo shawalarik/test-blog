@@ -104,8 +104,34 @@ export default defineConfig({
       terserOptions: {
         compress: {
           dead_code: true, // 移除死代码
-          //drop_console: true, // 移除 console
-          //drop_debugger: true // 移除 debugger
+          drop_console: true, // 移除 console
+          drop_debugger: true // 移除 debugger
+        }
+      },
+      rollupOptions: {
+        external: (id) => {
+          // 调试日志：输出匹配的文件路径
+          const isOriginalMusic = /^.*public[/\\]music[/\\](?!compressed[/\\]).*\.(mp3|wav|flac)$/i.test(id);
+          if (isOriginalMusic) {
+            console.log(`忽略原始音频文件: ${id}`);
+          }
+          return isOriginalMusic
+        },
+        output: {
+          // 确保资源复制到正确位置
+          assetFileNames: (assetInfo) => {
+            console.log(assetInfo.name);
+            if (assetInfo.name.endsWith('.mp3') ||
+                assetInfo.name.endsWith('.wav') ||
+                assetInfo.name.endsWith('.flac')) {
+              // 只复制compressed目录下的音频文件
+              if (assetInfo.name.includes('compressed')) {
+                return 'public/music/compressed/[name][extname]';
+              }
+              return null; // 忽略原始音频文件
+            }
+            return 'assets/[name][extname]';
+          }
         }
       }
     },

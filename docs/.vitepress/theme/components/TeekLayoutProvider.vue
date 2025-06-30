@@ -23,10 +23,10 @@ import TitleChange from "./TitleChange.vue" //导入网页标题变化
 // @ts-ignore
 import OhMyLive2D from "./OhMyLive2D.vue"  //导入看板娘组件
 // @ts-ignore
-import ScrollProgressBar from "./ScrollProgressBar.vue" //导入顶部滚动条组件
+//import ScrollProgressBar from "./ScrollProgressBar.vue" //导入顶部滚动条组件
 // @ts-ignore
 import InformationCard from "./InformationCard.vue";
-import APlayerComponent from "./APlayerComponent.vue";
+import APlayer from "./APlayer.vue";
 
 
 const ns = "layout-provider";
@@ -80,11 +80,11 @@ const handleConfigSwitch = (config: TeekConfig, style: string) => {
       <!-- 看板娘组件 -->
       <OhMyLive2D />
       <!-- 顶部滚动条组件 -->
-      <ScrollProgressBar />
-      <!--网页标题切换组件  -->
+<!--      <ScrollProgressBar />-->
+      <!-- 网页标题切换组件 -->
       <TitleChange />
-      <!--音乐播放器组件-->
-      <APlayerComponent />
+      <!-- 音乐播放器组件 -->
+      <APlayer />
     </template>
 <!--    <template #teek-theme-enhance-bottom>
       <div :class="[ns, 'flx-align-center']">

@@ -1,11 +1,15 @@
 <template>
-  <div id="aplayer"></div>
+  <div>
+    <div id="aplayer" style="display:none;"></div>
+
+  </div>
 </template>
 
 <script setup>
 import {onMounted, onBeforeUnmount, nextTick} from "vue";
-console.log("import.meta.env.VITE_MUSIC_DATA_PATH", import.meta.env.VITE_MUSIC_DATA_PATH)
-
+import { audio } from '$internal/music-data'; // 导入虚拟模块中的数据
+// .vitepress/theme/index.js
+import 'aplayer/dist/APlayer.min.css';
 
 let player = null;
 
@@ -16,15 +20,14 @@ const initAPlayer = async () => {
 
   // 动态导入 APlayer 和样式
   const {default: APlayer} = await import('aplayer');
-  import('aplayer/dist/APlayer.min.css');
+  //import('aplayer/dist/APlayer.min.css');
 
   // 等待 DOM 更新完成
-  //await nextTick();
+  await nextTick();
 
   // 假设这是你的音频数据来源
   //const {audio} = await import('../../config/musicData');
-  // 从环境变量获取路径
-  const {audio} = import.meta.env.VITE_MUSIC_DATA_PATH || '../../config/musicData';
+  console.log("audio", audio)
 
   player = new APlayer({
     container: document.getElementById('aplayer'),
@@ -34,10 +37,16 @@ const initAPlayer = async () => {
     autoplay: true,
     theme: '#b7daff',
     loop: 'all',
-    order: 'list',
+    order: 'random', // 启用随机播放
     preload: 'auto',
     volume: 0.2,
     storageName: 'aplayer-setting',
+
+  });
+
+  // 当 APlayer 初始化完成后显示播放器
+  player.on('canplay', function() {
+    document.getElementById('aplayer').style.display = 'block';
   });
 };
 
