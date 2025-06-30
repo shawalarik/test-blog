@@ -4,6 +4,8 @@
 
 <script setup>
 import {onMounted, onBeforeUnmount, nextTick} from "vue";
+console.log("import.meta.env.VITE_MUSIC_DATA_PATH", import.meta.env.VITE_MUSIC_DATA_PATH)
+
 
 let player = null;
 
@@ -20,7 +22,9 @@ const initAPlayer = async () => {
   //await nextTick();
 
   // 假设这是你的音频数据来源
-  const {audio} = await import('../utils/musicData');
+  //const {audio} = await import('../../config/musicData');
+  // 从环境变量获取路径
+  const {audio} = import.meta.env.VITE_MUSIC_DATA_PATH || '../../config/musicData';
 
   player = new APlayer({
     container: document.getElementById('aplayer'),

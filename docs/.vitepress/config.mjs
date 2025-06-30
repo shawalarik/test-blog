@@ -10,6 +10,7 @@ import { visualizer } from "rollup-plugin-visualizer"; // 导入可视化分析�
 //import viteImagemin from "vite-plugin-imagemin"; // 导入图片压缩插件
 import compress from 'vite-plugin-compression';
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
+import { scanMusicPlugin } from '../../plugs/scan-music.mjs';
 
 
 // 是否为开发模式
@@ -103,8 +104,8 @@ export default defineConfig({
       terserOptions: {
         compress: {
           dead_code: true, // 移除死代码
-          drop_console: true, // 移除 console
-          drop_debugger: true // 移除 debugger
+          //drop_console: true, // 移除 console
+          //drop_debugger: true // 移除 debugger
         }
       }
     },
@@ -133,6 +134,10 @@ export default defineConfig({
         webp: { quality: 75 },
         svg: { multipass: true },
       }),
+      scanMusicPlugin({
+        musicDir: 'music', // 音乐文件存放目录
+        //outputFile: '' // 输出数据文件路径
+      })
       /*viteImagemin({
         gifsicle: {
           interlaced: true, // 隔行扫描

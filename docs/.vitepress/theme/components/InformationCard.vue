@@ -60,7 +60,7 @@ const getDiary = async () => {
 
 const init = async () => {
   await getWeatherInfo(); // 获取天气信息
-  await getDiary(); // 获取舔狗信息
+  //await getDiary(); // 获取舔狗信息
 };
 
 // 新增：控制显示选项
@@ -70,7 +70,7 @@ const showWeather = ref(true);
 const showDate = ref(true);
 const showTemperature = ref(true);
 const showWeek = ref(true);
-const showgetDiary = ref(true);
+const showgetDiary = ref(false);
 
 // 新增：FPS计算
 const fps = ref(0);
