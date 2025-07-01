@@ -9,6 +9,7 @@ const readdir = promisify(fs.readdir);
 
 export function scanMusicPlugin(options = {}) {
     const { musicDir = 'music' } = options;
+    const musicExt = ['.mp3', '.wav', '.flac', '.opus'];
     let resolvedConfig;
     let audioData = [];
     let isProduction = process.env.NODE_ENV === 'production';
@@ -57,7 +58,7 @@ export function scanMusicPlugin(options = {}) {
         const files = await readdir(originalPath);
         for (const file of files) {
             const ext = path.extname(file).toLowerCase();
-            if (!['.mp3', '.wav', '.flac'].includes(ext)) continue;
+            if (!musicExt.includes(ext)) continue;
 
             const baseName = path.basename(file, ext);
             const [artist, name] = baseName.split('-').map(s => s.trim());
@@ -99,7 +100,7 @@ export function scanMusicPlugin(options = {}) {
         const files = await readdir(musicPath);
         for (const file of files) {
             const ext = path.extname(file).toLowerCase();
-            if (!['.mp3', '.wav', '.flac'].includes(ext)) continue;
+            if (!musicExt.includes(ext)) continue;
 
             const baseName = path.basename(file, ext).replace(/_压缩$/, '');
             const [artist, name] = baseName.split('-').map(s => s.trim());

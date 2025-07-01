@@ -23,7 +23,6 @@ class AudioCompressor {
         this.options = {
             inputDir: resolve(__dirname, "../public/music"),
             outputDir: resolve(__dirname, "../public/music/compressed"),
-            bitrate: "64k",
             concurrency: 10,
             audioExtensions: [".mp3", ".wav", ".flac", ".aac"],
             skipCompressedDir: true, // 跳过compressed目录
@@ -72,7 +71,7 @@ class AudioCompressor {
 
         try {
             const filename = basename(inputPath);
-            const outputFilename = filename.replace(/\.\w+$/, "") + ".mp3";
+            const outputFilename = filename.replace(/\.\w+$/, "") + ".opus";
             const outputPath = join(this.options.outputDir, outputFilename);
 
             // 检查输出文件是否已存在
@@ -86,11 +85,18 @@ class AudioCompressor {
 
             // 执行压缩命令
             const process = spawn(ffmpegPath, [
-                "-i", inputPath,
-                "-b:a", this.options.bitrate,
-                "-vn",         // 不处理视频流
-                "-preset", "fast", // 加快编码速度
-                "-y",          // 覆盖输出文件
+                "-i", inputPath,                   // 输入文件路径
+                "-c:a", "libopus",                 // 使用 LAME MP3 编码器（兼容性好，但压缩效率低于 Opus）libmp3lame 和 libopus
+                "-b:a", "48k",                     // 音频比特率（例如 128k）
+                "-vn",                             // 不处理视频流
+                "-vbr", "on",                      // 启用可变比特率（VBR），比固定比特率（CBR）更高效
+                //"-q:a", "9",                     // 质量等级（0-9，5 约等于 128k CBR）- 与 -b:a 冲突，应移除
+                "-compression_level", "10",        // 压缩级别（0-10，越高体积越小，但可能增加编码时间）
+                "-joint_stereo", "on",             // 启用联合立体声（节省 10-20% 体积，适合人声为主的音乐）
+                "-preset", "fast",                 // 加快编码速度（仅对部分编码器有效，LAME 中可能无效）
+                "-y",                              // 覆盖输出文件
+                "-threads", "0",                   // 自动使用所有可用线程（提升编码速度）
+                "-application", "audio",           // 针对音频优化（对 LAME 可能无效）
                 outputPath
             ]);
 
@@ -234,7 +240,6 @@ class AudioCompressor {
 const compressor = new AudioCompressor({
     inputDir: resolve(__dirname, "../../../../public/music"),
     outputDir: resolve(__dirname, "../../../../public/music/compressed"),
-    bitrate: "64k",
     concurrency: 10, // 同时压缩3个文件
     skipCompressedDir: true // 显式设置跳过compressed目录
 });
