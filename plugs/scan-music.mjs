@@ -85,7 +85,11 @@ export function scanMusicPlugin(options = {}) {
     async function processCompressedAudio() {
         const baseDir = path.resolve(resolvedConfig.root, 'public', musicDir);
         const musicPath = path.resolve(baseDir, 'compressed');
+        const compressedCoverDir = path.resolve(musicPath); // 压缩目录下的封面文件夹
         audioData = [];
+
+        // 创建压缩封面目录（如果不存在）
+        await fs.promises.mkdir(compressedCoverDir, { recursive: true });
 
         if (!await fsExists(musicPath)) {
             this.warn(`压缩音乐目录 ${musicPath} 不存在`);
@@ -101,11 +105,22 @@ export function scanMusicPlugin(options = {}) {
             const [artist, name] = baseName.split('-').map(s => s.trim());
 
             let coverUrl = '';
+            let coverFileName = '';
             const coverExts = ['.webp', '.jpg', '.jpeg', '.png'];
+
             for (const cExt of coverExts) {
-                const coverFilePath = path.join(baseDir, baseName + cExt);
-                if (await fsExists(coverFilePath)) {
-                    coverUrl = `/${musicDir}/${baseName}${cExt}`;
+                const originalCoverPath = path.join(baseDir, baseName + cExt);
+
+                if (await fsExists(originalCoverPath)) {
+                    // 构建压缩目录中的封面路径
+                    coverFileName = `${baseName}${cExt}`;
+                    const compressedCoverPath = path.join(compressedCoverDir, coverFileName);
+
+                    // 复制封面图片到压缩目录
+                    await fs.promises.copyFile(originalCoverPath, compressedCoverPath);
+
+                    // 更新封面 URL 指向新位置
+                    coverUrl = `/${musicDir}/compressed/${coverFileName}`;
                     break;
                 }
             }
@@ -113,7 +128,7 @@ export function scanMusicPlugin(options = {}) {
             audioData.push({
                 name: name || baseName,
                 artist: artist || '未知艺术家',
-                url: `/${musicDir}/compressed/${file}`, // 使用压缩文件
+                url: `/${musicDir}/compressed/${file}`,
                 cover: coverUrl,
             });
         }

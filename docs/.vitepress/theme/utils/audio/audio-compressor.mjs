@@ -72,7 +72,7 @@ class AudioCompressor {
 
         try {
             const filename = basename(inputPath);
-            const outputFilename = filename.replace(/\.\w+$/, "") + "_压缩.mp3";
+            const outputFilename = filename.replace(/\.\w+$/, "") + ".mp3";
             const outputPath = join(this.options.outputDir, outputFilename);
 
             // 检查输出文件是否已存在

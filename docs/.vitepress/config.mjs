@@ -11,6 +11,7 @@ import { visualizer } from "rollup-plugin-visualizer"; // 导入可视化分析�
 import compress from 'vite-plugin-compression';
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
 import { scanMusicPlugin } from '../../plugs/scan-music.mjs';
+import {cleanDistMusic} from "../../plugs/clean-dist.js";
 
 
 // 是否为开发模式
@@ -124,6 +125,7 @@ export default defineConfig({
       external: []
     },
     plugins: [
+      cleanDistMusic(),
       groupIconVitePlugin(), //代码组图标
       visualizer({
         filename: "stats.html",
@@ -139,10 +141,28 @@ export default defineConfig({
         ext: '.gz', // 压缩后的文件扩展名
       }),
       ViteImageOptimizer({
-        png: { quality: 80 },
-        jpeg: { quality: 75 },
-        webp: { quality: 75 },
-        svg: { multipass: true },
+        name: 'vite-plugin-image-optimizer', // 明确指定插件名称
+        // 基础图片优化配置
+        png: {
+          quality: 20,
+          interlaced: true // 启用隔行扫描
+        },
+        jpeg: {
+          quality: 20,
+          progressive: true // 启用渐进式加载
+        },
+        webp: {
+          quality: 20,
+          //lossless: true // 无损压缩模式
+        },
+        svg: {
+          multipass: true,
+        },
+        // 构建控制配置
+        enabled: true, // 仅生产环境启用
+        //include: ['src/assets/images/**/*'], // 只优化指定目录
+        //exclude: ['src/assets/images/ignore/*.png'], // 排除特定文件
+        verbose: true // 关闭详细日志
       }),
       scanMusicPlugin({
         musicDir: 'music', // 音乐文件存放目录
