@@ -94,8 +94,8 @@ export default defineConfig({
       { icon: 'gitee', link: 'https://gitee.com/dlwwei' },
     ],
     footer: {
-      message: 'Released under the MIT License.',
-      copyright: 'Copyright © 2025-present Evan You'
+/*      message: 'Released under the MIT License.',
+      copyright: 'Copyright © 2025-present Evan You'*/
     }
 
   },
@@ -146,6 +146,10 @@ export default defineConfig({
         png: {
           quality: 20,
           interlaced: true // 启用隔行扫描
+        },
+        jpg: {
+          quality: 20,
+          progressive: true // 启用渐进式加载
         },
         jpeg: {
           quality: 20,
