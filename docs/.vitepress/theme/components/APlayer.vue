@@ -1,8 +1,7 @@
 <template>
-  <div>
+  <ClientOnly>
     <div id="aplayer" style="display:none;"></div>
-
-  </div>
+  </ClientOnly>
 </template>
 
 <script setup>
@@ -23,11 +22,14 @@ const initAPlayer = async () => {
   //import('aplayer/dist/APlayer.min.css');
 
   // 等待 DOM 更新完成
-  await nextTick();
+  //await nextTick();
 
   // 假设这是你的音频数据来源
   //const {audio} = await import('../../config/musicData');
   console.log("audio", audio)
+  if (audio.length === 0){
+    return;
+  }
 
   player = new APlayer({
     container: document.getElementById('aplayer'),

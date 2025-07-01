@@ -21,9 +21,9 @@ import GlobalGreet from "./GlobalGreet.vue";  //导入全局问候组件
 // @ts-ignore
 import TitleChange from "./TitleChange.vue" //导入网页标题变化
 // @ts-ignore
-import OhMyLive2D from "./OhMyLive2D.vue"  //导入看板娘组件
+//import OhMyLive2D from "./OhMyLive2D.vue"  //导入看板娘组件
 // @ts-ignore
-//import ScrollProgressBar from "./ScrollProgressBar.vue" //导入顶部滚动条组件
+import ScrollProgressBar from "./ScrollProgressBar.vue" //导入顶部滚动条组件
 // @ts-ignore
 import InformationCard from "./InformationCard.vue";
 import APlayer from "./APlayer.vue";
@@ -78,9 +78,9 @@ const handleConfigSwitch = (config: TeekConfig, style: string) => {
       <!-- 全局问候组件 -->
       <GlobalGreet />
       <!-- 看板娘组件 -->
-      <OhMyLive2D />
+<!--      <OhMyLive2D />-->
       <!-- 顶部滚动条组件 -->
-<!--      <ScrollProgressBar />-->
+      <ScrollProgressBar />
       <!-- 网页标题切换组件 -->
       <TitleChange />
       <!-- 音乐播放器组件 -->

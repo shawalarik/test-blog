@@ -207,7 +207,7 @@ class AudioCompressor {
 
             // 扫描所有音频文件，跳过compressed目录
             const audioFiles = await this.scanDirectory(this.options.inputDir);
-            console.log(`发现 ${audioFiles.length} 个音频文件`);
+            console.log(`\n发现 ${audioFiles.length} 个音频文件`);
 
             // 添加所有文件到任务队列
             audioFiles.forEach(file => this.addTask(file));
@@ -217,12 +217,7 @@ class AudioCompressor {
                 await new Promise(resolve => setTimeout(resolve, 500));
             }
 
-            console.log("所有音频压缩完成");
-/*            return {
-                totalFiles: audioFiles.length,
-                compressedFiles: audioFiles.length - this.taskQueue.length,
-                skippedFiles: this.taskQueue.length
-            };*/
+            console.log("\n所有音频压缩完成");
             return {
                 totalFiles: this.totalFilesCount,
                 compressedFiles: this.compressedFilesCount,
