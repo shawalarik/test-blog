@@ -1,7 +1,7 @@
 import { defineConfig } from 'vitepress'
 import { defineTeekConfig } from "vitepress-theme-teek/config";
 import { Nav } from "./config/Nav.js"; // 导入Nav模块
-import {teekConfig} from "./config/teekConfig.js";
+//import {teekConfig} from "./config/TeekConfig";
 import {
   groupIconMdPlugin,
   groupIconVitePlugin,
@@ -22,6 +22,10 @@ if (isDev) {
 } else {
   console.log('正在构建生产版本');
 }
+
+const teekConfig = defineTeekConfig({
+});
+
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({

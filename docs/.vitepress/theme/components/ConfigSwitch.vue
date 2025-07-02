@@ -1,4 +1,3 @@
-// 配置切换
 <script setup lang="ts" name="ConfigSwitch">
 import {
   TkSegmented,
@@ -17,7 +16,7 @@ import {
   teekBlogFullConfig,
   teekBlogBodyConfig,
   teekBlogCardConfig,
-} from "../config/teekConfig";
+} from "../../config/TeekConfig";
 
 const ns = "config-switch";
 const tipInfo = {
@@ -54,12 +53,12 @@ const segmentedOptions = [
 ];
 
 const emit = defineEmits<{
-  switch: [config: typeof teekDocConfig, style: string];
+  switch: [config: typeof teekBlogFullConfig, style: string];
 }>();
 
 // 默认文档风格
-const themeStyle = defineModel({ default: "doc" });
-const teekConfig = ref(teekDocConfig);
+const themeStyle = defineModel({ default: "blog-full" });
+const teekConfig = ref(teekBlogFullConfig);
 
 const { copy, copied } = useClipboard();
 const isMobile = useMediaQuery("(max-width: 768px)");

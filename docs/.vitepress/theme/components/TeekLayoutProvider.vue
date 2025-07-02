@@ -3,13 +3,13 @@ import type { TeekConfig } from "vitepress-theme-teek";
 import Teek, { teekConfigContext, clockIcon } from "vitepress-theme-teek";
 import { useData } from "vitepress";
 import { watch, nextTick, ref, provide } from "vue";
-//import { teekBlogCardConfig } from "../../config/teekConfig";
+import { teekBlogFullConfig } from "../../config/TeekConfig";
 /*import { useRibbon } from "../composables/useRibbon";
 import { useRuntime } from "../composables/useRuntime";*/
 // @ts-ignore
 import ConfigSwitch from "./ConfigSwitch.vue";
 // @ts-ignore
-import ContributeChart from "./ContributeChart.vue";
+import ContributeChart from "./ContributeChart.vue"; // 贡献图组件
 // @ts-ignore
 import NoticeContent from "./NoticeContent.vue"; //导入公告组件
 // @ts-ignore
@@ -33,26 +33,23 @@ const ns = "layout-provider";
 const { frontmatter } = useData();
 
 // 默认卡片风
-const currentStyle = ref("blog-card");
-/*const teekConfig = ref(teekBlogCardConfig);
-provide(teekConfigContext, teekConfig);*/
-// const currentStyle = ref("doc");
-// const teekConfig = ref(teekDocConfig);
-// provide(teekConfigContext, teekConfig);
+const currentStyle = ref("blog-full");
+const teekConfig = ref(teekBlogFullConfig);
+provide(teekConfigContext, teekConfig);
 
 /*// 彩带背景
 const { start: startRibbon, stop: stopRibbon } = useRibbon({ immediate: false, clickReRender: true });
 // 页脚运行时间
 const { start: startRuntime, stop: stopRuntime } = useRuntime("2025-03-14 00:00:00", {
   prefix: `<span style="width: 16px; display: inline-block; vertical-align: -3px; margin-right: 3px;">${clockIcon}</span>本站已在地球上苟活了`,
-});
+});*/
 
 const watchRuntimeAndRibbon = async (layout: string, style: string) => {
   const isHome = layout === "home";
   const isDoc = [undefined, "doc"].includes(layout);
   const isBlog = style.startsWith("blog");
 
-  // 博客类风格的首页显示运行时间
+/*  // 博客类风格的首页显示运行时间
   await nextTick();
   if (isHome && isBlog) startRuntime();
   else stopRuntime();
@@ -60,7 +57,7 @@ const watchRuntimeAndRibbon = async (layout: string, style: string) => {
 
   // 博客类风格的首页显示彩带 & 设置了 pageStyle 的文章页显示彩带
   if ((isHome && isBlog && style !== "blog-body") || (isDoc && teekConfig.value.pageStyle)) startRibbon();
-  else stopRibbon();
+  else stopRibbon();*/
 };
 
 watch(frontmatter, async newVal => watchRuntimeAndRibbon(newVal.layout, currentStyle.value), { immediate: true });
@@ -69,7 +66,7 @@ const handleConfigSwitch = (config: TeekConfig, style: string) => {
   teekConfig.value = config;
 
   watchRuntimeAndRibbon(frontmatter.value.layout, style);
-};*/
+};
 </script>
 
 <template>
@@ -86,25 +83,22 @@ const handleConfigSwitch = (config: TeekConfig, style: string) => {
       <!-- 音乐播放器组件 -->
       <APlayer />
     </template>
-<!--    <template #teek-theme-enhance-bottom>
+    <template #teek-theme-enhance-bottom>
       <div :class="[ns, 'flx-align-center']">
         <ConfigSwitch v-model="currentStyle" @switch="handleConfigSwitch" />
       </div>
     </template>
 
-    <template #nav-screen-content-after>
-      <ConfigSwitch v-model="currentStyle" @switch="handleConfigSwitch" />
-    </template>
-
+    <!--  归档页插槽  -->
     <template #teek-archives-top-before>
       <ContributeChart />
     </template>
 
-    <template #not-found>
+<!--    <template #not-found>
       <NotFound />
-    </template>
+    </template>-->
 
-    <template #teek-notice-content>
+<!--    <template #teek-notice-content>
       &lt;!&ndash; 公告组件 &ndash;&gt;
       <NoticeContent />
     </template>-->
