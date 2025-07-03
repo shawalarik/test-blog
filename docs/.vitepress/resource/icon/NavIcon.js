@@ -1,26 +1,11 @@
-import {
-  Blog,
-  Linux,
-  Nginx,
-  Git,
-  Docker,
-  Appstore,
-  Photo,
-  Music,
-  Film,
-  About,
-  Link,
-  Nav,
-  SiteAnalytics,
-  Status,
-} from "./Svgicon";
+// nav导航栏配置，暂时不用了，因为此方法不能匹配url路径
 
 export const TeekIcon = {
   text: "Teek主题",
   link: "/Teek",
   subMenu: true, // 是否有子菜单
   iconProps: {
-    icon: "https://vp.teek.top/teek-logo-mini.svg",
+    icon: "/svg/teek-logo-mini.svg",
     iconType: "img",
     // size: 12, // 图标大小
   },
@@ -42,7 +27,7 @@ export const SSLIcon = {
   link: "/SSL",
   subMenu: true, // 是否有子菜单
   iconProps: {
-    icon: "https://allinssl.com/logo.svg",
+    icon: "/svg/allinssl.svg",
     iconType: "img",
     size: 12, // 图标大小
   },
@@ -53,7 +38,8 @@ export const BlogIcon = {
   link: "/Blog",
   subMenu: true, // 是否有子菜单
   iconProps: {
-    icon: Blog,
+    icon: "/svg/blog.svg",
+    iconType: "img",
   },
 };
 
@@ -62,7 +48,8 @@ export const NginxIcon = {
   link: "/Nginx",
   subMenu: true, // 是否有子菜单
   iconProps: {
-    icon: Nginx,
+    icon: "/svg/nginx.svg",
+    iconType: "img",
   },
 };
 
@@ -71,7 +58,8 @@ export const LinuxIcon = {
   link: "/Linux",
   subMenu: true, // 是否有子菜单
   iconProps: {
-    icon: Linux,
+    icon: "/svg/linux.svg",
+    iconType: "img",
   },
 };
 
@@ -80,7 +68,8 @@ export const GitIcon = {
   link: "/Git",
   subMenu: true, // 是否有子菜单
   iconProps: {
-    icon: Git,
+    icon: "/svg/git.svg",
+    iconType: "img",
   },
 };
 
@@ -89,7 +78,8 @@ export const DockerIcon = {
   link: "/Docker",
   subMenu: true, // 是否有子菜单
   iconProps: {
-    icon: Docker,
+    icon: "/svg/docker.svg",
+    iconType: "img",
   },
 };
 
@@ -98,7 +88,8 @@ export const AppstoreIcon = {
   link: "/Appstore",
   subMenu: true, // 是否有子菜单
   iconProps: {
-    icon: Appstore,
+    icon: "/svg/appstore.svg",
+    iconType: "img",
   },
 };
 
@@ -107,7 +98,8 @@ export const PhotoIcon = {
   link: "https://photo.seasir.top/",
   subMenu: true, // 是否有子菜单
   iconProps: {
-    icon: Photo,
+    icon: "/svg/photo.svg",
+    iconType: "img",
   },
 };
 
@@ -116,7 +108,8 @@ export const MusicIcon = {
   link: "http://music.alger.fun/#/",
   subMenu: true, // 是否有子菜单
   iconProps: {
-    icon: Music,
+    icon: "/svg/music.svg",
+    iconType: "img",
   },
 };
 
@@ -125,7 +118,8 @@ export const FilmIcon = {
   link: "/Film",
   subMenu: true, // 是否有子菜单
   iconProps: {
-    icon: Film,
+    icon: "/svg/film.svg",
+    iconType: "img",
   },
 };
 
@@ -134,7 +128,8 @@ export const AboutIcon = {
   link: "/About",
   subMenu: true, // 是否有子菜单
   iconProps: {
-    icon: About,
+    icon: "/svg/about.svg",
+    iconType: "img",
   },
   size: 26, // 图标大小
 };
@@ -144,7 +139,8 @@ export const LinkIcon = {
   link: "/Link",
   subMenu: true, // 是否有子菜单
   iconProps: {
-    icon: Link,
+    icon: "/svg/link.svg",
+    iconType: "img",
   },
 };
 
@@ -153,7 +149,8 @@ export const NavIcon = {
   link: "/nav",
   subMenu: true, // 是否有子菜单
   iconProps: {
-    icon: Nav,
+    icon: "/svg/nav.svg",
+    iconType: "img",
   },
 };
 
@@ -162,7 +159,8 @@ export const SiteAnalyticsIcon = {
   link: "https://umami.seasir.top/share/rvVBNZWa0sUCN6wG/teek.seasir.top",
   subMenu: true, // 是否有子菜单
   iconProps: {
-    icon: SiteAnalytics,
+    icon: "/svg/SiteAnalytics.svg",
+    iconType: "img",
   },
 };
 
@@ -171,6 +169,7 @@ export const StatusIcon = {
   link: "https://status.seasir.top/",
   subMenu: true, // 是否有子菜单
   iconProps: {
-    icon: Status,
+    icon: "/svg/status.svg",
+    iconType: "img",
   },
 };

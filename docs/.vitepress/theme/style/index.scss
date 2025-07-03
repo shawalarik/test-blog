@@ -12,7 +12,8 @@
 @use "./vp-img-shadow.scss" as *; // 图片阴影
 @use "./vp-code-shadow.scss" as *; // 代码块阴影
 
-@use "./ScrollBar.scss" as *; // 滚动条样式
+@use "./scrollBar.scss" as *; // 滚动条样式
 // 流体边框自定义容器样式
 //@use "./custom-block.scss" as *; // 容器流体样式
 @use "./home.scss" as *;
+@use "./rainbow.scss" as *; // 文本/滚动条等彩虹渐变
