@@ -1,24 +1,24 @@
 ---
-title: 网站导航 #标题
-date: 2025-03-25 18:21:52 #时间
+title: 网站导航
+date: 2025-03-26 02:21:52
 layout: doc
-layoutClass: m-nav-layout #导航布局
-sidebar: false #是否显示侧边栏
-themeSize: wide #主题宽度
-themeStyle: vp-default #主题风格，默认
-prev: false #是否显示上一篇
-next: false #是否显示下一篇
-categories: #分类
+layoutClass: m-nav-layout
+sidebar: false
+themeSize: wide
+themeStyle: vp-default
+prev: false
+next: false
+categories:
   - 导航
   - nav
-permalink: /pages/5dc884 #永久链接
-article: false #是否显示文章
+permalink: /pages/5dc884
+article: false
 outline:
   - 2
   - 3
   - 4
-coverImg: /home/bg18.webp
-editLink: false #是否显示编辑按钮
+coverImg: /home/bg14.webp
+editLink: false
 ---
 
 <style src="/.vitepress/theme/style/nav.scss"></style>

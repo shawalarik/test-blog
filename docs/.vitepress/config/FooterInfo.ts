@@ -5,7 +5,7 @@ import { version } from "vitepress-theme-teek/es/version"; // 导入版本号
 export const FooterInfo = {
     // 页脚信息，支持 HTML 格式（位于主题版权上方）
     topMessage: [
-        `<span><img alt="VitePress" src="/footer/Animals.png" style="max-width: 80vw;"><span/>`,
+        `<span><img alt="VitePress" src="/footer/Animals.png" style="max-width: 50vw;"><span/>`,
         `
     <a target="_blank" href="https://vitepress.dev/" title="本站框架基于 VitePress${version}" ><img alt="VitePress" src="/footer/vitepress.svg" ></a>
     <!--<a target="_blank" href="https://twikoo.js.org/" title="本站评论系统使用 Twikoo" ><img alt="Twikoo" src="/footer/Twikoo.svg"></a>-->
