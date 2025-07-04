@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitepress'
 // @ts-ignore
 import { defineTeekConfig } from "vitepress-theme-teek/config";
+import { Head } from "./config/Head"; // 导入页面head配置
 import { Nav } from "./config/Nav"; // 导入Nav模块
 //import {teekConfig} from "./config/TeekConfig";
 import {
@@ -51,12 +52,10 @@ export default defineConfig({
   // Teek 主题配置
   extends: teekConfig,
   base: "/",
-  lang: 'en-US',
+  lang: "zh-CN",
   outDir: '../dist',
   title: "威威 Blog",
-  head: [
-    ['link', { rel: 'icon', href: '/favicon.ico' }]
-  ],
+  head: Head,
   description: "A VitePress Site",
   cleanUrls: true,
   // 当设置为 true 时，将页面元数据提取到单独的 JavaScript 块中，而不是内联在初始 HTML 中。
