@@ -5,6 +5,8 @@ import { FooterGroup } from "./FooterGroup";
 import { FriendLink } from "./FriendLink";
 import { Typewriter } from "./Typewriter";
 import { Wallpaper } from "./Wallpaper";
+import {SocialDate} from "./SocialDate";
+import {SocialLinks} from "./SocialLinks";
 
 // 博客基础配置
 const teekBlogCommonConfig: TeekConfig = {
@@ -83,33 +85,11 @@ const teekBlogCommonConfig: TeekConfig = {
     pageSpeed: 4000, // 翻页间隔时间，单位：毫秒。autoPage 为 true 时生效
     dateFormat: "yyyy-MM-dd hh:mm:ss", // 精选文章的日期格式
   },
-  friendLink: FriendLink,
-  social: [
-    {
-      icon: "icon-github",
-      iconType: "iconfont",
-      name: "GitHub",
-      link: "https://github.com/Seasir-Hyde",
-    },
-    {
-      icon: "icon-gitee2",
-      iconType: "iconfont",
-      name: "Gitee",
-      link: "https://gitee.com/SeasirHyde/vitepress-theme-teeker-hyde",
-    },
-    {
-      icon: "icon-qq",
-      iconType: "iconfont",
-      name: "QQ",
-      link: "http://wpa.qq.com/msgrd?v=3&uin=2429016980&site=qq&menu=yes",
-    },
-    {
-      icon: "icon-mobile",
-      iconType: "iconfont",
-      name: "联系我",
-      link: "https://teek.seasir.top",
-    },
-  ],
+  friendLink: FriendLink, // 友链配置
+  social: SocialDate, //社交信息配置
+  footerGroup: FooterGroup,
+  footerInfo: FooterInfo,
+
   // 站点信息卡片配置
   docAnalysis: {
     enabled: true,
@@ -133,8 +113,7 @@ const teekBlogCommonConfig: TeekConfig = {
     ],
     //appendInfo: [{ key: "index", label: "序号", value: "天客 99" }],
   },
-  footerGroup: FooterGroup,
-  footerInfo: FooterInfo,
+
   articleShare: {
     enabled: true, // 是否开启文章链接分享功能
     text: "分享此页面", // 分享按钮文本

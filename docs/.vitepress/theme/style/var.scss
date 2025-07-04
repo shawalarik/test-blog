@@ -1,7 +1,8 @@
 /* var.scss */
 :root {
   // 主页最大宽度
-  //--tk-home-max-width: 50%;
+  --tk-home-max-width: 1140px; /* 回退值，适用于不支持 max() 的浏览器 */
+  --tk-home-max-width: max(50%, 1140px); /* 现代浏览器会使用这个值 */
 
   --vp-c-brand-1: var(--vp-c-indigo-2);
 

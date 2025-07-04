@@ -22,3 +22,36 @@
 .VPMenuGroup {
   border-top: 1px solid var(--vp-c-divider)
 }
+
+/* 主页作者信息卡片设计按钮悬浮上移效果 */
+.tk-my__icons a{
+  transition:
+          color 0.3s ease-out,
+          transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+          box-shadow 0.3s ease-out !important;
+}
+
+.tk-my__icons a:hover{
+  transform: translateY(-3px);
+  transition:
+          color 0.5s ease-in,
+          transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+          box-shadow 0.5s ease-in !important;
+}
+
+/* 主页右上角社交按钮动效 */
+/* 方案 2：上升快回落慢 */
+.VPSocialLink {
+  transition:
+          color 0.3s ease-out,
+          transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+          box-shadow 0.3s ease-out !important;
+}
+
+.VPSocialLink:hover {
+  transform: translateY(-3px);
+  transition:
+          color 0.5s ease-in,
+          transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+          box-shadow 0.5s ease-in !important;
+}

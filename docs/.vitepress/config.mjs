@@ -16,6 +16,7 @@ import { scanMusicPlugin } from '../../plugs/scan-music.mjs';
 import { cleanDistMusic } from "../../plugs/clean-dist.mjs";
 import { Wallpaper } from "./config/Wallpaper.js";
 import AutoFrontmatter from "vitepress-plugin-auto-frontmatter";
+import {SocialLinks} from "./config/SocialLinks.js";
 
 // 是否为开发模式
 const isDev = process.argv.includes('dev');
@@ -131,6 +132,7 @@ export default defineConfig({
     },*/
     // https://vitepress.dev/reference/default-theme-config
     nav: Nav,
+    socialLinks: SocialLinks, // 社交链接配置
     sidebar: [
       {
         text: 'Examples',
@@ -139,10 +141,6 @@ export default defineConfig({
           { text: 'Runtime API Examples', link: '/api-examples' }
         ]
       }
-    ],
-
-    socialLinks: [
-      { icon: 'gitee', link: 'https://gitee.com/dlwwei' },
     ],
     footer: {
 /*      message: 'Released under the MIT License.',

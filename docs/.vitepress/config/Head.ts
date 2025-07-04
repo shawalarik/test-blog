@@ -16,15 +16,6 @@ const noScripTemplate = `
 
 export const Head =[
     ['link', { rel: 'icon', href: '/favicon.ico' }],
-    // umami统计
-    [
-        "script",
-        {
-            src: "https://umami.seasir.top/script.js",
-            "data-website-id": "baf9cac2-151d-4f1e-80ff-c7603df9792a",
-            defer: "defer",
-        },
-    ],
     ["meta", { name: "author", content: "威威" }],
     [
         "meta",
@@ -42,6 +33,32 @@ export const Head =[
         },
     ],
     ["meta", { name: "keywords", description }],
+    // umami统计
+    [
+        "script",
+        {
+            src: "https://umami.seasir.top/script.js",
+            "data-website-id": "baf9cac2-151d-4f1e-80ff-c7603df9792a",
+            defer: "defer",
+        },
+    ],
+/*    // 阿里在线矢量库
+    [
+        "link",
+        {
+            rel: "stylesheet",
+            href: "//at.alicdn.com/t/font_2989306_w303erbip9.css",
+        },
+    ],
+    [
+        // 阿里图标库symbol 引用
+        "script",
+        {
+            src: "https://at.alicdn.com/t/c/font_4899452_xj7acblxpxj.js",
+            media: "print",
+            onload: "this.media='all'",
+        },
+    ],*/
     [
         "noscript",
         {},
