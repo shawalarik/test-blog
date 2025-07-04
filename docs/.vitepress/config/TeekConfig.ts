@@ -146,7 +146,7 @@ const teekBlogCommonConfig: TeekConfig = {
     return {
       type: "tip",
       // title: "声明",
-      text: `<p>作者：Teek</p>
+      text: `<p>作者：威威</p>
              <p>版权：此文章版权归 威威 所有，如有转载，请注明出处!</p>
              <p style="margin-bottom: 0">链接：可点击右上角分享此页面复制文章链接</p>
             `,

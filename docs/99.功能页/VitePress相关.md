@@ -1,10 +1,10 @@
 ---
 date: 2025-05-05 05:46:28
 title: VitePress
-permalink: /pages/3308bb
+permalink: /VitePress
 categories:
   - 站点信息
-sidebar: true
+sidebar: false
 article: false
 comment: false
 coverImg: /home/bg15.webp

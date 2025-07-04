@@ -1,3 +1,4 @@
+<!-- 布局切换组件 -->
 <script setup lang="ts" name="ConfigSwitch">
 import {
   TkSegmented,

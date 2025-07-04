@@ -1,4 +1,4 @@
-import type { NavData } from "../types.ts";
+import type { NavData } from "../../components/NavigationPage/types.ts";
 import { SiteAnalytics } from "./SiteAnalytics"; // 网站分析
 import { Status } from "./Status"; // 网站监控
 

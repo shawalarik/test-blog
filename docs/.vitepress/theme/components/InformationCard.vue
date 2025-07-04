@@ -1,3 +1,4 @@
+<!-- banner下方天气组件 -->
 <script setup lang="ts">
 import { onMounted, ref,h } from 'vue';
 import { TkMessage } from "vitepress-theme-teek";

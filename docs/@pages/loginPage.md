@@ -6,7 +6,7 @@ layout: false
 loginPage: true
 logo: /avatar/avatar.webp
 name: 请先登录
-leftImg: /login/bg-1.png
+leftImg: /logo.svg
 article: false
 coverImg: /home/bg23.webp
 ---

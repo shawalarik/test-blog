@@ -1,3 +1,4 @@
+<!-- 首页banner箭头 -->
 <script setup lang="ts" name="BannerImgArrow">
 import { TkIcon } from "vitepress-theme-teek";
 // 新方式（直接导入SVG作为组件）

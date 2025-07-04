@@ -1,3 +1,4 @@
+<!-- 音乐播放组件 -->
 <template>
   <ClientOnly>
     <div id="aplayer" style="display:none;"></div>

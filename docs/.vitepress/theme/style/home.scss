@@ -7,7 +7,18 @@
   height: 550px;
 }
 
-/*主页菜单适应内容宽度*/
+/* 主页菜单适应内容宽度 */
 .VPMenu{
   width: max-content;
+}
+
+/* 主页菜单组添加分隔线 */
+.VPMenuGroup:first-child {
+  margin-top: 0;
+  border-top: 0;
+  padding-top: 0;
+}
+
+.VPMenuGroup {
+  border-top: 1px solid var(--vp-c-divider)
 }

@@ -27,6 +27,13 @@ if (isDev) {
 }
 
 const teekConfig = defineTeekConfig({
+  // 分类页
+/*  category: {
+    path: "/categories",
+  },*/
+  riskLink: {
+    enabled: true,
+  },
   // 新版代码块配置
   codeBlock: {
     disabled: false, // 是否禁用新版代码块

@@ -1,4 +1,4 @@
-import type { NavData } from "../types.ts";
+import type { NavData } from "../../components/NavigationPage/types.ts";
 
 export const Status = {
   title: "网站监控",

@@ -1,4 +1,4 @@
-import type { NavData } from "../types.ts";
+import type { NavData } from "../../components/NavigationPage/types.ts";
 
 export const SiteAnalytics = {
   title: "网站分析",

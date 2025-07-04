@@ -1,3 +1,4 @@
+<!-- 贡献图组件 -->
 <script setup lang="ts" name="ContributeChart">
 import * as echarts from 'echarts/core';
 import { HeatmapChart } from 'echarts/charts';

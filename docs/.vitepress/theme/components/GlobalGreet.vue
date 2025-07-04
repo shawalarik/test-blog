@@ -1,4 +1,4 @@
-// 全局问候提示
+<!-- 全局问候提示 -->
 <script setup lang="ts" name="GlobalGreet">
 import { TkMessage } from "vitepress-theme-teek";
 import { ref, watch, onMounted } from "vue";

@@ -3,7 +3,7 @@ import { computed } from "vue";
 import { withBase } from "vitepress";
 import { slugify } from "@mdit-vue/shared";
 
-import { NavLink } from '../utils/types'
+import { NavLink } from './types'
 
 const props = defineProps<{
   noIcon?: boolean;

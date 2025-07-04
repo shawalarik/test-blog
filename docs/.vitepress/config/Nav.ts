@@ -1,10 +1,11 @@
-import { isEmpty } from "../theme/utils/WwUtils";
-import type { DefaultTheme  } from "vitepress/theme";
-function getNav(text:string, svgPath:string) {
+import {isEmpty} from "../theme/utils/WwUtils";
+import type {DefaultTheme} from "vitepress/theme";
+
+function getNav(text: string, svgPath: string) {
     let imgTemplate
-    if (!isEmpty(svgPath)){
+    if (!isEmpty(svgPath)) {
         imgTemplate = `<img src="${svgPath}" alt="" style="width: 16px; height: 16px;">`
-    }else {
+    } else {
         imgTemplate = ''
     }
 
@@ -22,6 +23,39 @@ export const Nav: DefaultTheme.NavItem[] = [
         link: "/"
     },
     {
+        text: '🏓生活',
+        items: [
+            {
+                // 分组标题1
+                text: '娱乐',
+                items: [
+                    {
+                        text: getNav("相册", "/svg/相册.svg"),
+                        link: '/photo',
+                    },
+                    {
+                        text: getNav("电影", "/svg/电影.svg"),
+                        link: '/movie',
+                    },
+                    {
+                        text: getNav("音乐", "/svg/音乐.svg"),
+                        link: '/music',
+                    },
+                ],
+            },
+            {
+                // 分组标题2
+                text: '小屋',
+                items: [
+                    {
+                        text: getNav("时间管理", "/svg/时间管理.svg"),
+                        link: '/time-plan',
+                    }
+                ]
+            }
+        ]
+    },
+    {
         text: "📖笔记专栏",
         items: [
             {
@@ -34,11 +68,11 @@ export const Nav: DefaultTheme.NavItem[] = [
             },
             {
                 text: getNav("SSL证书", "/svg/allinssl.svg"),
-                link: '/SSL',
+                link: '/ssl',
             },
             {
                 text: getNav("博客搭建", "/svg/blog.svg"),
-                link: '/Blog',
+                link: '/blog',
             }
         ],
     },
@@ -47,48 +81,33 @@ export const Nav: DefaultTheme.NavItem[] = [
         items: [
             {
                 text: getNav("Linux", "/svg/linux.svg"),
-                link: '/Linux',
+                link: '/linux',
             },
             {
                 text: getNav("Nginx", "/svg/nginx.svg"),
-                link: '/Nginx',
+                link: '/nginx',
             },
             {
                 text: getNav("Git", "/svg/git.svg"),
-                link: '/Git',
+                link: '/git',
             },
             {
                 text: getNav("Docker", "/svg/docker.svg"),
-                link: '/Docker',
+                link: '/docker',
             },
             {
                 text: getNav("实用软件", "/svg/appstore.svg"),
-                link: '/Appstore',
+                link: '/appstore',
             }
         ],
     },
-    /*  {
-        text: "🏙️生活娱乐",
-        items: [
-          {
-            component: "NavIcon",
-            props: PhotoIcon,
-          },
-          {
-            component: "NavIcon",
-            props: MusicIcon,
-          },
-          {
-            component: "NavIcon",
-            props: FilmIcon,
-          },
-        ],
-      },
-      { text: "👂畅所欲言", link: "/message-area/" },*/
     {
         text: "👏文章索引",
         items: [
-            {text: "📃文章分类", link: "/categories/"},
+            {
+                text: getNav("📃文章分类", null),
+                link: '/categories',
+            },
             {
                 text: getNav("🔖文章标签", null),
                 link: '/tags',
@@ -104,35 +123,41 @@ export const Nav: DefaultTheme.NavItem[] = [
             {
                 text: getNav("站点登录", '/svg/登录.svg'),
                 link: '/login',
-            },
-            {
-                text: getNav("风险提示", '/svg/风险提示.svg'),
-                link: '/risk-link',
-            },
+            }
         ],
     },
     {
-        text: "🌐站点信息",
+        text: "🍷关于",
         items: [
             {
-                text: getNav("关于本站", '/svg/about.svg'),
-                link: '/About',
+                text: getNav("👋关于我", null),
+                link: '/about-me',
             },
             {
                 text: getNav("友链链接", '/svg/link.svg'),
-                link: '/Link',
+                link: '/friend-link',
             },
             {
-                text: getNav("网站导航", '/svg/nav.svg'),
-                link: '/Nav',
+                text: getNav("🌐网站导航", null),
+                link: '/websites',
             },
             {
                 text: getNav("站点统计", '/svg/SiteAnalytics.svg'),
                 link: 'https://umami.seasir.top/share/rvVBNZWa0sUCN6wG/teek.seasir.top',
             },
             {
-                text: getNav("站点状态", '/svg/status.svg'),
+                text: getNav("站点监控", '/svg/站点监控.svg'),
                 link: 'https://status.seasir.top/',
+            },
+            {
+                // 分组标题2
+                text: '其他',
+                items: [
+                    {
+                        text: getNav("VitePress相关", "/svg/时间管理.svg"),
+                        link: '/VitePress',
+                    }
+                ]
             }
         ],
     },

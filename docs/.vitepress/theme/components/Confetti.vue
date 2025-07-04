@@ -1,4 +1,4 @@
-<!-- 五彩纸屑 -->
+<!-- 彩色纸屑组件 -->
 <script setup lang="ts">
 import confetti from "canvas-confetti";
 import { inBrowser } from "vitepress";

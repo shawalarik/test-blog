@@ -29,7 +29,6 @@ import InformationCard from "./InformationCard.vue";
 import APlayer from "./APlayer.vue";
 
 
-const ns = "layout-provider";
 const { frontmatter } = useData();
 
 // 默认卡片风
@@ -83,8 +82,10 @@ const handleConfigSwitch = (config: TeekConfig, style: string) => {
       <!-- 音乐播放器组件 -->
       <APlayer />
     </template>
+
+    <!-- 布局切换组件 -->
     <template #teek-theme-enhance-bottom>
-      <div :class="[ns, 'flx-align-center']">
+      <div :class="['layout-provider', 'flx-align-center']">
         <ConfigSwitch v-model="currentStyle" @switch="handleConfigSwitch" />
       </div>
     </template>
@@ -98,10 +99,10 @@ const handleConfigSwitch = (config: TeekConfig, style: string) => {
       <NotFound />
     </template>-->
 
-<!--    <template #teek-notice-content>
-      &lt;!&ndash; 公告组件 &ndash;&gt;
+    <template #teek-notice-content>
+      <!-- 公告组件 -->
       <NoticeContent />
-    </template>-->
+    </template>
 
     <template #teek-home-banner-feature-after>
       <!-- 横幅图片箭头组件 -->
