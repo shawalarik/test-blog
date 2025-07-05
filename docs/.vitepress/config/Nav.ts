@@ -59,6 +59,10 @@ export const Nav: DefaultTheme.NavItem[] = [
         text: "📖笔记专栏",
         items: [
             {
+                text: getNav("Vite相关", "/svg/vite.svg"),
+                link: '/Vite',
+            },
+            {
                 text: getNav("Teek主题", "/svg/teek-logo-mini.svg"),
                 link: '/Teek',
             },

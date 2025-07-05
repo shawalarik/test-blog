@@ -45,3 +45,8 @@ if (inBrowser) {
   });
 }
 </script>
+
+<template>
+  <!-- 防止提示没有根组件 -->
+  <div></div>
+</template>

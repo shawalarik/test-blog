@@ -1,5 +1,5 @@
 // 卡片栏社交信息
-import {Social} from "vitepress-theme-teek/config";
+import {Social} from "vitepress-theme-teek/es/config/interface/social.js";
 import {gitee, email, WhatsApp, telegram} from "../resource/icon/icons";
 
 export const SocialDate: Social[] = [

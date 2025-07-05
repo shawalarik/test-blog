@@ -26,21 +26,30 @@ import "vitepress-theme-teek/tk-plus/banner-full-img-scale.scss"; // Banner 全�
 import "./style/index.scss";
 import "virtual:group-icons.css"; //代码组图标样式
 
-import MNavLinks from "./components/NavigationPage/NavLinks.vue"; // 引入导航组件
+import TeekLayoutProvider from "./components/TeekLayoutProvider.vue"; // 布局组件
 import Confetti from "./components/Confetti.vue"; //导入五彩纸屑组件
 import NavIcon from "./components/NavIcon.vue"; //导入导航栏图标
 import TitleChange from "./components/TitleChange.vue";
-import TeekLayoutProvider from "./components/TeekLayoutProvider.vue"; //导入导航栏图标
 
 export default {
+    /**
+     * 扩展另一个主题，在我们的主题之前调用它的 `enhanceApp`
+     * @optional
+     */
     extends: Teek,
+    /**
+     * 每个页面的根布局组件
+     * @required
+     */
+    //Layout: TeekLayoutProvider,
     Layout: defineComponent({
         name: "LayoutProvider",
         setup() {
             const props = {};
             const { frontmatter } = useData();
+            console.log(frontmatter);
 
-            // 添加自定义 class 逻辑
+            // 根据元数据动态应用 CSS 类，实现页面级样式定制
             if (frontmatter.value?.layoutClass) {
                 props.class = frontmatter.value.layoutClass;
             }
@@ -48,12 +57,17 @@ export default {
             return () => h(TeekLayoutProvider, props);
         },
     }),
-    //Layout: '',
-    async enhanceApp({ app, router }) {
+    /**
+     * 增强 Vue 应用实例
+     *  app: App // Vue 应用实例
+     *  router: Router // VitePress 路由实例
+     *  siteData: Ref<SiteData> // 站点级元数据
+     * @optional
+     */
+    async enhanceApp({ app, router, siteData }) {
         // 注册组件
-        app.component("MNavLinks", MNavLinks); // 网站导航页组件
         app.component("Confetti", Confetti); // 注册五彩纸屑组件
         //app.component("NavIcon", NavIcon); // 导航栏图标，暂时不用
-        app.component("TitleChange", TitleChange); // 网页标题切换组件
+        //app.component("TitleChange", TitleChange); // 网页标题切换组件
     },
 };

@@ -26,10 +26,24 @@ import TitleChange from "./TitleChange.vue" //导入网页标题变化
 import ScrollProgressBar from "./ScrollProgressBar.vue" //导入顶部滚动条组件
 // @ts-ignore
 import InformationCard from "./InformationCard.vue";
+// 音乐组件
 import APlayer from "./APlayer.vue";
+// 首页文字特效组件
+import TextGlitch from "./TextGlitch.vue";
 
-
-const { frontmatter } = useData();
+/**
+site: Ref<SiteData<T>> 站点级元数据
+theme: Ref<T>  .vitepress/config.js 中的 themeConfig
+page: Ref<PageData> 页面级元数据
+frontmatter: Ref<PageData['frontmatter']>  页面 frontmatter
+params: Ref<PageData['params']> 动态路由参数
+title: Ref<string>
+description: Ref<string>
+lang: Ref<string>
+isDark: Ref<boolean>
+dir: Ref<string>
+localeIndex: Ref<string>*/
+const { frontmatter,title } = useData();
 
 // 默认卡片风
 const currentStyle = ref("blog-full");
@@ -106,8 +120,13 @@ const handleConfigSwitch = (config: TeekConfig, style: string) => {
 
     <template #teek-home-banner-feature-after>
       <!-- 横幅图片箭头组件 -->
-      <BannerImgArrow />
+      <BannerImgArrow v-if="frontmatter.layout === 'home'" />
     </template>
+
+    <template #teek-home-banner-content-before>
+      <TextGlitch :text=title />
+    </template>
+
 
     <template #teek-home-banner-after>
       <InformationCard />

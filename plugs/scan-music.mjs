@@ -8,7 +8,7 @@ const fsExists = promisify(fs.exists);
 const readdir = promisify(fs.readdir);
 
 export function scanMusicPlugin(options = {}) {
-    const { musicDir = 'music' } = options;
+    const { musicDir = 'music', showDetail = false } = options;
     const musicExt = ['.mp3', '.wav', '.flac', '.opus'];
     let resolvedConfig;
     let audioData = [];
@@ -143,13 +143,16 @@ export function scanMusicPlugin(options = {}) {
             resolvedConfig = config;
             isServerBuild = config.build.ssr;
             isProduction = process.env.NODE_ENV === 'production';
-            console.log(`当前环境: ${isProduction ? '生产' : '开发'} | 构建类型: ${isServerBuild ? '服务器' : '客户端'}`);
-            // 开发模式：无论服务器/客户端构建，都处理音频
+            console.log(`音频扫描插件-当前环境: ${isProduction ? '生产' : '开发'} | 构建类型: ${isServerBuild ? '服务器' : '客户端'}`);
+            // 开发模式：直接使用原始音频文件
             // 生产模式：只在服务器构建时处理音频
             if (!isProduction || !isServerBuild) {
                 console.log("开始处理音频文件...");
                 await processAudioFiles();
                 console.log("音频处理完成");
+                if (showDetail) {
+                    console.log("音频数据", audioData);
+                }
             }
         },
 

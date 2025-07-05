@@ -4,19 +4,9 @@ import { defineTeekConfig } from "vitepress-theme-teek/config";
 import { Head } from "./config/Head"; // 导入页面head配置
 import { Nav } from "./config/Nav"; // 导入Nav模块
 //import {teekConfig} from "./config/TeekConfig";
-import {
-  groupIconMdPlugin,
-  groupIconVitePlugin,
-} from "vitepress-plugin-group-icons"; // 导入代码组图标插件
-import { visualizer } from "rollup-plugin-visualizer"; // 导入可视化分析插件
-//import viteImagemin from "vite-plugin-imagemin"; // 导入图片压缩插件
-import compress from 'vite-plugin-compression';
-import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
-import { scanMusicPlugin } from '../../plugs/scan-music.mjs';
-import { cleanDistMusic } from "../../plugs/clean-dist.mjs";
-import { Wallpaper } from "./config/Wallpaper.js";
-import AutoFrontmatter from "vitepress-plugin-auto-frontmatter";
-import {SocialLinks} from "./config/SocialLinks.js";
+import { SocialLinks } from "./config/SocialLinks.js";
+import { plugings } from "./plugins.mjs";
+import path from "path";
 
 // 是否为开发模式
 const isDev = process.argv.includes('dev');
@@ -149,6 +139,12 @@ export default defineConfig({
 
   },
   vite: {
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, './'),
+        '@components': path.resolve(__dirname, './theme/components/') // 将 @ 指向 src 目录
+      }
+    },
     build: {
       chunkSizeWarningLimit: 1500, // 限制警告的块大小
       assetsInlineLimit: 4096, // 小于 4KB 的字体转为 base64
@@ -189,106 +185,6 @@ export default defineConfig({
       // 标记 APlayer 为外部依赖，不在 SSR 中处理
       external: []
     },
-    plugins: [
-      AutoFrontmatter({
-        pattern: "**/*.md",
-          // exclude 指定的对象如果在 markdown frontmatter 存在，则忽略该文件。当 include 和 exclude 存在相同文件时，exclude 优先级高
-          //exclude: { coverImg: true},
-          // 每次启动项目时，是否基于 transform 返回的数据重新生成新的 frontmatter，如果为 false，则只对不存在的 key 进行生成，如果为 true，则重新生成新的 frontmatter
-          recoverTransform: false,
-          transform: (frontmatter) => {
-            // 如果文件本身存在了 coverImg，则不生成
-            if (frontmatter.coverImg) return; // 随机获取 coverImg
-
-            console.log("frontmatter", frontmatter)
-
-            const list = Wallpaper;
-
-            const coverImg = list[Math.floor(Math.random() * list.length)];
-
-            const transformResult = { ...frontmatter, coverImg };
-
-            return Object.keys(transformResult).length
-                ? transformResult
-                : undefined;
-          },
-        }),
-      cleanDistMusic(),
-      groupIconVitePlugin(), //代码组图标
-      visualizer({
-        filename: "stats.html",
-        open: false, // 打包后自动打开报告
-        gzipSize: true, // 压缩大小
-        brotliSize: true,
-      }),
-      compress({
-        verbose: false, // 是否在控制台输出压缩结果
-        disable: false, // 是否禁用压缩
-        threshold: 10240, // 文件大小超过此值时进行压缩，单位为字节
-        algorithm: 'gzip', // 压缩算法，可选 'gzip' 或 'brotli'
-        ext: '.gz', // 压缩后的文件扩展名
-      }),
-      ViteImageOptimizer({
-        // 基础图片优化配置
-        png: {
-          quality: 20,
-        },
-        jpg: {
-          quality: 20,
-          progressive: true // 启用渐进式加载
-        },
-        jpeg: {
-          quality: 20,
-          progressive: true // 启用渐进式加载
-        },
-        webp: {
-          quality: 20,
-          //lossless: true // 无损压缩模式
-        },
-        svg: {
-          multipass: true,
-        },
-        // 构建控制配置
-        //include: ['src/assets/images/**/*'], // 只优化指定目录
-        //exclude: ['src/assets/images/ignore/*.png'], // 排除特定文件
-      }),
-      scanMusicPlugin({
-        musicDir: 'music', // 音乐文件存放目录
-        //outputFile: '' // 输出数据文件路径
-      })
-      /*viteImagemin({
-        gifsicle: {
-          interlaced: true, // 隔行扫描
-          optimizationLevel: 3, // 压缩级别（0-3）
-        },
-        optipng: {
-          optimizationLevel: 5, // 压缩级别（0-7），值越大压缩率越高
-        },
-        mozjpeg: {
-          quality: 80, // 压缩质量（0-100）
-          progressive: true, // 渐进式加载
-          smooth: 2, // 平滑处理，减少色彩失真
-        },
-        svgo: {
-          plugins: [
-            { name: 'removeViewBox', active: false }, // 保留 viewBox 以防止 SVG 变形
-            { name: 'removeEmptyAttrs', active: true }, // 移除空属性
-            { name: 'convertColors', params: { currentColor: true } }, // 颜色转换
-          ]
-        },
-        webp: {
-          quality: 80, // WebP 质量（0-100）
-          lossless: false, // 是否无损压缩
-          method: 6, // 压缩方法（0-6），数值越大，压缩率越高但速度变慢
-        },
-        pngquant: {
-          quality: [0.8, 0.9], // PNG 质量范围
-          speed: 4, // 压缩速度（1-10），数值越大速度越快但压缩率降低
-        },
-        disable: true, // 仅在生产环境启用
-        /!** 是否在控制台输出压缩结果 *!/
-        verbose: true,
-      })*/
-    ],
+    plugins: plugings
   },
 })
