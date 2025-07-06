@@ -68,7 +68,7 @@ const teekBlogCommonConfig: TeekConfig = {
     hideWaves: false, // 开启壁纸模式后，是否隐藏 Banner 波浪组件，仅 banner.bgStyle = 'fullImg' 生效
   },
   page: {
-    pageSize: 20,
+    pageSize: 15,
   },
   post: {
     postStyle: "list", // card 和 list 文章列表风格

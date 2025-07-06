@@ -1,7 +1,7 @@
 import Teek from "vitepress-theme-teek";
 import "vitepress-theme-teek/index.css";
-import { defineComponent, h } from "vue";
-import { useData } from "vitepress";
+import {defineComponent, h, onMounted} from "vue";
+import { useData,inBrowser } from "vitepress";
 
 // Teek 在线主题包引用（需安装 Teek 在线版本）
 import "vitepress-theme-teek/index.css"; // 引入主题样式
@@ -21,6 +21,11 @@ import "vitepress-theme-teek/theme-chalk/tk-banner-desc-gradient.css"; // Banner
 import "vitepress-theme-teek/theme-chalk/tk-nav-blur.css"; // 导航栏毛玻璃样式
 import "vitepress-theme-teek/tk-plus/banner-full-img-scale.scss"; // Banner 全屏图片放大样式
 //import "vitepress-theme-teek/vp-plus/container-flow.scss"; // Markdown 容器流体样式
+
+// 进度条
+import NProgress from 'nprogress'
+// 样式
+import 'nprogress/nprogress.css'
 
 // 引入全局样式
 import "./style/index.scss";
@@ -62,7 +67,27 @@ export default {
      * @optional
      */
     async enhanceApp({ app, router, siteData }) {
-        // 注册组件
         app.component("Confetti", Confetti); // 注册五彩纸屑组件
+
+        vitepressNprogress(router)
     },
 };
+
+const vitepressNprogress = (router) => {
+    if (inBrowser) {
+        // 配置进度条
+        NProgress.configure({ showSpinner: true })
+
+        // 重写路由钩子
+        router.onBeforeRouteChange = (to) => {
+            console.log("onBeforeRouteChange")
+            NProgress.start() // 开始进度条
+        }
+
+        router.onAfterRouteChange = (to) => {
+            console.log("onAfterRouteChange")
+            NProgress.done() // 停止进度条
+        }
+    }
+    return NProgress
+}

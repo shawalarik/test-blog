@@ -1,7 +1,7 @@
 <script setup lang="ts" name="TeekLayoutProvider">
 import type { TeekConfig } from "vitepress-theme-teek";
 import Teek, { teekConfigContext, clockIcon } from "vitepress-theme-teek";
-import { useData } from "vitepress";
+import {useData, useRoute, useRouter} from "vitepress";
 import { watch, nextTick, ref, provide } from "vue";
 import { teekBlogFullConfig } from "../../config/TeekConfig";
 /*import { useRibbon } from "../composables/useRibbon";
@@ -34,6 +34,8 @@ import TextGlitch from "./TextGlitch.vue";
 import Clock from "./Clock.vue";
 // 右键菜单组件
 import ContextMenu from "./ContextMenu/ContextMenu.vue";
+// 过渡动画
+import RouteTransition from "./RouteTransition.vue";
 
 
 /**
@@ -107,6 +109,8 @@ const toggleTheme = (theme) => {
     <template #layout-top>
       <!-- 添加全局右键菜单 -->
       <ContextMenu/>
+
+<!--      <RouteTransition/>-->
 
       <!-- 全局问候组件 -->
       <GlobalGreet />

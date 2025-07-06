@@ -187,4 +187,19 @@ export default defineConfig({
     },
     plugins: plugings
   },
+  setup() {
+    console.log("setup")
+/*    // 监听路由变化，显示进度条
+    const router = useRouter()
+
+    router.onBeforeRouteChange(() => {
+      console.log("onBeforeRouteChange")
+      nprogress.start()
+    })
+
+    router.onAfterRouteChange(() => {
+      console.log("onAfterRouteChange")
+      nprogress.done()
+    })*/
+  }
 })
