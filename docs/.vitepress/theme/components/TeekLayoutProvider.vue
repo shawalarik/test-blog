@@ -30,7 +30,11 @@ import InformationCard from "./InformationCard.vue";
 import APlayer from "./APlayer.vue";
 // 首页文字特效组件
 import TextGlitch from "./TextGlitch.vue";
+// 时钟组件
 import Clock from "./Clock.vue";
+// 右键菜单组件
+import ContextMenu from "./ContextMenu/ContextMenu.vue";
+
 
 /**
 site: Ref<SiteData<T>> 站点级元数据
@@ -81,11 +85,29 @@ const handleConfigSwitch = (config: TeekConfig, style: string) => {
 
   watchRuntimeAndRibbon(frontmatter.value.layout, style);
 };
+
+const { theme } = useData()
+const themeMode = ref('light')
+
+// 处理菜单操作
+const handleAction = (action) => {
+  console.log('执行操作:', action)
+}
+
+// 切换主题
+const toggleTheme = (theme) => {
+  themeMode.value = theme
+  localStorage.setItem('theme', theme)
+}
+
 </script>
 
 <template>
   <Teek.Layout>
     <template #layout-top>
+      <!-- 添加全局右键菜单 -->
+      <ContextMenu/>
+
       <!-- 全局问候组件 -->
       <GlobalGreet />
       <!-- 看板娘组件 -->
