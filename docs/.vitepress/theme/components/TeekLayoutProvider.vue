@@ -30,6 +30,7 @@ import InformationCard from "./InformationCard.vue";
 import APlayer from "./APlayer.vue";
 // 首页文字特效组件
 import TextGlitch from "./TextGlitch.vue";
+import Clock from "./Clock.vue";
 
 /**
 site: Ref<SiteData<T>> 站点级元数据
@@ -98,7 +99,7 @@ const handleConfigSwitch = (config: TeekConfig, style: string) => {
     </template>
 
     <!-- 布局切换组件 -->
-    <template #teek-theme-enhance-bottom>
+    <template #teek-theme-enhance-top>
       <div :class="['layout-provider', 'flx-align-center']">
         <ConfigSwitch v-model="currentStyle" @switch="handleConfigSwitch" />
       </div>
@@ -126,6 +127,20 @@ const handleConfigSwitch = (config: TeekConfig, style: string) => {
     <template #teek-home-banner-content-before>
       <TextGlitch :text=title />
     </template>
+
+<!--    <template #nav-bar-title-after>
+      <h1>nav-bar-title-after</h1>
+    </template>-->
+
+<!--    <template #nav-bar-content-before>
+      <Clock/>
+    </template>-->
+
+    <template #nav-bar-content-after>
+      <Clock/>
+    </template>
+
+
 
 
     <template #teek-home-banner-after>

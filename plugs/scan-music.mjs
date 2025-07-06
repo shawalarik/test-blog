@@ -21,6 +21,9 @@ export function scanMusicPlugin(options = {}) {
             // 开发模式：直接使用原始音频文件
             if (!isProduction) {
                 console.log("开发模式：直接使用原始音频文件")
+                if (showDetail) {
+                    console.log("音频数据", audioData);
+                }
                 await processOriginalAudio();
                 return;
             }
@@ -150,9 +153,6 @@ export function scanMusicPlugin(options = {}) {
                 console.log("开始处理音频文件...");
                 await processAudioFiles();
                 console.log("音频处理完成");
-                if (showDetail) {
-                    console.log("音频数据", audioData);
-                }
             }
         },
 

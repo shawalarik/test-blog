@@ -174,7 +174,7 @@ export const teekBlogParkConfig: TeekConfig = {
     bgStyle: "partImg",
     imgSrc: Wallpaper,
     description: Typewriter, // 打字机描述信息,
-    descStyle: "switch",
+    descStyle: "types",
   },
 };
 

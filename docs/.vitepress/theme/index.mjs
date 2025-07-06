@@ -28,8 +28,6 @@ import "virtual:group-icons.css"; //代码组图标样式
 
 import TeekLayoutProvider from "./components/TeekLayoutProvider.vue"; // 布局组件
 import Confetti from "./components/Confetti.vue"; //导入五彩纸屑组件
-import NavIcon from "./components/NavIcon.vue"; //导入导航栏图标
-import TitleChange from "./components/TitleChange.vue";
 
 export default {
     /**
@@ -47,7 +45,6 @@ export default {
         setup() {
             const props = {};
             const { frontmatter } = useData();
-            console.log(frontmatter);
 
             // 根据元数据动态应用 CSS 类，实现页面级样式定制
             if (frontmatter.value?.layoutClass) {
@@ -67,7 +64,5 @@ export default {
     async enhanceApp({ app, router, siteData }) {
         // 注册组件
         app.component("Confetti", Confetti); // 注册五彩纸屑组件
-        //app.component("NavIcon", NavIcon); // 导航栏图标，暂时不用
-        //app.component("TitleChange", TitleChange); // 网页标题切换组件
     },
 };
