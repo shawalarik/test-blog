@@ -1,7 +1,7 @@
 import Teek from "vitepress-theme-teek";
 import "vitepress-theme-teek/index.css";
 import {defineComponent, h, onMounted, provide, ref} from "vue";
-import { useData,inBrowser } from "vitepress";
+import { useData } from "vitepress";
 
 // Teek 在线主题包引用（需安装 Teek 在线版本）
 import "vitepress-theme-teek/index.css"; // 引入主题样式
@@ -69,7 +69,7 @@ export default {
     async enhanceApp({ app, router, siteData }) {
         app.component("Confetti", Confetti); // 注册五彩纸屑组件
 
-        if (inBrowser) {
+        if (!import.meta.env.SSR) {
             // 创建过渡状态
             const isTransitioning = ref(false)
             let transitionStart = 0
@@ -102,23 +102,3 @@ export default {
         return NProgress
     },
 };
-
-const vitepressNprogress = (router) => {
-/*    if (inBrowser) {
-        // 配置进度条
-        NProgress.configure({ showSpinner: true })
-
-        // 重写路由钩子
-        router.onBeforeRouteChange = (to) => {
-            console.log("onBeforeRouteChange")
-            isTransitioning.value = true
-            NProgress.start() // 开始进度条
-        }
-
-        router.onAfterRouteChange = (to) => {
-            console.log("onAfterRouteChange")
-            NProgress.done() // 停止进度条
-        }
-    }
-    return NProgress*/
-}

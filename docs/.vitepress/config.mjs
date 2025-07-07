@@ -123,15 +123,7 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: Nav,
     socialLinks: SocialLinks, // 社交链接配置
-    sidebar: [
-      {
-        text: 'Examples',
-        items: [
-          { text: 'Markdown Examples', link: '/markdown-examples' },
-          { text: 'Runtime API Examples', link: '/api-examples' }
-        ]
-      }
-    ],
+    //sidebar: [],
     footer: {
 /*      message: 'Released under the MIT License.',
       copyright: 'Copyright © 2025-present Evan You'*/

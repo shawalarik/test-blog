@@ -7,7 +7,8 @@ import { useRoute } from "vitepress";
 const route = useRoute();
 
 const hasGreet = ref(false);
-const duration = 4000;
+// 显示时间
+const duration = 2000;
 
 const greet = () => {
   if (hasGreet.value) return;
