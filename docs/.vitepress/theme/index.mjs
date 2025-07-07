@@ -1,6 +1,6 @@
 import Teek from "vitepress-theme-teek";
 import "vitepress-theme-teek/index.css";
-import {defineComponent, h, onMounted} from "vue";
+import {defineComponent, h, onMounted, provide, ref} from "vue";
 import { useData,inBrowser } from "vitepress";
 
 // Teek 在线主题包引用（需安装 Teek 在线版本）
@@ -69,18 +69,49 @@ export default {
     async enhanceApp({ app, router, siteData }) {
         app.component("Confetti", Confetti); // 注册五彩纸屑组件
 
-        vitepressNprogress(router)
+        if (inBrowser) {
+            // 创建过渡状态
+            const isTransitioning = ref(false)
+            let transitionStart = 0
+            // 通过 app.provide 提供状态（替代 provide()）
+            app.provide('isTransitioning', isTransitioning)
+
+            // 配置进度条
+            NProgress.configure({ showSpinner: false })
+
+            // 重写路由钩子
+            router.onBeforeRouteChange = (to) => {
+                console.log("onBeforeRouteChange")
+                transitionStart = Date.now() // 更新 ref 值
+                isTransitioning.value = true
+                NProgress.start() // 开始进度条
+            }
+
+            router.onAfterRouteChange = (to) => {
+                console.log("onAfterRouteChange")
+                const elapsed = Date.now() - transitionStart
+                console.log(`路由切换消耗时间：${elapsed} ms`)
+                // 确保过渡动画至少显示 300ms，避免过快消失
+                const delay = Math.max(0, 300 - elapsed)
+                setTimeout(() => {
+                    isTransitioning.value = false
+                    NProgress.done() // 停止进度条
+                }, delay)
+            }
+        }
+        return NProgress
     },
 };
 
 const vitepressNprogress = (router) => {
-    if (inBrowser) {
+/*    if (inBrowser) {
         // 配置进度条
         NProgress.configure({ showSpinner: true })
 
         // 重写路由钩子
         router.onBeforeRouteChange = (to) => {
             console.log("onBeforeRouteChange")
+            isTransitioning.value = true
             NProgress.start() // 开始进度条
         }
 
@@ -89,5 +120,5 @@ const vitepressNprogress = (router) => {
             NProgress.done() // 停止进度条
         }
     }
-    return NProgress
+    return NProgress*/
 }

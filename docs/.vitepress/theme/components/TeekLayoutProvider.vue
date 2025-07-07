@@ -35,7 +35,7 @@ import Clock from "./Clock.vue";
 // 右键菜单组件
 import ContextMenu from "./ContextMenu/ContextMenu.vue";
 // 过渡动画
-import RouteTransition from "./RouteTransition.vue";
+import RouteSwitchingAnimation from "./RouteSwitchingAnimation.vue";
 
 
 /**
@@ -107,8 +107,14 @@ const toggleTheme = (theme) => {
 <template>
   <Teek.Layout>
     <template #layout-top>
-      <!-- 添加全局右键菜单 -->
-      <ContextMenu/>
+      <!-- 需要进行ssr优化 -->
+      <ClientOnly>
+        <!-- 添加全局右键菜单 -->
+        <ContextMenu/>
+      </ClientOnly>
+
+      <RouteSwitchingAnimation/>
+
 
 <!--      <RouteTransition/>-->
 

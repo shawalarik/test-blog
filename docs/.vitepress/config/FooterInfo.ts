@@ -31,8 +31,8 @@ export const FooterInfo = {
     },
     // ICP 备案信息配置
     icpRecord: {
-        name: "",
-        link: "",
+        name: "鄂ICP备2023009441号-1",
+        link: "https://beian.miit.gov.cn/",
     },
     // 网络安全备案信息配置
     securityRecord: {

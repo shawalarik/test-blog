@@ -416,7 +416,7 @@ html[class*='dark'] .menu-container {
 .menu-header {
   display: flex;
   align-items: center;
-  padding: 14px 16px;
+  padding: 10px 16px;
   border-bottom: 1px solid var(--border-light);
   background: var(--header-gradient-light);
   border-top-left-radius: 12px;
@@ -476,7 +476,7 @@ html[class*='dark'] .menu-divider {
 .menu-item:not(.has-submenu) {
   display: flex;
   align-items: center;
-  padding: 10px 14px;
+  padding: 5px 14px;
 }
 
 .menu-item-content {
