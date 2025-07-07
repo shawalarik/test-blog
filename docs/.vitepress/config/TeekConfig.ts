@@ -114,7 +114,7 @@ const teekBlogCommonConfig: TeekConfig = {
                 // 本站被访问了
                 key: 'viewCount', show: false,
                 value: (originValue, currentValue) => {
-                    console.log("viewCount", originValue, currentValue)
+                    //console.log("viewCount", originValue, currentValue)
                     return currentValue
                 },
             },
@@ -122,7 +122,7 @@ const teekBlogCommonConfig: TeekConfig = {
                 // 本站曾来访过
                 key: 'visitCount', show: false,
                 value: (originValue, currentValue) => {
-                    console.log("visitCount", originValue, currentValue)
+                    //console.log("visitCount", originValue, currentValue)
                     return currentValue
                 },
             },

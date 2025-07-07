@@ -1,6 +1,6 @@
 import Teek from "vitepress-theme-teek";
 import "vitepress-theme-teek/index.css";
-import {defineComponent, h, onMounted, provide, ref} from "vue";
+import {defineComponent, h, nextTick, onMounted, provide, ref} from "vue";
 import { useData } from "vitepress";
 
 // Teek 在线主题包引用（需安装 Teek 在线版本）
@@ -33,6 +33,8 @@ import "virtual:group-icons.css"; //代码组图标样式
 
 import TeekLayoutProvider from "./components/TeekLayoutProvider.vue"; // 布局组件
 import Confetti from "./components/Confetti.vue"; //导入五彩纸屑组件
+import sendVisitStatistics from './utils/statistics.mjs'
+
 
 export default {
     /**
@@ -81,14 +83,16 @@ export default {
 
             // 重写路由钩子
             router.onBeforeRouteChange = (to) => {
-                console.log("onBeforeRouteChange")
+                console.log("onBeforeRouteChange", to)
                 transitionStart = Date.now() // 更新 ref 值
                 isTransitioning.value = true
                 NProgress.start() // 开始进度条
             }
 
             router.onAfterRouteChange = (to) => {
-                console.log("onAfterRouteChange")
+                console.log("onAfterRouteChange", to)
+                sendVisitStatistics(router, siteData)
+
                 const elapsed = Date.now() - transitionStart
                 console.log(`路由切换消耗时间：${elapsed} ms`)
                 // 确保过渡动画至少显示 300ms，避免过快消失

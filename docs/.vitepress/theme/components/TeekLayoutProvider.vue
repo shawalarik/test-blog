@@ -113,10 +113,8 @@ const toggleTheme = (theme) => {
         <ContextMenu/>
       </ClientOnly>
 
+      <!-- 路由切换动画组件 -->
       <RouteSwitchingAnimation/>
-
-
-<!--      <RouteTransition/>-->
 
       <!-- 全局问候组件 -->
       <GlobalGreet />

@@ -4,7 +4,7 @@
  * @param {any} value - 待检查的值
  * @returns {boolean} - 如果值为空返回 true，否则返回 false
  */
-export function isEmpty(value) {
+export function isEmpty(value: Object) {
     // 处理 null 和 undefined
     if (value === null || value === undefined) {
         return true;
@@ -38,4 +38,8 @@ export function isEmpty(value) {
 
     // 其他情况（数字、布尔值、函数等）
     return false;
+}
+
+export function isNotEmpty(value: Object) {
+    return !isEmpty(value)
 }

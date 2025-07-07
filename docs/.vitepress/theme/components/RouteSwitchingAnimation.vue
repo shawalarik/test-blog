@@ -1,4 +1,4 @@
-<!-- .vitepress/theme/Layout.vue -->
+<!-- 路由切换动画组件 -->
 <template>
   <div class="vp-layout">
     <!-- 主内容区域，添加过渡动画 -->
