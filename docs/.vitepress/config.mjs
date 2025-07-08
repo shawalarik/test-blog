@@ -1,12 +1,13 @@
+import path from "path";
 import { defineConfig } from 'vitepress'
-// @ts-ignore
 import { defineTeekConfig } from "vitepress-theme-teek/config";
+//import {teekConfig} from "./config/TeekConfig";
 import { Head } from "./config/Head"; // 导入页面head配置
 import { Nav } from "./config/Nav"; // 导入Nav模块
-//import {teekConfig} from "./config/TeekConfig";
 import { SocialLinks } from "./config/SocialLinks.js";
-import { plugings } from "./plugins.mjs";
-import path from "path";
+import {generateEnvDefines} from "./theme/utils/WwUtils.js"; // 工具类
+import config from "./env.mjs"; // 全局变量
+import { plugings } from "./plugins.mjs"; // 插件
 
 // 是否为开发模式
 const isDev = process.argv.includes('dev');
@@ -18,10 +19,6 @@ if (isDev) {
 }
 
 const teekConfig = defineTeekConfig({
-  // 分类页
-/*  category: {
-    path: "/categories",
-  },*/
   riskLink: {
     enabled: true,
   },
@@ -128,9 +125,11 @@ export default defineConfig({
 /*      message: 'Released under the MIT License.',
       copyright: 'Copyright © 2025-present Evan You'*/
     }
-
   },
   vite: {
+    define: {
+      ...generateEnvDefines(config[process.env.NODE_ENV]) // 自动注入全局变量
+    },
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './'),
@@ -178,20 +177,5 @@ export default defineConfig({
       external: []
     },
     plugins: plugings
-  },
-  setup() {
-    console.log("setup")
-/*    // 监听路由变化，显示进度条
-    const router = useRouter()
-
-    router.onBeforeRouteChange(() => {
-      console.log("onBeforeRouteChange")
-      nprogress.start()
-    })
-
-    router.onAfterRouteChange(() => {
-      console.log("onAfterRouteChange")
-      nprogress.done()
-    })*/
   }
 })

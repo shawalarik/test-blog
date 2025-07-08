@@ -46,7 +46,7 @@ const sendVisitStatistics = (router, siteData, visitorId) => {
     console.log("data", data)
 
     // 发送POST请求到统计API
-    fetch('/api/visit/record', {
+    fetch(import.meta.env.VISIT_URL || '/api/visit/record', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

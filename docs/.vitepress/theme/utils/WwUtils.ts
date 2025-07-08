@@ -43,3 +43,13 @@ export function isEmpty(value: Object) {
 export function isNotEmpty(value: Object) {
     return !isEmpty(value)
 }
+
+// 生成全局变量辅助方法
+export function generateEnvDefines(config = {}, prefix = '') {
+    const defines = {};
+    for (const [key, value] of Object.entries(config)) {
+        const defineKey = `import.meta.env.${prefix}${key.toUpperCase()}`;
+        defines[defineKey] = JSON.stringify(value);
+    }
+    return defines;
+}

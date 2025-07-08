@@ -34,7 +34,6 @@ import "virtual:group-icons.css"; //代码组图标样式
 import TeekLayoutProvider from "./components/TeekLayoutProvider.vue"; // 布局组件
 import Confetti from "./components/Confetti.vue"; //导入五彩纸屑组件
 import sendVisitStatistics from './utils/statistics.mjs' // 信息统计
-import FingerprintJS from "@fingerprintjs/fingerprintjs"; // 浏览器指纹库
 
 export default {
     /**
@@ -104,63 +103,67 @@ export default {
                     NProgress.done() // 停止进度条
                 }, delay)
             }
+            return NProgress
         }
-        return NProgress
     },
 };
 
 async function getFingerprint() {
+    const FingerprintJS = (await import('@fingerprintjs/fingerprintjs')).default;
+    // 加载并初始化指纹生成器
+    const fpPromise = FingerprintJS.load({
+        // 配置项
+        debug: false,                  // 启用调试模式，输出详细日志
+        delayFallback: 500,            // 异步指纹源的超时时间（毫秒）
+        cacheTime: 99999999,      // 指纹缓存时间（毫秒），避免重复计算。设置为 0 可禁用缓存
+        preload: true,                 // 页面加载时预加载指纹（提高首次获取速度）
+        fallbackCanvas: true,          // 降级使用Canvas指纹（v3默认关闭）
+        /*    storageKey: 'my_custom_key',  // 可选：自定义存储键名
+            persistence: 'localStorage',*/
+        persistence: {
+            type: 'localStorage',
+            prefix: 'myapp_',
+            expiresInDays: 60,
+            blocking: true
+        },
+        components: {                  // 自定义要收集的组件
+            userAgent: true,           // 用户代理字符串
+            language: true,            // 浏览器语言
+            colorDepth: true,          // 屏幕颜色深度
+            deviceMemory: true,        // 设备内存（如果可用）
+            screenResolution: true,    // 屏幕分辨率
+            availableScreenResolution: true, // 可用屏幕分辨率
+            timezoneOffset: true,      // 时区偏移
+            timezone: true,            // 时区名称
+            hardwareConcurrency: true, // CPU核心数
+            sessionStorage: true,      // sessionStorage支持
+            localStorage: true,        // localStorage支持
+            indexedDb: true,           // IndexedDB支持
+            addBehavior: true,         // 添加行为分析（专业版）
+            fonts: {                   // 字体检测（专业版）
+                extendedJsFonts: true,
+                canvasFonts: true
+            },
+            canvas: true,              // Canvas指纹
+            webgl: true,               // WebGL指纹
+            webglVendorAndRenderer: true, // WebGL供应商和渲染器信息
+            adBlock: false,            // 广告拦截器检测
+            hasLiedLanguages: false,   // 是否伪造语言设置
+            hasLiedResolution: false,  // 是否伪造分辨率
+            hasLiedOs: false,          // 是否伪造操作系统
+            hasLiedBrowser: false,     // 是否伪造浏览器
+            touchSupport: true,        // 触摸支持
+            plugins: true,             // 浏览器插件
+            audio: true,               // 音频指纹（专业版）
+            webRTC: true,              // WebRTC本地IP（专业版）
+        }
+    })
+
     const fp = await fpPromise
     const result = await fp.get()
     console.log("您的浏览器指纹是：", result.visitorId);
     return result.visitorId
 }
 
-// 加载并初始化指纹生成器
-const fpPromise = FingerprintJS.load({
-    // 配置项
-    debug: false,                  // 启用调试模式，输出详细日志
-    delayFallback: 500,            // 异步指纹源的超时时间（毫秒）
-    cacheTime: 99999999,      // 指纹缓存时间（毫秒），避免重复计算。设置为 0 可禁用缓存
-    preload: true,                 // 页面加载时预加载指纹（提高首次获取速度）
-    fallbackCanvas: true,          // 降级使用Canvas指纹（v3默认关闭）
-/*    storageKey: 'my_custom_key',  // 可选：自定义存储键名
-    persistence: 'localStorage',*/
-    persistence: {
-        type: 'localStorage',
-        prefix: 'myapp_',
-        expiresInDays: 60,
-        blocking: true
-    },
-    components: {                  // 自定义要收集的组件
-        userAgent: true,           // 用户代理字符串
-        language: true,            // 浏览器语言
-        colorDepth: true,          // 屏幕颜色深度
-        deviceMemory: true,        // 设备内存（如果可用）
-        screenResolution: true,    // 屏幕分辨率
-        availableScreenResolution: true, // 可用屏幕分辨率
-        timezoneOffset: true,      // 时区偏移
-        timezone: true,            // 时区名称
-        hardwareConcurrency: true, // CPU核心数
-        sessionStorage: true,      // sessionStorage支持
-        localStorage: true,        // localStorage支持
-        indexedDb: true,           // IndexedDB支持
-        addBehavior: true,         // 添加行为分析（专业版）
-        fonts: {                   // 字体检测（专业版）
-            extendedJsFonts: true,
-            canvasFonts: true
-        },
-        canvas: true,              // Canvas指纹
-        webgl: true,               // WebGL指纹
-        webglVendorAndRenderer: true, // WebGL供应商和渲染器信息
-        adBlock: false,            // 广告拦截器检测
-        hasLiedLanguages: false,   // 是否伪造语言设置
-        hasLiedResolution: false,  // 是否伪造分辨率
-        hasLiedOs: false,          // 是否伪造操作系统
-        hasLiedBrowser: false,     // 是否伪造浏览器
-        touchSupport: true,        // 触摸支持
-        plugins: true,             // 浏览器插件
-        audio: true,               // 音频指纹（专业版）
-        webRTC: true,              // WebRTC本地IP（专业版）
-    }
-})
+
+
