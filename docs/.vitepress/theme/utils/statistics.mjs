@@ -1,17 +1,17 @@
-import {toRef, unref, isRef, isProxy, toRaw} from "vue";
 import {isNotEmpty, isEmpty} from "./WwUtils"
-import { useData } from 'vitepress'
 
-
-const sendVisitStatistics = (router, siteData) => {
-
-
+/**
+ * 发送统计信息
+ * @param router 路由实例
+ * @param siteData 站点信息
+ * @param visitorId 访客ID
+ */
+const sendVisitStatistics = (router, siteData, visitorId) => {
     console.log("sendVisitStatistics - router", router)
     console.log("sendVisitStatistics - siteData", siteData)
 
     //console.log(JSON.stringify(siteData._rawValue))
     const route = router.route
-
     const siteId = 'YOUR_SITE_ID' // 替换为您的网站ID
     const pageUrl = route.path // VitePress 提供的相对路径
     const pageTitle = isNotEmpty(route.data.title) ? route.data.title : siteData._rawValue.title
@@ -26,17 +26,9 @@ const sendVisitStatistics = (router, siteData) => {
         permalink = "/"
     }
 
-
 /*    console.log("pageUrl", pageUrl, "pageTitle", pageTitle)
     console.log("relativePath", route.data.relativePath)
     console.log("permalink", route.data.frontmatter.permalink)*/
-
-    // 生成或获取访问者ID (使用localStorage存储)
-    let visitorId = localStorage.getItem('visitor_id')
-    if (!visitorId) {
-        visitorId = generateUUID()
-        localStorage.setItem('visitor_id', visitorId)
-    }
 
     const windowPageUrl = window.location.pathname
 
@@ -62,15 +54,6 @@ const sendVisitStatistics = (router, siteData) => {
         body: data
     }).catch(error => {
         console.error('统计数据发送失败:', error)
-    })
-}
-
-// 生成UUID
-const generateUUID = () => {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        const r = Math.random() * 16 | 0
-        const v = c === 'x' ? r : (r & 0x3 | 0x8)
-        return v.toString(16)
     })
 }
 

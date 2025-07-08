@@ -134,7 +134,7 @@ export default defineConfig({
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './'),
-        '@components': path.resolve(__dirname, './theme/components/') // 将 @ 指向 src 目录
+        '@components': path.resolve(__dirname, './theme/components/') // 将 @ 指向 components 目录
       }
     },
     build: {
