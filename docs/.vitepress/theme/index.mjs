@@ -3,7 +3,7 @@ import "vitepress-theme-teek/index.css";
 import {defineComponent, h, nextTick, onMounted, provide, ref} from "vue";
 import { useData } from "vitepress";
 
-// Teek 在线主题包引用（需安装 Teek 在线版本）
+// 主题增强样式
 import "vitepress-theme-teek/index.css"; // 引入主题样式
 import "vitepress-theme-teek/theme-chalk/tk-code-block-mobile.css"; // 引入移动端代码块样式
 import "vitepress-theme-teek/theme-chalk/tk-sidebar.css"; // 引入侧边栏样式
@@ -16,24 +16,17 @@ import "vitepress-theme-teek/theme-chalk/tk-blockquote.css"; //引用样式
 import "vitepress-theme-teek/theme-chalk/tk-index-rainbow.css"; // Vitepress 首页彩虹渐变样式
 import "vitepress-theme-teek/theme-chalk/tk-doc-fade-in.css"; // 文档淡入效果样式
 import "vitepress-theme-teek/theme-chalk/tk-banner-desc-gradient.css"; // Banner 描述渐变样式
-
-// 主题增强样式
 import "vitepress-theme-teek/theme-chalk/tk-nav-blur.css"; // 导航栏毛玻璃样式
 import "vitepress-theme-teek/tk-plus/banner-full-img-scale.scss"; // Banner 全屏图片放大样式
 //import "vitepress-theme-teek/vp-plus/container-flow.scss"; // Markdown 容器流体样式
-
-// 进度条
-import NProgress from 'nprogress'
-// 样式
-import 'nprogress/nprogress.css'
-
-// 引入全局样式
-import "./style/index.scss";
+import "./style/index.scss"; // 引入全局样式
 import "virtual:group-icons.css"; //代码组图标样式
 
 import TeekLayoutProvider from "./components/TeekLayoutProvider.vue"; // 布局组件
 import Confetti from "./components/Confetti.vue"; //导入五彩纸屑组件
 import sendVisitStatistics from './utils/statistics.mjs' // 信息统计
+import NProgress from 'nprogress' // 路由进度条
+import 'nprogress/nprogress.css' // 路由进度条样式
 
 export default {
     /**
@@ -69,6 +62,16 @@ export default {
      */
     async enhanceApp({ app, router, siteData }) {
         app.component("Confetti", Confetti); // 注册五彩纸屑组件
+        app.config.devtools = true; // 强制开启 devtools
+
+        // 捕获水合错误并打印详细信息
+        app.config.errorHandler = (err, instance, info) => {
+            if (err.message.includes('Hydration')) {
+                console.log('水合错误组件:', instance);
+                console.log('错误信息:', info);
+            }
+            throw err;
+        }
 
         if (!import.meta.env.SSR) {
             const fingerprintID = await getFingerprint()

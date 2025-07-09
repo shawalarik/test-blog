@@ -128,6 +128,7 @@ export default defineConfig({
   },
   vite: {
     define: {
+      __VUE_PROD_DEVTOOLS__: isDev,
       ...generateEnvDefines(config[process.env.NODE_ENV]) // 自动注入全局变量
     },
     resolve: {
@@ -137,6 +138,8 @@ export default defineConfig({
       }
     },
     build: {
+      // 生成 sourcemap 方便定位压缩后的代码
+      //sourcemap: true,
       chunkSizeWarningLimit: 1500, // 限制警告的块大小
       assetsInlineLimit: 4096, // 小于 4KB 的字体转为 base64
       minify: 'terser', // 使用 Terser 进行代码压缩 或 'esbuild'
@@ -162,6 +165,28 @@ export default defineConfig({
         },
       },
       rollupOptions: {
+        output: {
+          manualChunks: (id) => {
+            //console.log("id", id)
+            // 排除可能导致问题的主题库和核心依赖
+            const excludePkgs = [
+              'vitepress-theme-teek', // 主题库，避免拆分
+              'vue',
+              'vue-router',    // Vue 核心库，建议整体打包
+              'vitepress'             // VitePress 核心，避免拆分
+            ];
+
+            if (id.includes('node_modules')) {
+              const pkg = id.split('node_modules/')[1].split('/')[0];
+              // 如果是需要排除的库，不单独分块（使用默认策略）
+              if (excludePkgs.includes(pkg)) {
+                return undefined; // 让 Rollup 按默认方式处理
+              }
+              // 其他库正常拆分
+              return `vendor/${pkg}`;
+            }
+          },
+        },
 /*        external: (id) => {
           // 调试日志：输出匹配的文件路径
           const isOriginalMusic = /^.*public[/\\]music[/\\](?!compressed[/\\]).*\.(mp3|wav|flac)$/i.test(id);

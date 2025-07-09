@@ -12,8 +12,9 @@ import inspect from 'vite-plugin-inspect'
 // 检查是否有 --inspect 参数
 const isEnableInspectPluging = false
 
-
 export const plugings =  [
+    groupIconVitePlugin(), //代码组图标
+
     AutoFrontmatter({
         pattern: "**/*.md",
         // exclude 指定的对象如果在 markdown frontmatter 存在，则忽略该文件。当 include 和 exclude 存在相同文件时，exclude 优先级高
@@ -23,22 +24,16 @@ export const plugings =  [
         transform: (frontmatter) => {
             // 如果文件本身存在了 coverImg，则不生成
             if (frontmatter.coverImg) return; // 随机获取 coverImg
-
             console.log("frontmatter", frontmatter)
-
             const list = Wallpaper;
-
             const coverImg = list[Math.floor(Math.random() * list.length)];
-
             const transformResult = { ...frontmatter, coverImg };
-
             return Object.keys(transformResult).length
                 ? transformResult
                 : undefined;
         },
     }),
     cleanDistMusic(),
-    groupIconVitePlugin(), //代码组图标
     visualizer({
         filename: "stats.html",
         open: false, // 打包后自动打开报告

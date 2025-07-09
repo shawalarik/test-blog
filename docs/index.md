@@ -1,5 +1,4 @@
 ---
-# https://vitepress.dev/reference/default-theme-home-page
 layout: home
 
 hero:
@@ -13,7 +12,6 @@ hero:
     - theme: brand
       text: 联系我
       link: /
-      
 
 features:
   - title: 这是一个标题

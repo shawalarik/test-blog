@@ -89,7 +89,6 @@ const teekBlogCommonConfig: TeekConfig = {
     social: SocialDate, //社交信息配置
     footerGroup: FooterGroup,
     footerInfo: FooterInfo,
-
     // 站点信息卡片配置
     docAnalysis: {
         enabled: true,
@@ -154,7 +153,6 @@ const teekBlogCommonConfig: TeekConfig = {
         ],
         //appendInfo: [{ key: "index", label: "序号", value: "天客 99" }],
     },
-
     articleShare: {
         enabled: true, // 是否开启文章链接分享功能
         text: "分享此页面", // 分享按钮文本
