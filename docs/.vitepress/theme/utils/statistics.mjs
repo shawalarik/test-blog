@@ -12,7 +12,7 @@ const sendVisitStatistics = (router, siteData, visitorId) => {
 
     //console.log(JSON.stringify(siteData._rawValue))
     const route = router.route
-    const siteId = 'YOUR_SITE_ID' // 替换为您的网站ID
+    const siteId = import.meta.env.SITE_ID || 'YOUR_SITE_ID' // 替换为您的网站ID
     const pageUrl = route.path // VitePress 提供的相对路径
     const pageTitle = isNotEmpty(route.data.title) ? route.data.title : siteData._rawValue.title
     const relativePath = route.data.relativePath
