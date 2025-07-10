@@ -31,7 +31,7 @@ defineProps({
   font-size: 4.5em;
   line-height: 1.5;
   color: white;
-  animation: glitch-skew 1s infinite linear alternate-reverse;
+  animation: glitch-skew 2s infinite linear alternate-reverse;
   text-shadow: 0 1px 0 hsl(174, 5%, 80%), 0 2px 0 hsl(174, 5%, 75%),
   0 3px 0 hsl(174, 5%, 70%), 0 4px 0 hsl(174, 5%, 66%),
   0 5px 0 hsl(174, 5%, 64%), 0 6px 0 hsl(174, 5%, 62%),
@@ -61,13 +61,13 @@ defineProps({
   left: 2px;
   text-shadow: -2px 0 #ff00c1;
   clip: rect(44px, 450px, 56px, 0);
-  animation: glitch-anim 5s infinite linear alternate-reverse;
+  animation: glitch-anim 10s infinite linear alternate-reverse;
 }
 
-.glitch::after {
+.glitch:hover::after {
   left: -2px;
   text-shadow: -2px 0 #00fff9, 2px 2px #ff00c1;
-  animation: glitch-anim2 1s infinite linear alternate-reverse;
+  animation: glitch-anim2 2s infinite linear alternate-reverse;
 }
 
 @keyframes glitch-anim {

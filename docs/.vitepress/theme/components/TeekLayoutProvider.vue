@@ -1,6 +1,6 @@
 <script setup lang="ts" name="TeekLayoutProvider">
-import type { TeekConfig } from "vitepress-theme-teek";
-import Teek, { teekConfigContext, clockIcon } from "vitepress-theme-teek";
+import {isClient, TeekConfig} from "vitepress-theme-teek";
+import Teek, { teekConfigContext } from "vitepress-theme-teek";
 import {useData, useRoute, useRouter} from "vitepress";
 import { watch, nextTick, ref, provide } from "vue";
 import { teekBlogFullConfig } from "../../config/TeekConfig";
@@ -36,6 +36,8 @@ import Clock from "./Clock.vue";
 import ContextMenu from "./ContextMenu/ContextMenu.vue";
 // 过渡动画
 import RouteSwitchingAnimation from "./RouteSwitchingAnimation.vue";
+import {useRibbon} from "../composables/useRibbon";
+import {useRuntime} from "../composables/useRuntime";
 
 
 /**
@@ -57,27 +59,17 @@ const currentStyle = ref("blog-full");
 const teekConfig = ref(teekBlogFullConfig);
 provide(teekConfigContext, teekConfig);
 
-/*// 彩带背景
+// 彩带背景
 const { start: startRibbon, stop: stopRibbon } = useRibbon({ immediate: false, clickReRender: true });
 // 页脚运行时间
-const { start: startRuntime, stop: stopRuntime } = useRuntime("2025-03-14 00:00:00", {
-  prefix: `<span style="width: 16px; display: inline-block; vertical-align: -3px; margin-right: 3px;">${clockIcon}</span>本站已在地球上苟活了`,
-});*/
+const { start: startRuntime, stop: stopRuntime } = useRuntime("2025-06-15 00:00:00", {});
 
 const watchRuntimeAndRibbon = async (layout: string, style: string) => {
-  const isHome = layout === "home";
-  const isDoc = [undefined, "doc"].includes(layout);
-  const isBlog = style.startsWith("blog");
-
-/*  // 博客类风格的首页显示运行时间
+  if (!isClient) return;
   await nextTick();
-  if (isHome && isBlog) startRuntime();
-  else stopRuntime();
-  // startRuntime();
-
-  // 博客类风格的首页显示彩带 & 设置了 pageStyle 的文章页显示彩带
-  if ((isHome && isBlog && style !== "blog-body") || (isDoc && teekConfig.value.pageStyle)) startRibbon();
-  else stopRibbon();*/
+  console.log("watchRuntimeAndRibbon", layout, style);
+  //startRibbon()
+  startRuntime()
 };
 
 watch(frontmatter, async newVal => watchRuntimeAndRibbon(newVal.layout, currentStyle.value), { immediate: true });
@@ -88,18 +80,9 @@ const handleConfigSwitch = (config: TeekConfig, style: string) => {
   watchRuntimeAndRibbon(frontmatter.value.layout, style);
 };
 
-const { theme } = useData()
-const themeMode = ref('light')
-
 // 处理菜单操作
 const handleAction = (action) => {
   console.log('执行操作:', action)
-}
-
-// 切换主题
-const toggleTheme = (theme) => {
-  themeMode.value = theme
-  localStorage.setItem('theme', theme)
 }
 
 </script>
@@ -128,16 +111,13 @@ const toggleTheme = (theme) => {
       <APlayer />
     </template>
 
-    <!-- 布局切换组件 -->
-    <template #teek-theme-enhance-top>
-      <div :class="['layout-provider', 'flx-align-center']">
-        <ConfigSwitch v-model="currentStyle" @switch="handleConfigSwitch" />
-      </div>
+    <template #nav-bar-content-after>
+      <Clock/>
     </template>
 
-    <!--  归档页插槽  -->
-    <template #teek-archives-top-before>
-      <ContributeChart />
+    <!-- 布局切换组件 -->
+    <template #teek-theme-enhance-top>
+      <ConfigSwitch v-model="currentStyle" @switch="handleConfigSwitch" />
     </template>
 
 <!--    <template #not-found>
@@ -158,23 +138,13 @@ const toggleTheme = (theme) => {
       <TextGlitch :text=title />
     </template>
 
-<!--    <template #nav-bar-title-after>
-      <h1>nav-bar-title-after</h1>
-    </template>-->
-
-<!--    <template #nav-bar-content-before>
-      <Clock/>
-    </template>-->
-
-    <template #nav-bar-content-after>
-      <Clock/>
-    </template>
-
-
-
-
     <template #teek-home-banner-after>
       <InformationCard />
+    </template>
+
+    <!--  归档页插槽  -->
+    <template #teek-archives-top-before>
+      <ContributeChart />
     </template>
   </Teek.Layout>
 </template>

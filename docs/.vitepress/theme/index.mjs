@@ -140,7 +140,7 @@ async function getFingerprint() {
             timezone: true,            // 时区名称
             hardwareConcurrency: true, // CPU核心数
             sessionStorage: true,      // sessionStorage支持
-            localStorage: true,        // localStorage支持
+            localStorage: false,        // localStorage支持
             indexedDb: true,           // IndexedDB支持
             addBehavior: true,         // 添加行为分析（专业版）
             fonts: {                   // 字体检测（专业版）

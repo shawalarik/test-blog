@@ -23,6 +23,18 @@ export const FooterInfo = {
         name: `Theme By Teek@${version}`,
         link: "", // 自定义链接
     },
+    bottomMessage: [
+/*        `<script id="LA-DATA-WIDGET" crossorigin="anonymous" charset="UTF-8" src="https://v6-widget.51.la/v6/3MQCwI1AgSSiVg37/quote.js?theme=0&f=12"></script>`,
+        `<a href="https://51.la/" target="_blank" style="display:flex;align-items:center;justify-content:center;">本网站由<img src="https://51.la/favicon.ico" style="width:16px;height:16px;" alt="51.LA"> 51.LA </a>
+
+    <a href="https://umami.is/" target="_blank" style="display:flex;align-items:center;justify-content:center;"> |<img src="https://umami.is/favicon.ico" style="width:16px;height:16px;" alt="Umami">Umami </a>
+
+    <a href="https://analytics.google.com/" target="_blank" style="display:flex;align-items:center;justify-content:center;"> |<img src="//www.gstatic.com/analytics-suite/header/suite/v2/ic_analytics.svg" style="width:16px;height:16px;" alt="Google Analytics">Google Analytics 提供数据统计服务</a>`,
+        */
+
+        `<span id="runtime"></span>(●'◡'●)`,
+        "人心中的成见是一座大山~",
+    ],
     // 博客版权配置
     copyright: {
         show: true, // 是否显示博客版权
