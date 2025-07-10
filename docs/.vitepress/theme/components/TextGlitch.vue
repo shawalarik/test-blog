@@ -26,11 +26,11 @@ defineProps({
 
 .glitch {
   position: relative;
-  font-family: "Fredericka the Great", Mulish, -apple-system, "PingFang SC", "Microsoft YaHei",
-  sans-serif;
+  font-family: "Fredericka the Great", Mulish, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
   font-size: 4.5em;
   line-height: 1.5;
   color: white;
+  cursor: url(/mouse/pointer.cur), auto !important;
   animation: glitch-skew 2s infinite linear alternate-reverse;
   text-shadow: 0 1px 0 hsl(174, 5%, 80%), 0 2px 0 hsl(174, 5%, 75%),
   0 3px 0 hsl(174, 5%, 70%), 0 4px 0 hsl(174, 5%, 66%),

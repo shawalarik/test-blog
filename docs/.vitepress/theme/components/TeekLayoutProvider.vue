@@ -1,43 +1,27 @@
-<script setup lang="ts" name="TeekLayoutProvider">
-import {isClient, TeekConfig} from "vitepress-theme-teek";
+<script setup name="TeekLayoutProvider">
+import {isClient} from "vitepress-theme-teek";
 import Teek, { teekConfigContext } from "vitepress-theme-teek";
 import {useData, useRoute, useRouter} from "vitepress";
-import { watch, nextTick, ref, provide } from "vue";
+import {watch, nextTick, ref, provide, onMounted} from "vue";
 import { teekBlogFullConfig } from "../../config/TeekConfig";
-/*import { useRibbon } from "../composables/useRibbon";
-import { useRuntime } from "../composables/useRuntime";*/
-// @ts-ignore
 import ConfigSwitch from "./ConfigSwitch.vue";
-// @ts-ignore
 import ContributeChart from "./ContributeChart.vue"; // 贡献图组件
-// @ts-ignore
 import NoticeContent from "./NoticeContent.vue"; //导入公告组件
-// @ts-ignore
 import BannerImgArrow from "./BannerImgArrow.vue"; //导入横幅图片箭头组件
-// @ts-ignore
-import NotFound from "./NotFound.vue";//导入404组件
-// @ts-ignore
+//import NotFound from "./NotFound.vue";//导入404组件
 import GlobalGreet from "./GlobalGreet.vue";  //导入全局问候组件
-// @ts-ignore
 import TitleChange from "./TitleChange.vue" //导入网页标题变化
-// @ts-ignore
 //import OhMyLive2D from "./OhMyLive2D.vue"  //导入看板娘组件
-// @ts-ignore
 import ScrollProgressBar from "./ScrollProgressBar.vue" //导入顶部滚动条组件
-// @ts-ignore
 import InformationCard from "./InformationCard.vue";
-// 音乐组件
-import APlayer from "./APlayer.vue";
-// 首页文字特效组件
-import TextGlitch from "./TextGlitch.vue";
-// 时钟组件
-import Clock from "./Clock.vue";
-// 右键菜单组件
-import ContextMenu from "./ContextMenu/ContextMenu.vue";
-// 过渡动画
-import RouteSwitchingAnimation from "./RouteSwitchingAnimation.vue";
+import APlayer from "./APlayer.vue"; // 音乐组件
+import TextGlitch from "./TextGlitch.vue"; // 首页文字特效组件
+import Clock from "./Clock.vue"; // 时钟组件
+import ContextMenu from "./ContextMenu/ContextMenu.vue"; // 右键菜单组件
+import RouteSwitchingAnimation from "./RouteSwitchingAnimation.vue"; // 过渡动画组件
 import {useRibbon} from "../composables/useRibbon";
 import {useRuntime} from "../composables/useRuntime";
+import {myConsoleInfo} from "../utils/WwUtils";
 
 
 /**
@@ -64,7 +48,7 @@ const { start: startRibbon, stop: stopRibbon } = useRibbon({ immediate: false, c
 // 页脚运行时间
 const { start: startRuntime, stop: stopRuntime } = useRuntime("2025-06-15 00:00:00", {});
 
-const watchRuntimeAndRibbon = async (layout: string, style: string) => {
+const watchRuntimeAndRibbon = async (layout, style) => {
   if (!isClient) return;
   await nextTick();
   console.log("watchRuntimeAndRibbon", layout, style);
@@ -74,7 +58,7 @@ const watchRuntimeAndRibbon = async (layout: string, style: string) => {
 
 watch(frontmatter, async newVal => watchRuntimeAndRibbon(newVal.layout, currentStyle.value), { immediate: true });
 
-const handleConfigSwitch = (config: TeekConfig, style: string) => {
+const handleConfigSwitch = (config, style) => {
   teekConfig.value = config;
 
   watchRuntimeAndRibbon(frontmatter.value.layout, style);
@@ -84,6 +68,10 @@ const handleConfigSwitch = (config: TeekConfig, style: string) => {
 const handleAction = (action) => {
   console.log('执行操作:', action)
 }
+
+onMounted(()=>{
+  myConsoleInfo(true, import.meta.env.TITLE, import.meta.env.BLOG_URL,'欢迎来访')
+})
 
 </script>
 

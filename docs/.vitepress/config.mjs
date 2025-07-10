@@ -156,9 +156,16 @@ export default defineConfig({
       minify: 'terser', // 使用 Terser 进行代码压缩 或 'esbuild'
       terserOptions: {
         compress: {
-          drop_console: false, // 移除所有 console.* 调用（生产环境建议开启）
-          drop_debugger: true, // 移除 debugger 语句（生产环境必备）
-          pure_funcs: ["console.info"], // 保留 console.info 调用（白名单机制）
+          drop_console: false, // 关闭“一刀切”删除所有 console
+          drop_debugger: true, // 保留移除 debugger 的配置
+          // 明确指定要移除的 console 方法（排除 info）
+          pure_funcs: [
+            'console.log',
+            'console.warn',
+            'console.error',
+            'console.debug',
+            'console.trace'
+          ],
           dead_code: true, // 移除不可达代码（消除死代码）
           arrows: true, // 将 function 转换为箭头函数（优化代码体积）
           unused: true, // 移除未使用的变量/函数（需确保不影响程序逻辑）
