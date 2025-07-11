@@ -26,6 +26,7 @@ class AudioCompressor {
             concurrency: 10,
             audioExtensions: [".mp3", ".wav", ".flac", ".aac"],
             skipCompressedDir: true, // 跳过compressed目录
+            isCover: false, // 是否覆盖输出
             ...options
         };
 
@@ -74,13 +75,15 @@ class AudioCompressor {
             const outputFilename = filename.replace(/\.\w+$/, "") + ".opus";
             const outputPath = join(this.options.outputDir, outputFilename);
 
-            // 检查输出文件是否已存在
-            const outputExists = await this.fileExists(outputPath);
-            if (outputExists) {
-                this.skippedFilesCount++;  // 增加跳过计数
-                console.log(`已存在压缩文件: ${outputPath}`);
-                this.runningTasks--;
-                return outputPath;
+            if (!this.options.isCover){
+                // 检查输出文件是否已存在
+                const outputExists = await this.fileExists(outputPath);
+                if (outputExists) {
+                    this.skippedFilesCount++;  // 增加跳过计数
+                    console.log(`已存在压缩文件: ${outputPath}`);
+                    this.runningTasks--;
+                    return outputPath;
+                }
             }
 
             // 执行压缩命令
@@ -97,6 +100,12 @@ class AudioCompressor {
                 "-y",                              // 覆盖输出文件
                 "-threads", "0",                   // 自动使用所有可用线程（提升编码速度）
                 "-application", "audio",           // 针对音频优化（对 LAME 可能无效）
+                //"-af", "volume=0.7",             // 直接设置缩放系数（0.5=降低6dB）
+                // I: 综合响度目标 (-16dB LUFS 适合流媒体)
+                // # LRA: 动态范围 (11dB 是广播标准)
+                // TP: 峰值限制 (-1.5dBTP 避免削波)
+                // 0.316	-10dB	显著降低，适合背景音
+                "-af", "loudnorm=I=-16:LRA=11:TP=-1.5,volume=0.316",
                 outputPath
             ]);
 
@@ -241,7 +250,8 @@ const compressor = new AudioCompressor({
     inputDir: resolve(__dirname, "../../../../public/music"),
     outputDir: resolve(__dirname, "../../../../public/music/compressed"),
     concurrency: 10, // 同时压缩3个文件
-    skipCompressedDir: true // 显式设置跳过compressed目录
+    skipCompressedDir: true, // 显式设置跳过compressed目录
+    isCover: false,
 });
 
 export default compressor
