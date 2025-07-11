@@ -96,7 +96,7 @@ const teekBlogCommonConfig: TeekConfig = {
         wordCount: true,
         readingTime: true,
         statistics: {
-            provider: "busuanzi",
+            provider: "", // busuanzi
             siteView: true,
             pageView: true,
         },

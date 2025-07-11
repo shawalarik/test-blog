@@ -41,7 +41,7 @@ const initAPlayer = async () => {
     loop: 'all',
     order: 'random', // 启用随机播放
     preload: 'auto',
-    volume: 0.1, // 设置初始音量
+    volume: 0.05, // 设置初始音量
     storageName: 'aplayer-setting',
 
   });

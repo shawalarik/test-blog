@@ -4,6 +4,7 @@ import { defineTeekConfig } from "vitepress-theme-teek/config";
 //import {teekConfig} from "./config/TeekConfig";
 import { Head } from "./config/Head"; // 导入页面head配置
 import { Nav } from "./config/Nav"; // 导入Nav模块
+import { Comment } from "./config/Comment"; // 导入Nav模块
 import { SocialLinks } from "./config/SocialLinks.js";
 import {generateEnvDefines} from "./theme/utils/WwUtils.js"; // 工具类
 import config from "./env.mjs"; // 全局变量
@@ -33,6 +34,7 @@ const env = loadEnv(
 console.log('env:', env)*/
 
 const teekConfig = defineTeekConfig({
+  comment: Comment,
   notice: {
     enabled: true, // 是否启用公告功能
     title: "公告", // 公告标题，支持函数式：需要和国际化搭配使用，根据不同语言环境返回不同标题
