@@ -1,6 +1,6 @@
 ---
 date: 2025-07-11 19:33:31
-title: comment
+title: 评价插件配置
 permalink: /pages/5ecfd3
 categories:
   - 指南

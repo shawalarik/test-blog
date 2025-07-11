@@ -77,6 +77,10 @@ export const Nav: DefaultTheme.NavItem[] = [
             {
                 text: getNav("博客搭建", "/svg/blog.svg"),
                 link: '/blog',
+            },
+            {
+                text: getNav("友人专栏", "/svg/朋友.svg"),
+                link: '/friend',
             }
         ],
     },

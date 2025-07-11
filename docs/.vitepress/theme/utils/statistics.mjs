@@ -1,6 +1,5 @@
 import {isNotEmpty, isEmpty, getLocationInfo} from "./WwUtils"
 
-
 let isInit = true;
 let ipInfo = {}
 
@@ -54,8 +53,7 @@ const sendVisitStatistics = async (router, siteData, visitorId) => {
         pageTitle,
         pageUrl: permalink,
         relativePath,
-        locationInfo,
-        referer: document.referrer
+        locationInfo
     }
 
     const data = JSON.stringify(visitData)
