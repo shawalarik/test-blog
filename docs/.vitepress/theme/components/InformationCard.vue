@@ -101,10 +101,6 @@ onMounted(async () => {
   await init();
   requestAnimationFrame(updateFPS);
 });
-
-onMounted(() => {
-  getWeatherInfo();
-});
 </script>
 
 <template>

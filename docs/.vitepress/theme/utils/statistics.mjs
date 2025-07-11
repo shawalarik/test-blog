@@ -1,4 +1,17 @@
-import {isNotEmpty, isEmpty} from "./WwUtils"
+import {isNotEmpty, isEmpty, getLocationInfo} from "./WwUtils"
+
+
+let isInit = true;
+let ipInfo = {}
+
+const init = async () => {
+    if (isInit){
+        ipInfo = await getLocationInfo()
+        isInit = false
+    }
+    console.log("ipInfo", ipInfo)
+    return ipInfo
+}
 
 /**
  * 发送统计信息
@@ -6,7 +19,7 @@ import {isNotEmpty, isEmpty} from "./WwUtils"
  * @param siteData 站点信息
  * @param visitorId 访客ID
  */
-const sendVisitStatistics = (router, siteData, visitorId) => {
+const sendVisitStatistics = async (router, siteData, visitorId) => {
     //console.log("sendVisitStatistics - router", router)
     //console.log("sendVisitStatistics - siteData", siteData)
 
@@ -32,6 +45,8 @@ const sendVisitStatistics = (router, siteData, visitorId) => {
 
     const windowPageUrl = window.location.pathname
 
+    let locationInfo =  await init();
+
     // 构建统计数据
     const visitData = {
         siteId,
@@ -39,6 +54,7 @@ const sendVisitStatistics = (router, siteData, visitorId) => {
         pageTitle,
         pageUrl: permalink,
         relativePath,
+        locationInfo,
         referer: document.referrer
     }
 

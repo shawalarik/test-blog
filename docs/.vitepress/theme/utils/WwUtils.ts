@@ -1,4 +1,5 @@
 // utils/isEmpty.js
+
 /**
  * 检查值是否为空（支持多种类型）
  * @param {any} value - 待检查的值
@@ -53,6 +54,19 @@ export function generateEnvDefines(config = {}, prefix = '') {
         defines[defineKey] = JSON.stringify(value);
     }
     return defines;
+}
+
+export async function getLocationInfo(){
+    try {
+        const response = await fetch('https://api.vvhan.com/api/ipInfo');
+        const data = await response.json();
+        if (data.success) {
+            const info = data.info;
+            return `${info.country}-${info.prov}-${info.city}-${info.isp}`;
+        }
+    } catch (err) {
+        console.error('获取ip信息失败', err);
+    }
 }
 
 export function myConsoleInfo(isRandom: boolean = false, ...params: string[]) {
