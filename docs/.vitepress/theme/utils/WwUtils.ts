@@ -46,6 +46,7 @@ export function isNotEmpty(value: Object) {
 
 // 生成全局变量辅助方法
 export function generateEnvDefines(config = {}, prefix = '') {
+    console.log('generateEnvDefines - config', config)
     const defines = {};
     for (const [key, value] of Object.entries(config)) {
         const defineKey = `import.meta.env.${prefix}${key.toUpperCase()}`;
@@ -56,6 +57,7 @@ export function generateEnvDefines(config = {}, prefix = '') {
 
 export function myConsoleInfo(isRandom: boolean = false, ...params: string[]) {
     if (params.length === 0) return;
+    console.log("myConsoleInfo - params", params)
 
     // 定义更多颜色选项（包括深浅对比和彩虹色系）
     const colors = [
@@ -82,7 +84,6 @@ export function myConsoleInfo(isRandom: boolean = false, ...params: string[]) {
         let colorIndex: number;
 
         param = String(param)
-        console.log("param", param)
         let color
         // 如果是url则使用固定的颜色
         if (param.startsWith("http:") || param.startsWith("https:")){

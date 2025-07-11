@@ -1,5 +1,5 @@
 import path from "path";
-import { defineConfig } from 'vitepress'
+import {defineConfig, loadEnv} from 'vitepress'
 import { defineTeekConfig } from "vitepress-theme-teek/config";
 //import {teekConfig} from "./config/TeekConfig";
 import { Head } from "./config/Head"; // 导入页面head配置
@@ -11,12 +11,26 @@ import { plugings } from "./plugins.mjs"; // 插件
 
 // 是否为开发模式
 const isDev = process.argv.includes('dev');
+const isProd = process.argv.includes('build')
 
 if (isDev) {
   console.log('正在以开发模式运行');
 } else {
   console.log('正在构建生产版本');
 }
+
+// 首次启动时，process.env.NODE_ENV为空，手动设置为开发模式，生成模式无此问题
+if (process.env.NODE_ENV === undefined){
+  process.env.NODE_ENV = 'development'
+}
+console.log("process.env.NODE_ENV", process.env.NODE_ENV)
+
+/*// 加载环境变量（第一个参数为模式，第二个参数为环境变量文件所在目录）
+const env = loadEnv(
+    process.argv.includes('build') ? 'production' : 'development',
+    process.cwd()
+)
+console.log('env:', env)*/
 
 const teekConfig = defineTeekConfig({
   notice: {
@@ -76,12 +90,12 @@ export default defineConfig({
     },
     // 更改容器默认值标题
     container: {
-      tipLabel: "提示",
-      warningLabel: "警告",
-      dangerLabel: "危险",
-      infoLabel: "信息",
-      detailsLabel: "详细信息",
-    },
+      tipLabel: '提示',
+      warningLabel: '警告',
+      dangerLabel: '危险',
+      infoLabel: '信息',
+      detailsLabel: '详细信息'
+    }
   },
   themeConfig: {
     logo: '/logo.svg',

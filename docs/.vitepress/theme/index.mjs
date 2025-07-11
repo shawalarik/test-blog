@@ -87,14 +87,15 @@ export default {
 
             // 重写路由钩子
             router.onBeforeRouteChange = (to) => {
-                console.log("onBeforeRouteChange", to)
+                //console.log("onBeforeRouteChange", decodeURIComponent(to))
                 transitionStart = Date.now() // 更新 ref 值
                 isTransitioning.value = true
                 NProgress.start() // 开始进度条
             }
 
             router.onAfterRouteChange = (to) => {
-                console.log("onAfterRouteChange", to)
+                //console.log("onAfterRouteChange", decodeURIComponent(to))
+                // 发送访问记录
                 sendVisitStatistics(router, siteData, fingerprintID)
 
                 const elapsed = Date.now() - transitionStart
@@ -164,7 +165,7 @@ async function getFingerprint() {
 
     const fp = await fpPromise
     const result = await fp.get()
-    console.log("您的浏览器指纹是：", result.visitorId);
+    //console.log("您的浏览器指纹是：", result.visitorId);
     return result.visitorId
 }
 

@@ -7,8 +7,8 @@ import {isNotEmpty, isEmpty} from "./WwUtils"
  * @param visitorId 访客ID
  */
 const sendVisitStatistics = (router, siteData, visitorId) => {
-    console.log("sendVisitStatistics - router", router)
-    console.log("sendVisitStatistics - siteData", siteData)
+    //console.log("sendVisitStatistics - router", router)
+    //console.log("sendVisitStatistics - siteData", siteData)
 
     //console.log(JSON.stringify(siteData._rawValue))
     const route = router.route
@@ -43,7 +43,7 @@ const sendVisitStatistics = (router, siteData, visitorId) => {
     }
 
     const data = JSON.stringify(visitData)
-    console.log("data", data)
+    console.log("记录信息", data)
 
     // 发送POST请求到统计API
     fetch(import.meta.env.VISIT_URL || '/api/visit/record', {
