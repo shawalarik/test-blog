@@ -100,7 +100,7 @@ export default defineConfig({
     }
   },
   themeConfig: {
-    logo: '/svg/avatar.svg',
+    logo: '/avatar/avatar.svg',
     search: {
       // 用浏览器内索引进行模糊全文搜索
       provider: 'local',

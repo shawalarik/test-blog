@@ -7,13 +7,10 @@
 @use "./vp-code-title.scss" as *; //代码块标题
 @use "./font.scss" as *; // 字体
 @use "./hyde-homeCardSort.scss" as *; // 文字在悬停时会出现下划线动画
-//@use "./Container/container-hyde.scss" as *; // container-hyde容器
-
+@use "./Container/container-hyde.scss" as *; // container-hyde容器
 @use "./vp-img-shadow.scss" as *; // 图片阴影
 @use "./vp-code-shadow.scss" as *; // 代码块阴影
-
 @use "./scrollBar.scss" as *; // 滚动条样式
-// 流体边框自定义容器样式
 //@use "./custom-block.scss" as *; // 容器流体样式
 @use "./home.scss" as *;
 @use "./rainbow.scss" as *; // 文本/滚动条等彩虹渐变
