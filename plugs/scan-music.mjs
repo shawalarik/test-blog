@@ -10,6 +10,7 @@ const readdir = promisify(fs.readdir);
 export function scanMusicPlugin(options = {}) {
     const { musicDir = 'music', showDetail = false } = options;
     const musicExt = ['.mp3', '.wav', '.flac', '.opus'];
+    const coverExts = ['.webp', '.jpg', '.jpeg', '.png'];
     const isProduction = process.env.NODE_ENV === 'production';
     let resolvedConfig;
     let audioData = [];
@@ -67,7 +68,6 @@ export function scanMusicPlugin(options = {}) {
             const [artist, name] = baseName.split('-').map(s => s.trim());
 
             let coverUrl = '';
-            const coverExts = ['.webp', '.jpg', '.jpeg', '.png'];
             for (const cExt of coverExts) {
                 const coverFilePath = path.join(originalPath, baseName + cExt);
                 if (await fsExists(coverFilePath)) {
@@ -110,7 +110,6 @@ export function scanMusicPlugin(options = {}) {
 
             let coverUrl = '';
             let coverFileName = '';
-            const coverExts = ['.webp', '.jpg', '.jpeg', '.png'];
 
             for (const cExt of coverExts) {
                 const originalCoverPath = path.join(baseDir, baseName + cExt);

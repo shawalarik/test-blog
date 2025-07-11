@@ -105,7 +105,7 @@ class AudioCompressor {
                 // # LRA: 动态范围 (11dB 是广播标准)
                 // TP: 峰值限制 (-1.5dBTP 避免削波)
                 // 0.316	-10dB	显著降低，适合背景音
-                "-af", "loudnorm=I=-16:LRA=11:TP=-1.5,volume=0.316",
+                "-af", "loudnorm=I=-16:LRA=11:TP=-1.5,volume=0.1",
                 outputPath
             ]);
 
