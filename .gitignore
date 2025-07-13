@@ -1,5 +1,6 @@
 /docs/.vitepress/cache/
 node_modules/
+stats.html
 
 # Build and Release Folders
 bin-debug/

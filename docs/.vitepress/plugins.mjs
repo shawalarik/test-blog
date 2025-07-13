@@ -33,12 +33,12 @@ export const plugings =  [
         },
     }),
     cleanDistMusic(),
-    visualizer({
+/*    visualizer({
         filename: "stats.html",
         open: false, // 打包后自动打开报告
         gzipSize: true, // 压缩大小
         brotliSize: true,
-    }),
+    }),*/
     compress({
         verbose: false, // 是否在控制台输出压缩结果
         disable: false, // 是否禁用压缩
