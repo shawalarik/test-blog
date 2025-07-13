@@ -10,8 +10,9 @@ export const FooterInfo = {
     <a target="_blank" href="https://gitee.com/explore" title="本站代码管理基于 Git" ><img alt="Git" src="/footer/Managed-Git.svg" ></a>
     <a target="_blank" href="https://gitee.com/explore" title="本站代码托管基于 Gitee" ><img alt="Gitee" src="/footer/CodeHosting-Gitee.svg" ></a>
     <a target="_blank" href="https://cn.vitejs.dev/" title="本站构建基于 Vite" ><img alt="Vite" src="/footer/Build-Vite.svg" ></a>
-    <a target="_blank" href="https://vitepress.dev/" title="本站框架基于 VitePress${version}" ><img alt="VitePress" src="/footer/vitepress.svg" ></a>
+    <a target="_blank" href="https://vitepress.dev/" title="本站框架基于 VitePress 1.6.3" ><img alt="VitePress" src="/footer/vitepress.svg" ></a>
     <a target="_blank" href="https://twikoo.js.org/" title="本站评论系统使用 Twikoo" ><img alt="Twikoo" src="/footer/Twikoo.svg"></a>
+    <a target="_blank" href="https://twikoo.js.org/" title="本站监控使用 Uptime Kuma" ><img alt="Twikoo" src="/footer/monitor-Uptime%20Kuma.svg"></a>
     <a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="本站内容采用 CC BY-NC-SA 4.0 国际许可协议进行许可"><img alt="Copyright" src="/footer/Copyright-BY--NC--SA%204.svg"></a>
     <!--<a target="_blank" href="https://www.algolia.com/" title="本站搜索服务使用 Algolia"><img alt="Algolia" src="/footer/Animals.png"></a>-->
     <a target="_blank" href="https://www.aliyun.com/" title="本站部署服务使用 Aliyun"><img alt="Aliyun" src="/footer/Alibaba-Cloud.svg"></a>

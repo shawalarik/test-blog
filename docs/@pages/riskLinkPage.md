@@ -1,10 +1,10 @@
 ---
-date: 2025-05-20 02:07:44
+date: 2025-05-22 10:07:44
 title: 跳转提示
 permalink: /risk-link
 categories:
   - 笔记专栏
-coverImg: /home/bg15.webp
+coverImg: /home/bg17.webp
 layout: false
 riskLinkPage: true
 logo: /avatar/avatar.webp

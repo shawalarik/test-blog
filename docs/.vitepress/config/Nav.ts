@@ -151,11 +151,11 @@ export const Nav: DefaultTheme.NavItem[] = [
             },
             {
                 text: getNav("站点统计", '/svg/SiteAnalytics.svg'),
-                link: 'https://umami.seasir.top/share/rvVBNZWa0sUCN6wG/teek.seasir.top',
+                link: 'https://umami.dl-web.top/',
             },
             {
                 text: getNav("站点监控", '/svg/站点监控.svg'),
-                link: 'https://status.seasir.top/',
+                link: 'https://status.dl-web.top/status/monitor',
             },
             {
                 // 分组标题2

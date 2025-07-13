@@ -3,7 +3,7 @@ export const Comment = {
   provider: "twikoo",
   options: {
     // twikoo 配置，官网：https://twikoo.js.org/
-    envId: "https://dl-web.top/twikoo",
+    envId: "https://twikoo.dl-web.top/",
     // link: "https://cdn.jsdelivr.net/npm/twikoo@1.6.41/dist/twikoo.all.min.js", //teek主题内置
     version: "1.6.41",
 

@@ -18,11 +18,15 @@ export const Wallpaper = [
     '/home/bg17.webp',
     '/home/bg18.webp',
     '/home/bg19.webp',
-    '/home/bg20.webp',
-    '/home/bg21.webp',
-    '/home/bg22.webp',
-    '/home/bg23.webp',
-    '/home/bg24.webp',
-    '/home/bg25.webp',
-    '/home/bg26.webp'
+    '/home/bg20.webp'
 ]
+
+// 首页壁纸
+export const BlogImg = [
+    '/blogImg/01.webp',
+    '/blogImg/02.webp',
+    '/blogImg/03.webp',
+    '/blogImg/04.webp',
+    '/blogImg/05.webp'
+]
+

@@ -5,7 +5,7 @@ import compress from 'vite-plugin-compression';
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
 import { scanMusicPlugin } from '../../plugs/scan-music.mjs';
 import AutoFrontmatter from "vitepress-plugin-auto-frontmatter";
-import {Wallpaper} from "./config/Wallpaper.js";
+import {Wallpaper, BlogImg} from "./config/Wallpaper.js";
 import {cleanDistMusic} from "../../plugs/clean-dist.mjs";
 import inspect from 'vite-plugin-inspect'
 
@@ -19,15 +19,14 @@ export const plugings =  [
         pattern: "**/*.md",
         // exclude 指定的对象如果在 markdown frontmatter 存在，则忽略该文件。当 include 和 exclude 存在相同文件时，exclude 优先级高
         //exclude: { coverImg: true},
-        // 每次启动项目时，是否基于 transform 返回的数据重新生成新的 frontmatter，如果为 false，则只对不存在的 key 进行生成，如果为 true，则重新生成新的 frontmatter
-        recoverTransform: false,
+        recoverTransform: true, // false 只添加不存在的字段
         transform: (frontmatter) => {
             // 如果文件本身存在了 coverImg，则不生成
             if (frontmatter.coverImg) return; // 随机获取 coverImg
-            console.log("frontmatter", frontmatter)
-            const list = Wallpaper;
+            const list = [...Wallpaper, ...BlogImg];
             const coverImg = list[Math.floor(Math.random() * list.length)];
             const transformResult = { ...frontmatter, coverImg };
+            console.log("transformResult", transformResult)
             return Object.keys(transformResult).length
                 ? transformResult
                 : undefined;

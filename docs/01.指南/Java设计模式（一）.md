@@ -1,10 +1,10 @@
 ---
-date: 2025-06-27 07:09:00
+date: 2025-06-29 15:09:00
 title: Java设计模式（一）
 permalink: /pages/f99efb
 categories:
   - 指南
-coverImg: /home/bg19.webp
+coverImg: /home/bg16.webp
 ---
 ![image-20220513191747324](https://tva1.sinaimg.cn/large/e6c9d24egy1h26ztcf6xbj21hy0i2abh.jpg)
 

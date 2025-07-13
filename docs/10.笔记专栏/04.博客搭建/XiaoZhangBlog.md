@@ -1,11 +1,11 @@
 ---
-date: 2024-11-14 04:05:45
+date: 2024-11-16 12:05:45
 title: XiaoZhangBlog
 permalink: /XiaoZhang/Blog
 categories:
   - 笔记专栏
   - 博客搭建
-coverImg: /home/bg02.webp
+coverImg: /blogImg/05.webp
 ---
 
 # 博客部署教程-宝塔面版详细版

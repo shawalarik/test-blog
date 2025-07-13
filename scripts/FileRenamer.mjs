@@ -128,9 +128,9 @@ class FileRenamer {
 async function main() {
     // 配置选项
     const options = {
-        directory: '../docs/public/home',     // 要处理的目录
+        directory: '../docs/public/blogImg',     // 要处理的目录
         extensions: ['.webp'],    // 要处理的文件后缀
-        prefix: 'bg',                     // 文件名前缀
+        prefix: '',                     // 文件名前缀
         startNumber: 1,                   // 起始编号
         numberLength: 2,                  // 编号最小长度
         dryRun: false                      // 预览模式，不实际执行重命名
@@ -155,6 +155,6 @@ async function main() {
     }
 }
 
-main();
+await main();
 
 export default FileRenamer;

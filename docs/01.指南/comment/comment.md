@@ -1,11 +1,11 @@
 ---
-date: 2025-07-11 19:33:31
+date: 2025-07-14 03:33:31
 title: 评价插件配置
 permalink: /pages/5ecfd3
 categories:
   - 指南
   - comment
-coverImg: /home/bg03.webp
+coverImg: /home/bg05.webp
 ---
 # 评价插件配置
 
