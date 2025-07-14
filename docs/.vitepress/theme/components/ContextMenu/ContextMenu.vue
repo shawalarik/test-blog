@@ -31,6 +31,23 @@
           </svg>
         </div>
         <span :style="{ color: themeColor }">{{ useWebsite.webInfo?.websiteName }}</span>
+
+        <div class="menu-title-icon screen" @click="toggleFullscreen">
+          <svg
+              viewBox="0 0 24 24"
+              width="24"
+              height="24"
+              :stroke="themeColor"
+              stroke-width="2"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+          >
+            <path v-if="isFullScreen" d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path>
+            <path v-else d="M20 9V6.616q0-.231-.192-.424T19.385 6H17V5h2.385q.69 0 1.152.463T21 6.616V9zM3 9V6.616q0-.691.463-1.153T4.615 5H7v1H4.616q-.231 0-.424.192T4 6.616V9zm14 10v-1h2.385q.23 0 .423-.192t.192-.424V15h1v2.385q0 .69-.462 1.152T19.385 19zM4.615 19q-.69 0-1.153-.462T3 17.384V15h1v2.385q0 .23.192.423t.423.192H7v1zm2.231-3.846V8.846h10.308v6.308zm1-1h8.308V9.846H7.846zm0 0V9.846z" />
+          </svg>
+        </div>
+
       </div>
 
       <!-- 菜单项列表 todo 后续改造为通过数据驱动渲染菜单 -->
@@ -68,18 +85,16 @@
 
         <!-- 其他（子菜单） -->
         <li class="menu-item has-submenu">
-          <div class="menu-item-content">
-            <div class="menu-item-icon">
-              <svg viewBox="0 0 24 24" width="24" height="24" :stroke="themeColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path>
-              </svg>
-            </div>
-            <span>其他</span>
-            <div class="menu-item-arrow">
-              <svg viewBox="0 0 24 24" width="24" height="24" :stroke="themeColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="9 18 15 12 9 6"></polyline>
-              </svg>
-            </div>
+          <div class="menu-item-icon">
+            <svg viewBox="0 0 24 24" width="24" height="24" :stroke="themeColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path>
+            </svg>
+          </div>
+          <span>其他</span>
+          <div class="menu-item-arrow">
+            <svg viewBox="0 0 24 24" width="24" height="24" :stroke="themeColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
           </div>
           <ul class="submenu" :style="themeColor">
             <li class="submenu-item" @click.stop="navigateTo('/tree-hole')">
@@ -163,7 +178,9 @@
 import {ref, onMounted, onUnmounted, computed, reactive, nextTick} from 'vue';
 import { useRouter, useRoute, withBase } from 'vitepress'; // 引入 VitePress 路由
 import {Website} from "./Website"
-
+import {useFullscreen} from "./useFullscreen.mjs"
+// 自定义处理全屏事件hook
+const { isFullScreen, toggleFullscreen } = useFullscreen();
 const useWebsite = ref(Website)
 
 const router = useRouter(); // 获取 VitePress 路由实例
@@ -173,7 +190,6 @@ const x = ref(0);
 const y = ref(0);
 // 缓存DOM元素引用
 let contextMenu: HTMLElement | null = null;
-let menuItems: NodeListOf<HTMLElement> | null = null;
 
 // 子菜单可见状态
 const submenuVisible = reactive({
@@ -196,13 +212,6 @@ function getContextMenu() {
     contextMenu = document.querySelector('.context-menu') as HTMLElement;
   }
   return contextMenu;
-}
-
-function getMenuItems() {
-  if (!menuItems) {
-    menuItems = document.querySelectorAll('.menu-item') as NodeListOf<HTMLElement>;
-  }
-  return menuItems;
 }
 
 // 显示菜单
@@ -397,12 +406,12 @@ onUnmounted(() => {
   box-shadow: 0 4px 20px rgba(139, 92, 246, 0.15);
   border: 1px solid #f3f0ff;
   min-width: 240px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
   color: #4a4158;
   position: relative;
   transition: all 0.2s ease;
   animation: slideIn 0.2s ease;
   overflow: visible !important;
+  font-family: var(--vp-font-family-base);
 }
 
 html[class*='dark'] .menu-container {
@@ -437,14 +446,18 @@ html[class*='dark'] .menu-header {
   margin-right: 10px;
   width: 20px;
   height: 20px;
-  animation: pulse 2s infinite;
 }
 
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
+.screen {
+  margin-left: auto;
+  transition: transform 0.3s;
 }
+
+.screen:hover {
+  stroke: var(--vp-c-brand-1);
+  transform: scale(1.15);
+}
+
 
 /* 菜单项 */
 .menu-items {
@@ -453,6 +466,7 @@ html[class*='dark'] .menu-header {
   padding: 10px;
 }
 
+/* 分隔线 */
 .menu-divider {
   height: 1px;
   margin: 10px 0;
@@ -464,6 +478,9 @@ html[class*='dark'] .menu-divider {
 }
 
 .menu-item {
+  display: flex;
+  align-items: center;
+  padding: 5px 14px;
   position: relative;
   font-size: 0.9rem;
   margin: 4px 0;
@@ -473,39 +490,19 @@ html[class*='dark'] .menu-divider {
   overflow: visible;
 }
 
-.menu-item:not(.has-submenu) {
-  display: flex;
-  align-items: center;
-  padding: 5px 14px;
-}
-
-.menu-item-content {
-  display: flex;
-  align-items: center;
-  padding: 10px 14px;
-  width: 100%;
-  border-radius: 10px;
-}
-
-.has-submenu {
-  position: relative;
-  overflow: visible;
-}
-
+/* 子菜单箭头旋转 */
 .has-submenu:hover .menu-item-arrow {
   transform: rotate(90deg);
 }
 
-
-
-.menu-item:hover, .menu-item-content:hover {
+/* 菜单hover背景等 */
+.menu-item:hover {
   background-color: var(--hover-light);
   transform: translateX(2px);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-html[class*='dark'] .menu-item:hover,
-html[class*='dark'] .menu-item-content:hover {
+html[class*='dark'] .menu-item:hover {
   background-color: var(--hover-dark);
 }
 
@@ -519,10 +516,12 @@ html[class*='dark'] .menu-item-content:hover {
   transition: transform 0.3s;
 }
 
+/* 图标放大加旋转 */
 .menu-item:hover .menu-item-icon {
   transform: scale(1.15) rotate(8deg);
 }
 
+/* 设置图标样式 */
 .menu-item-icon svg {
   width: 18px;
   height: 18px;
@@ -533,7 +532,7 @@ html[class*='dark'] .menu-item-content:hover {
 }
 
 /* 鼠标悬停变色逻辑，带有refresh-item类的除外 */
-.menu-item:not(.refresh-item):hover .menu-item-icon svg:not(.refresh-item) {
+.menu-item:not(.refresh-item):hover .menu-item-icon svg {
   stroke: var(--vp-c-brand-1);
 }
 
@@ -547,13 +546,6 @@ html[class*='dark'] .menu-item:not(.refresh-item):hover .menu-item-icon svg {
 
 html[class*='dark'] .submenu-item:hover .submenu-item-icon svg {
   stroke: var(--vp-c-brand-1);
-
-}
-
-.menu-item span {
-  transition: all 0.2s ease;
-  font-weight: 500;
-  letter-spacing: 0.2px;
 }
 
 .menu-item-arrow {
@@ -563,8 +555,6 @@ html[class*='dark'] .submenu-item:hover .submenu-item-icon svg {
   opacity: 0.7;
   transition: transform 0.2s ease;
 }
-
-
 
 /* 子菜单 */
 .submenu {
@@ -616,7 +606,6 @@ html[class*='dark'] .submenu {
 html[class*='dark'] .submenu-item:hover {
   background-color: var(--hover-dark);
 }
-
 
 .submenu-item-icon {
   display: flex;

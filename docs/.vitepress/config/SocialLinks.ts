@@ -1,4 +1,4 @@
-import {gitee, email, WhatsApp, telegram} from "../resource/icon/icons";
+import {gitee, email, WhatsApp, telegram} from "../theme/icon/icons";
 
 export const SocialLinks = [
     {
