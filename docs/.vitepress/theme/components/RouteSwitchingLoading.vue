@@ -11,16 +11,20 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import {onBeforeMount, onMounted, ref} from 'vue';
 import { useRouter } from 'vitepress';
 
 // 路由相关
 const router = useRouter();
-let transitionStart = 0;
-
 // 过渡状态管理
 const isTransitioning = ref(false);
+// 计算路由时间
+let transitionStart = 0;
+
+// 保存 VitePress 内部默认的路由钩子
+const originalBeforeRouteChange = router.onBeforeRouteChange;
+const originalAfterRouteChange = router.onAfterRouteChange;
 
 // 路由开始切换时
 function handleRouteStart() {
@@ -41,13 +45,21 @@ function handleRouteComplete() {
 }
 
 // 监听路由变化
-router.onBeforeRouteChange = () => {
-  handleRouteStart();
-};
+router.onBeforeRouteChange = (to) => {
+  // 调用 VitePress 内部默认逻辑
+  if (originalBeforeRouteChange) {
+    originalBeforeRouteChange(to);
+  }
+  handleRouteStart()
+}
 
-router.onAfterRouteChange = () => {
-  handleRouteComplete();
-};
+router.onAfterRouteChange = (to) => {
+  // 调用 VitePress 内部默认逻辑
+  if (originalAfterRouteChange) {
+    originalAfterRouteChange(to);
+  }
+  handleRouteComplete()
+}
 
 /* 首次加载遮罩 */
 onBeforeMount(() => {
