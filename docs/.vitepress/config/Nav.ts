@@ -155,7 +155,7 @@ export const Nav: DefaultTheme.NavItem[] = [
             },
             {
                 text: getNav("站点监控", '/svg/站点监控.svg'),
-                link: 'https://status.dl-web.top/status/monitor',
+                link: 'https://umami.dl-web.top/share/W17NnbgApgn6RaVs/dl-web.top',
             },
             {
                 // 分组标题2

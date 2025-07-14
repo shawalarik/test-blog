@@ -86,7 +86,7 @@ export default {
             router.onAfterRouteChange = (to) => {
                 //console.log("onAfterRouteChange", decodeURIComponent(to))
                 // 发送访问记录
-                sendVisitStatistics(router, siteData, fingerprintID)
+                //sendVisitStatistics(router, siteData, fingerprintID)
                 NProgress.done() // 停止进度条
             }
             return NProgress
