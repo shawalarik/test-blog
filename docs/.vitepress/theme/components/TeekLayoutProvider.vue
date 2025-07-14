@@ -18,11 +18,10 @@ import APlayer from "./APlayer.vue"; // 音乐组件
 import TextGlitch from "./TextGlitch.vue"; // 首页文字特效组件
 import Clock from "./Clock.vue"; // 时钟组件
 import ContextMenu from "./ContextMenu/ContextMenu.vue"; // 右键菜单组件
-import RouteSwitchingAnimation from "./RouteSwitchingAnimation.vue"; // 过渡动画组件
+import RouteSwitchingLoading from "./RouteSwitchingLoading.vue"; // 过渡动画组件
 import {useRibbon} from "../composables/useRibbon";
 import {useRuntime} from "../composables/useRuntime";
 import {myConsoleInfo} from "../utils/WwUtils";
-
 
 /**
 site: Ref<SiteData<T>> 站点级元数据
@@ -84,8 +83,8 @@ onMounted(()=>{
         <ContextMenu/>
       </ClientOnly>
 
-      <!-- 路由切换动画组件 -->
-      <RouteSwitchingAnimation/>
+      <!-- 路由切换遮罩动画组件 -->
+      <RouteSwitchingLoading/>
 
       <!-- 全局问候组件 -->
       <GlobalGreet />
@@ -138,9 +137,4 @@ onMounted(()=>{
 </template>
 
 <style lang="scss">
-.tk-my.is-circle-bg {
-  .tk-my__avatar.circle-rotate {
-    margin-top: 200px;
-  }
-}
 </style>

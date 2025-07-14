@@ -76,7 +76,6 @@ export default {
         if (!import.meta.env.SSR) {
             const fingerprintID = await getFingerprint()
 
-
             // 创建过渡状态
             const isTransitioning = ref(false)
             let transitionStart = 0
