@@ -177,3 +177,14 @@ docker compose up -d
    ```
 
 如果遇到问题，请提供错误日志，我会进一步帮助你排查！
+
+
+
+
+
+### 源码部署
+
+```bash
+wget --http-user=download@hscsec.cn  --http-passwd=HSC2019  https://download.hscsec.cn/GeoLite2-City.mmdb -O /root/GeoLite2-City.mmdb
+```
+

@@ -34,13 +34,13 @@ export const Head =[
     ],
     ["meta", { name: "keywords", description }],
     // umami统计
-/*    [
+    [
         "script",
         {
-            src: "https://umami.seasir.top/script.js",
-            "data-website-id": "baf9cac2-151d-4f1e-80ff-c7603df9792a"
+            src: "https://umami.dl-web.top/script.js",
+            "data-website-id": "0b67009b-c85f-400f-b4f7-a2db22ee9698"
         },
-    ],*/
+    ],
 /*    // 阿里在线矢量库
     [
         "link",
