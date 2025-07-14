@@ -1,5 +1,5 @@
 ---
-date: 2025-07-15 17:58:51
+date: 2025-07-13 17:58:51
 title: Nginx配置
 permalink: /pages/nginx-config
 categories:

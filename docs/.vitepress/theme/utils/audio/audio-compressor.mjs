@@ -43,7 +43,8 @@ class AudioCompressor {
      * 初始化压缩器
      */
     async init() {
-        // 确保输出目录存在
+        // 确保目录存在
+        await this.ensureDirectoryExists(this.options.inputDir);
         await this.ensureDirectoryExists(this.options.outputDir);
         console.log(`音频压缩器初始化完成`);
         console.log(`输入目录: ${this.options.inputDir}`);
@@ -172,7 +173,6 @@ class AudioCompressor {
 
             // 跳过compressed目录
             if (this.options.skipCompressedDir && basename(filePath).toLowerCase() === "compressed") {
-                console.log(`跳过目录: ${filePath}`);
                 continue;
             }
 

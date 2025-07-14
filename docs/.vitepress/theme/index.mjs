@@ -62,7 +62,6 @@ export default {
      */
     async enhanceApp({ app, router, siteData }) {
         app.component("Confetti", Confetti); // 注册五彩纸屑组件
-        app.config.devtools = true; // 强制开启 devtools
 
         // 捕获水合错误并打印详细信息
         app.config.errorHandler = (err, instance, info) => {
@@ -75,21 +74,12 @@ export default {
 
         if (!import.meta.env.SSR) {
             const fingerprintID = await getFingerprint()
-
-            // 创建过渡状态
-            const isTransitioning = ref(false)
-            let transitionStart = 0
-            // 通过 app.provide 提供状态（替代 provide()）
-            app.provide('isTransitioning', isTransitioning)
-
             // 配置进度条
             NProgress.configure({ showSpinner: false })
 
             // 重写路由钩子
             router.onBeforeRouteChange = (to) => {
                 //console.log("onBeforeRouteChange", decodeURIComponent(to))
-                transitionStart = Date.now() // 更新 ref 值
-                isTransitioning.value = true
                 NProgress.start() // 开始进度条
             }
 
@@ -97,15 +87,7 @@ export default {
                 //console.log("onAfterRouteChange", decodeURIComponent(to))
                 // 发送访问记录
                 sendVisitStatistics(router, siteData, fingerprintID)
-
-                const elapsed = Date.now() - transitionStart
-                console.log(`路由切换消耗时间：${elapsed} ms`)
-                // 确保过渡动画至少显示 300ms，避免过快消失
-                const delay = Math.max(0, 300 - elapsed)
-                setTimeout(() => {
-                    isTransitioning.value = false
-                    NProgress.done() // 停止进度条
-                }, delay)
+                NProgress.done() // 停止进度条
             }
             return NProgress
         }
