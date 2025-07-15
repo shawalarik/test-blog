@@ -87,7 +87,10 @@
         <li class="menu-item has-submenu">
           <div class="menu-item-icon">
             <svg viewBox="0 0 24 24" width="24" height="24" :stroke="themeColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path>
+              <path d="M4 5h13" />
+              <path d="M4 10h10" />
+              <path d="M4 15h16" />
+              <path d="M4 20h13" />
             </svg>
           </div>
           <span>其他</span>
@@ -161,10 +164,66 @@
         <!-- 刷新页面 - 特殊样式 -->
         <li class="menu-item refresh-item" @click="handleRefresh">
           <div class="menu-item-icon">
-            <svg viewBox="0 0 24 24" width="24" height="24" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+<!--            <svg viewBox="0 0 24 24" width="24" height="24" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
               <path d="M23 4v6h-6"></path>
               <path d="M1 20v-6h6"></path>
               <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+            </svg>-->
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <rect width="7.33" height="7.33" x="1" y="1" fill="currentColor">
+                <animate id="svgSpinnersBlocksWave0" attributeName="x" begin="0;svgSpinnersBlocksWave1.end+0.3s" dur="0.9s" values="1;4;1" />
+                <animate attributeName="y" begin="0;svgSpinnersBlocksWave1.end+0.3s" dur="0.9s" values="1;4;1" />
+                <animate attributeName="width" begin="0;svgSpinnersBlocksWave1.end+0.3s" dur="0.9s" values="7.33;1.33;7.33" />
+                <animate attributeName="height" begin="0;svgSpinnersBlocksWave1.end+0.3s" dur="0.9s" values="7.33;1.33;7.33" />
+              </rect>
+              <rect width="7.33" height="7.33" x="8.33" y="1" fill="currentColor">
+                <animate attributeName="x" begin="svgSpinnersBlocksWave0.begin+0.15s" dur="0.9s" values="8.33;11.33;8.33" />
+                <animate attributeName="y" begin="svgSpinnersBlocksWave0.begin+0.15s" dur="0.9s" values="1;4;1" />
+                <animate attributeName="width" begin="svgSpinnersBlocksWave0.begin+0.15s" dur="0.9s" values="7.33;1.33;7.33" />
+                <animate attributeName="height" begin="svgSpinnersBlocksWave0.begin+0.15s" dur="0.9s" values="7.33;1.33;7.33" />
+              </rect>
+              <rect width="7.33" height="7.33" x="1" y="8.33" fill="currentColor">
+                <animate attributeName="x" begin="svgSpinnersBlocksWave0.begin+0.15s" dur="0.9s" values="1;4;1" />
+                <animate attributeName="y" begin="svgSpinnersBlocksWave0.begin+0.15s" dur="0.9s" values="8.33;11.33;8.33" />
+                <animate attributeName="width" begin="svgSpinnersBlocksWave0.begin+0.15s" dur="0.9s" values="7.33;1.33;7.33" />
+                <animate attributeName="height" begin="svgSpinnersBlocksWave0.begin+0.15s" dur="0.9s" values="7.33;1.33;7.33" />
+              </rect>
+              <rect width="7.33" height="7.33" x="15.66" y="1" fill="currentColor">
+                <animate attributeName="x" begin="svgSpinnersBlocksWave0.begin+0.3s" dur="0.9s" values="15.66;18.66;15.66" />
+                <animate attributeName="y" begin="svgSpinnersBlocksWave0.begin+0.3s" dur="0.9s" values="1;4;1" />
+                <animate attributeName="width" begin="svgSpinnersBlocksWave0.begin+0.3s" dur="0.9s" values="7.33;1.33;7.33" />
+                <animate attributeName="height" begin="svgSpinnersBlocksWave0.begin+0.3s" dur="0.9s" values="7.33;1.33;7.33" />
+              </rect>
+              <rect width="7.33" height="7.33" x="8.33" y="8.33" fill="currentColor">
+                <animate attributeName="x" begin="svgSpinnersBlocksWave0.begin+0.3s" dur="0.9s" values="8.33;11.33;8.33" />
+                <animate attributeName="y" begin="svgSpinnersBlocksWave0.begin+0.3s" dur="0.9s" values="8.33;11.33;8.33" />
+                <animate attributeName="width" begin="svgSpinnersBlocksWave0.begin+0.3s" dur="0.9s" values="7.33;1.33;7.33" />
+                <animate attributeName="height" begin="svgSpinnersBlocksWave0.begin+0.3s" dur="0.9s" values="7.33;1.33;7.33" />
+              </rect>
+              <rect width="7.33" height="7.33" x="1" y="15.66" fill="currentColor">
+                <animate attributeName="x" begin="svgSpinnersBlocksWave0.begin+0.3s" dur="0.9s" values="1;4;1" />
+                <animate attributeName="y" begin="svgSpinnersBlocksWave0.begin+0.3s" dur="0.9s" values="15.66;18.66;15.66" />
+                <animate attributeName="width" begin="svgSpinnersBlocksWave0.begin+0.3s" dur="0.9s" values="7.33;1.33;7.33" />
+                <animate attributeName="height" begin="svgSpinnersBlocksWave0.begin+0.3s" dur="0.9s" values="7.33;1.33;7.33" />
+              </rect>
+              <rect width="7.33" height="7.33" x="15.66" y="8.33" fill="currentColor">
+                <animate attributeName="x" begin="svgSpinnersBlocksWave0.begin+0.45s" dur="0.9s" values="15.66;18.66;15.66" />
+                <animate attributeName="y" begin="svgSpinnersBlocksWave0.begin+0.45s" dur="0.9s" values="8.33;11.33;8.33" />
+                <animate attributeName="width" begin="svgSpinnersBlocksWave0.begin+0.45s" dur="0.9s" values="7.33;1.33;7.33" />
+                <animate attributeName="height" begin="svgSpinnersBlocksWave0.begin+0.45s" dur="0.9s" values="7.33;1.33;7.33" />
+              </rect>
+              <rect width="7.33" height="7.33" x="8.33" y="15.66" fill="currentColor">
+                <animate attributeName="x" begin="svgSpinnersBlocksWave0.begin+0.45s" dur="0.9s" values="8.33;11.33;8.33" />
+                <animate attributeName="y" begin="svgSpinnersBlocksWave0.begin+0.45s" dur="0.9s" values="15.66;18.66;15.66" />
+                <animate attributeName="width" begin="svgSpinnersBlocksWave0.begin+0.45s" dur="0.9s" values="7.33;1.33;7.33" />
+                <animate attributeName="height" begin="svgSpinnersBlocksWave0.begin+0.45s" dur="0.9s" values="7.33;1.33;7.33" />
+              </rect>
+              <rect width="7.33" height="7.33" x="15.66" y="15.66" fill="currentColor">
+                <animate id="svgSpinnersBlocksWave1" attributeName="x" begin="svgSpinnersBlocksWave0.begin+0.6s" dur="0.9s" values="15.66;18.66;15.66" />
+                <animate attributeName="y" begin="svgSpinnersBlocksWave0.begin+0.6s" dur="0.9s" values="15.66;18.66;15.66" />
+                <animate attributeName="width" begin="svgSpinnersBlocksWave0.begin+0.6s" dur="0.9s" values="7.33;1.33;7.33" />
+                <animate attributeName="height" begin="svgSpinnersBlocksWave0.begin+0.6s" dur="0.9s" values="7.33;1.33;7.33" />
+              </rect>
             </svg>
           </div>
           <span>刷新页面</span>
@@ -639,12 +698,12 @@ html[class*='dark'] .submenu-item:hover {
 .refresh-item:hover {
   background: linear-gradient(135deg, #a78bfa, #f472b6);
   box-shadow: 0 5px 15px rgba(139, 92, 246, 0.4), 0 2px 5px rgba(236, 72, 153, 0.3);
-  transform: translateY(-2px) translateX(2px);
+  //transform: translateY(-2px) translateX(2px);
 }
 
-.refresh-item .menu-item-icon svg {
+/*.refresh-item .menu-item-icon svg {
   stroke: white;
-}
+}*/
 
 .refresh-item span {
   color: white;
