@@ -31,7 +31,18 @@ import {
   Git,
   GithubDark,
   GitlabDark,
-  Docker, JAVA, IDEA, DataGrip, RedisDark, MongoDBDark, Oracle, RabbitMqDark, SpringDark, SpringBootDark
+  Docker,
+  JAVA,
+  IDEA,
+  DataGrip,
+  RedisDark,
+  MongoDBDark,
+  Oracle,
+  RabbitMqDark,
+  SpringDark,
+  SpringBootDark,
+  NpmDark,
+  NacosDark, MybatisDark, Android, MavenDark, SvnDark
 } from '../icon/TechIcons';
 
 const profile = {
@@ -66,13 +77,13 @@ const techStackIcons = [
   {name: 'SpringBoot', icon: SpringBootDark},
   {},
   // 第二行
+  {name: 'Nacos', icon: NacosDark},
   {name: 'Redis', icon: RedisDark},
   {name: 'RabbitMq', icon: RabbitMqDark},
   {name: 'Html', icon: Html},
   {name: 'Css', icon: Css},
   {name: 'Javascript', icon: Javascript},
   {name: 'Typescript', icon: Typescript},
-  {name: 'Git', icon: Git},
   {name: 'Jquery', icon: Jquery},
   // 第三行
   {name: 'Vuejs', icon: VuejsDark},
@@ -84,23 +95,24 @@ const techStackIcons = [
   {name: 'Mysql', icon: MysqlDark},
   {name: 'Oracle', icon: Oracle},
   // 第四行，首尾空
-  {},
-  {name: 'React', icon: ReactDark},
+  {name: 'Mybatis', icon: MybatisDark},
+  {name: 'Npm', icon: NpmDark},
   {name: 'Git', icon: Git},
   {name: 'Github', icon: GithubDark},
   {name: 'Postman', icon: Postman},
   {name: 'Docker', icon: Docker},
-  {name: 'MongoDB', icon: MongoDBDark},
-  {},
+  {name: 'Maven', icon: MavenDark},
+  {name: 'Svn', icon: SvnDark},
 
-  {},
+  // 第五行，缩小行
+  {name: 'MongoDB', icon: MongoDBDark, small: true},
+  {name: 'Android', icon: Android, small: true},
   {name: 'Pnpm', icon: PnpmDark, small: true},
   {name: 'Electron', icon: Electron, small: true},
   {name: 'Sass', icon: Sass, small: true},
   {name: 'Tailwindcss', icon: TailwindcssDark, small: true},
   {name: 'Github', icon: GithubDark, small: true},
-  {name: 'Postman', icon: Postman, small: true},
-  {},
+  {name: 'Postman', icon: Postman, small: true}
 ];
 const ossProjects = [
   {
@@ -229,6 +241,8 @@ const techStackRows = computed(() => {
   }
   return rows;
 });
+
+console.log("techStackRows", techStackRows)
 </script>
 
 <template>
