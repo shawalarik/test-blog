@@ -1,8 +1,7 @@
 <script setup>
 import {TkIcon} from "vitepress-theme-teek";
-import {ref, onMounted, onBeforeUnmount, computed} from 'vue';
-
-import {gitee, email, WhatsApp, telegram} from '../icon/icons';
+import {ref, onMounted, onBeforeUnmount, computed, onUnmounted} from 'vue';
+import {SocialLinks} from '../../config/SocialLinks';
 
 import {
   VscodeDark,
@@ -53,19 +52,6 @@ const majorSkills = [
   {name: 'JavaScript & Vue.js', percent: 90, color: '#e4ae3a'},
   {name: 'Spring', percent: 93, color: '#88619a'},
   {name: 'Linux', percent: 85, color: '#96b466'},
-];
-const otherSkills = [
-  {title: '响应式设计', desc: '创建适应各种设备的网站布局'},
-  {title: 'UI/UX 设计', desc: '设计美观且用户友好的界面'},
-  {title: '移动应用开发', desc: '使用React Native开发跨平台应用'},
-  {title: '性能优化', desc: '提高网站加载速度和性能'},
-];
-
-const socialLinks = [
-  {icon: gitee, url: 'https://gitee.com/SeasirHyde/teek-hyde', name: 'Gitee'},
-  {icon: email, url: 'mailto:seasir666@gmail.com', name: 'Email'},
-  {icon: WhatsApp, url: 'https://api.whatsapp.com/send/?phone=13527063419&text=Hello', name: 'WhatsApp'},
-  {icon: telegram, url: 'https://t.me/seasir_Bot', name: 'Telegram'},
 ];
 
 // techStackIcons 扩展为 46 个（8*4+14）SVG图标
@@ -166,19 +152,53 @@ const ossProjects = [
 ];
 const tab = ref(0);
 
-// open-source-section 动画相关
-const ossSectionRef = ref(null);
-const ossSectionVisible = ref(false);
+/**
+ * 自定义观察器函数
+ * @param {Object} targetRef - 目标元素
+ * @param {number} threshold - 交叉阈值（默认0.2）
+ * @returns {Boolean} isVisible - 是否可见
+ */
+const useIntersectionObserver = (targetRef, threshold = 0.2) => {
+  const isVisible = ref(false);
+  let observer = null;
+  onMounted(() => {
+    if ('IntersectionObserver' in window && targetRef.value) {
+      observer = new IntersectionObserver(
+          (entries) => {
+            isVisible.value = entries[0].isIntersecting;
+          },
+          { threshold }
+      );
+      // 开始监听目标元素
+      observer.observe(targetRef.value);
+    } else {
+      // 不支持 IntersectionObserver 的浏览器，直接显示元素
+      isVisible.value = true;
+    }
+  });
+
+  onUnmounted(() => {
+    // 组件卸载时清理监听
+    observer?.disconnect();
+  });
+
+  return isVisible;
+};
+
+// 使用封装的组合式函数创建监听
+// skills-left 动画相关
+const skillsLeftRef = ref(null);
+const skillsLeftVisible = useIntersectionObserver(skillsLeftRef, 0.2);
 
 // skills-right 动画相关
 const skillsRightRef = ref(null);
-const skillsRightVisible = ref(false);
+const skillsRightVisible = useIntersectionObserver(skillsRightRef, 0.2);
 
-// skills-left 动画相关
-const skillsLeftRef = ref(null);
-const skillsLeftVisible = ref(false);
+// open-source-section 动画相关
+const ossSectionRef = ref(null);
+const ossSectionVisible = useIntersectionObserver(ossSectionRef, 0.2);
 
-// about-hero 和 skills-section 动画相关
+// 首屏元素延迟动画，about-hero 和 skills-section 动画相关
 const aboutHeroVisible = ref(false);
 const skillsSectionVisible = ref(false);
 
@@ -187,80 +207,19 @@ const checkMobile = () => {
   isMobile.value = window.innerWidth <= 600;
 };
 onMounted(() => {
+  // about-hero 和 skills-section 动画
+  setTimeout(() => {
+    aboutHeroVisible.value = true;
+    skillsSectionVisible.value = true;
+  }, 60); // 延迟触发动画，避免与页面渲染冲突
   checkMobile();
   window.addEventListener('resize', checkMobile);
 });
 onBeforeUnmount(() => {
   window.removeEventListener('resize', checkMobile);
 });
+// 移动端情况下过滤掉空的图标（占位符图标）
 const mobileTechStackIcons = computed(() => techStackIcons.filter(i => i.icon));
-
-onMounted(() => {
-  let observer = null;
-  if ('IntersectionObserver' in window) {
-    observer = new IntersectionObserver(
-        (entries) => {
-          if (entries[0].isIntersecting) {
-            ossSectionVisible.value = true;
-          } else {
-            ossSectionVisible.value = false;
-          }
-        },
-        {threshold: 0.2}
-    );
-    if (ossSectionRef.value) {
-      observer.observe(ossSectionRef.value);
-    }
-  } else {
-    ossSectionVisible.value = true;
-  }
-
-  // skills-right 动画 observer
-  let skillsObserver = null;
-  if ('IntersectionObserver' in window) {
-    skillsObserver = new IntersectionObserver(
-        (entries) => {
-          if (entries[0].isIntersecting) {
-            skillsRightVisible.value = true;
-          } else {
-            skillsRightVisible.value = false;
-          }
-        },
-        {threshold: 0.2}
-    );
-    if (skillsRightRef.value) {
-      skillsObserver.observe(skillsRightRef.value);
-    }
-  } else {
-    skillsRightVisible.value = true;
-  }
-
-  // skills-left 动画 observer
-  let leftObserver = null;
-  if ('IntersectionObserver' in window) {
-    leftObserver = new IntersectionObserver(
-        (entries) => {
-          if (entries[0].isIntersecting) {
-            skillsLeftVisible.value = true;
-          } else {
-            skillsLeftVisible.value = false;
-          }
-        },
-        {threshold: 0.2}
-    );
-    if (skillsLeftRef.value) {
-      leftObserver.observe(skillsLeftRef.value);
-    }
-  } else {
-    skillsLeftVisible.value = true;
-  }
-
-  // about-hero 和 skills-section 动画
-  setTimeout(() => {
-    aboutHeroVisible.value = true;
-    skillsSectionVisible.value = true;
-  }, 60); // 延迟触发动画，避免与页面渲染冲突
-});
 
 const techStackRows = computed(() => {
   // 每行8个，最后一行不足8个自动补齐
@@ -286,9 +245,9 @@ const techStackRows = computed(() => {
           }}</a>
       </div>
       <div class="SocialLinks">
-        <a v-for="item in socialLinks" :key="item.name" :href="item.url" class="social-link" target="_blank"
+        <a v-for="item in SocialLinks" :key="item.name" :href="item.link" class="social-link" target="_blank"
            rel="noopener noreferrer" :title="item.name">
-          <TkIcon :icon="item.icon" icon-type="svg" size="22px"/>
+          <TkIcon :icon="item.icon.svg" icon-type="svg" size="22px"/>
         </a>
       </div>
     </div>
@@ -319,8 +278,7 @@ const techStackRows = computed(() => {
         <!-- PC端 -->
         <div class="tech-stack-grid pc" v-if="!isMobile">
           <div v-for="(row, rowIdx) in techStackRows" :key="rowIdx" class="tech-stack-row">
-            <div v-for="(item, idx) in row" :key="idx" class="tech-stack-item"
-                 :class="{ empty: !item.icon, small: item.small }">
+            <div v-for="(item, idx) in row" :key="idx" class="tech-stack-item" :class="{ empty: !item.icon }">
               <TkIcon v-if="item.icon" :icon="item.icon" icon-type="svg" :size="item.small ? '25px' : '44px'" :title="item.name"/>
             </div>
           </div>
