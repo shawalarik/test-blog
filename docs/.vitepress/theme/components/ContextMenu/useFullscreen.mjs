@@ -45,7 +45,7 @@ export function useFullscreen() {
     };
 
     const handleKeydown = (e) => {
-        console.log("handleKeydown", e.key)
+        //console.log("handleKeydown", e.key)
         if (e.key === 'F11' || e.keyCode === 122) {
             console.log("isFullScreen.value", isFullScreen.value)
             requestAnimationFrame(updateStatus);

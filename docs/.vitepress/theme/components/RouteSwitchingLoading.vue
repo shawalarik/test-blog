@@ -81,6 +81,8 @@ onMounted(() => {
   height: 100%;
   display: flex;
   justify-content: center;
+  /* 水平居中 */
+  align-items: center;
   background: rgba(255, 255, 255, 0.9); /* 半透明白色背景 */
   z-index: 9999; /* 确保覆盖所有内容 */
 }

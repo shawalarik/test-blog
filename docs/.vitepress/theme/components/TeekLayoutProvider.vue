@@ -4,16 +4,15 @@ import Teek, { teekConfigContext } from "vitepress-theme-teek";
 import {useData, useRoute, useRouter} from "vitepress";
 import {watch, nextTick, ref, provide, onMounted} from "vue";
 import { teekBlogFullConfig } from "../../config/TeekConfig";
-import ConfigSwitch from "./ConfigSwitch.vue";
+import ConfigSwitch from "./ConfigSwitch.vue"; // 右上角布局切换组件
 import ContributeChart from "./ContributeChart.vue"; // 贡献图组件
 import NoticeContent from "./NoticeContent.vue"; //导入公告组件
 import BannerImgArrow from "./BannerImgArrow.vue"; //导入横幅图片箭头组件
-//import NotFound from "./NotFound.vue";//导入404组件
 import GlobalGreet from "./GlobalGreet.vue";  //导入全局问候组件
 import TitleChange from "./TitleChange.vue" //导入网页标题变化
 //import OhMyLive2D from "./OhMyLive2D.vue"  //导入看板娘组件
 import ScrollProgressBar from "./ScrollProgressBar.vue" //导入顶部滚动条组件
-import InformationCard from "./InformationCard.vue";
+import InformationCard from "./InformationCard.vue"; // 主页天气组件
 import APlayer from "./APlayer.vue"; // 音乐组件
 import TextGlitch from "./TextGlitch.vue"; // 首页文字特效组件
 import Clock from "./Clock.vue"; // 时钟组件
@@ -22,6 +21,7 @@ import RouteSwitchingLoading from "./RouteSwitchingLoading.vue"; // 过渡动画
 import {useRibbon} from "../composables/useRibbon";
 import {useRuntime} from "../composables/useRuntime";
 import {myConsoleInfo} from "../utils/WwUtils";
+import UnderConstruction from "./UnderConstruction.vue"; // 在建工程组件
 
 /**
 site: Ref<SiteData<T>> 站点级元数据
@@ -107,9 +107,9 @@ onMounted(()=>{
       <ConfigSwitch v-model="currentStyle" @switch="handleConfigSwitch" />
     </template>
 
-<!--    <template #not-found>
-      <NotFound />
-    </template>-->
+    <template #not-found>
+      <UnderConstruction/>
+    </template>
 
     <template #teek-notice-content>
       <!-- 公告组件 -->

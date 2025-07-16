@@ -658,7 +658,7 @@ console.log("techStackRows", techStackRows)
   align-items: center;
   gap: 0;
   margin-bottom: 18px;
-  background: #f4f4f5;
+  background: var(--oss-tabs-bg);
   border-radius: 12px;
   padding: 6px;
   width: fit-content;
@@ -668,7 +668,7 @@ console.log("techStackRows", techStackRows)
 
 .oss-tabs button {
   background: transparent;
-  border: none;
+  color: var(--oss-tabs-button-text);
   border-radius: 8px;
   padding: 7px 28px 7px 28px;
   font-size: 1.08rem;
@@ -683,10 +683,9 @@ console.log("techStackRows", techStackRows)
 }
 
 .oss-tabs button.active {
-  background: #fff;
-  color: #222;
+  background: var(--oss-tabs-active-bg);
+  color: var(--oss-tabs-active-text);
   font-weight: bold;
-  box-shadow: 0 2px 8px #e0e3f7;
   z-index: 2;
 }
 

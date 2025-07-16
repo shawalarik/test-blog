@@ -73,33 +73,36 @@ const showTemperature = ref(true);
 const showWeek = ref(true);
 const showgetDiary = ref(false);
 
-// 新增：FPS计算
-const fps = ref(0);
-let frameCount = 0;
-let lastTime = 0;
+const fps = ref(0);        // 存储当前FPS值的响应式变量
+let frameCount = 0;        // 帧计数器
+let lastTime = 0;          // 上次计算FPS的时间戳
 
 const updateFPS = (time: DOMHighResTimeStamp) => {
+  // 首次调用时初始化时间戳
   if (lastTime === 0) {
     lastTime = time;
     requestAnimationFrame(updateFPS);
     return;
   }
 
-  const delta = time - lastTime;
-  frameCount += 1;
+  const delta = time - lastTime;  // 计算距离上次计算的时间差（毫秒）
+  frameCount += 1;                // 每帧递增计数器
 
+  // 当时间差超过1000毫秒（即1秒）时计算FPS
   if (delta > 1000) {
-    fps.value = Math.round((frameCount * 1000) / delta);
-    frameCount = 0;
-    lastTime = time;
+    fps.value = Math.round((frameCount * 1000) / delta);  // 计算FPS并取整
+    frameCount = 0;           // 重置计数器
+    lastTime = time;          // 更新时间戳
   }
 
+  // 请求下一帧渲染，形成循环
   requestAnimationFrame(updateFPS);
 };
 
 onMounted(async () => {
-  await init();
+  // 组件挂载后启动FPS计算，计算提前，避免被请求阻塞
   requestAnimationFrame(updateFPS);
+  await init();
 });
 </script>
 
