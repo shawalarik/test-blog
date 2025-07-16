@@ -1,5 +1,5 @@
 ---
-date: 2025-05-07 13:46:28
+date: 2025-05-07 21:46:28
 title: VitePress
 permalink: /VitePress
 categories:
@@ -7,7 +7,7 @@ categories:
 sidebar: false
 article: false
 comment: false
-coverImg: /home/bg20.webp
+coverImg: /home/bg07.webp
 editLink: false
 ---
 

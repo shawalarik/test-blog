@@ -22,11 +22,11 @@ export const Wallpaper = [
 ]
 
 // 首页壁纸
-export const BlogImg = [
-    '/blogImg/01.webp',
-    '/blogImg/02.webp',
-    '/blogImg/03.webp',
-    '/blogImg/04.webp',
-    '/blogImg/05.webp'
+export const BlogCover = [
+    '/blogCover/01.webp',
+    '/blogCover/02.webp',
+    '/blogCover/03.webp',
+    '/blogCover/04.webp',
+    '/blogCover/05.webp'
 ]
 

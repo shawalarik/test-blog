@@ -5,7 +5,7 @@ import compress from 'vite-plugin-compression';
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
 import { scanMusicPlugin } from '../../plugs/scan-music.mjs';
 import AutoFrontmatter from "vitepress-plugin-auto-frontmatter";
-import {Wallpaper, BlogImg} from "./config/Wallpaper.js";
+import {Wallpaper, BlogCover} from "./config/Wallpaper.js";
 import {cleanDistMusic} from "../../plugs/clean-dist.mjs";
 import inspect from 'vite-plugin-inspect'
 
@@ -23,7 +23,7 @@ export const plugings =  [
         transform: (frontmatter) => {
             // 如果文件本身存在了 coverImg，则不生成
             if (frontmatter.coverImg) return; // 随机获取 coverImg
-            const list = [...Wallpaper, ...BlogImg];
+            const list = [...Wallpaper, ...BlogCover];
             const coverImg = list[Math.floor(Math.random() * list.length)];
             const transformResult = { ...frontmatter, coverImg };
             console.log("transformResult", transformResult)
