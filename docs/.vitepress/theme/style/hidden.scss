@@ -5,20 +5,17 @@
   //border-top: none !important;
 }
 
-.VPMenuLink {
-  border-top: none !important;
-}
 // 页头横条隐藏线
 .vp-doc h2 {
   border-top: none;
 }
 
-// 页脚横条隐藏线
+// 博客页页脚横线隐藏
 .prev-next {
   border-top: none !important;
 }
 
-// 目录页横条隐藏线
+// 目录页上方横条隐藏线
 .tk-catalogue__header {
   border-bottom: none;
 }
@@ -28,12 +25,7 @@
   border-bottom: none !important;
 }
 
-// nav导航栏深色模式切换两边隐藏线
-.menu + .appearance[data-v-df4b8734]::before,
-.translations + .appearance[data-v-df4b8734]::before {
-  background-color: #ffffff00;
-}
-
-.appearance + .social-links[data-v-df4b8734]::before {
-  background-color: #ffffff00;
+// 取消页脚的高度只保留线
+.VPFooter{
+  padding: 0 !important;
 }
