@@ -1,5 +1,6 @@
 // 新语法 (推荐)
 @use "./var.scss" as *; ///自定义变量
+@use "./nav.scss";
 @use "./hidden.scss" as *; //隐藏横条
 @use "./hyde-banner-desc-gradient.scss" as *; // 首页打字机渐变文字颜色
 @use "./vp-code.scss" as *; //代码块

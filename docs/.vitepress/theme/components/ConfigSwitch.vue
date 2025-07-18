@@ -46,11 +46,7 @@ const segmentedOptions = [
   { value: "blog-part", label: "博客小图", title: "首页 Banner 小图" },
   { value: "blog-full", label: "博客大图", title: "首页 Banner 大图 + 评论" },
   { value: "blog-body", label: "博客全图", title: "全站背景图 + 碎片化文章页" },
-  {
-    value: "blog-card",
-    label: "博客卡片",
-    title: "首页卡片文章列表 + 左侧卡片栏列表",
-  },
+  { value: "blog-card", label: "博客卡片", title: "首页卡片文章列表 + 左侧卡片栏列表"},
 ];
 
 const emit = defineEmits<{

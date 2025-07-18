@@ -21,7 +21,8 @@ import RouteSwitchingLoading from "./RouteSwitchingLoading.vue"; // 过渡动画
 import {useRibbon} from "../composables/useRibbon";
 import {useRuntime} from "../composables/useRuntime";
 import {myConsoleInfo} from "../utils/WwUtils";
-import UnderConstruction from "./UnderConstruction.vue"; // 在建工程组件
+import UnderConstruction from "./UnderConstruction.vue";
+import CozeAi from "./CozeAi.vue"; // 在建工程组件
 
 /**
 site: Ref<SiteData<T>> 站点级元数据
@@ -96,6 +97,8 @@ onMounted(()=>{
       <TitleChange />
       <!-- 音乐播放器组件 -->
       <APlayer />
+
+      <CozeAi/>
     </template>
 
     <template #nav-bar-content-after>
@@ -104,6 +107,11 @@ onMounted(()=>{
 
     <!-- 布局切换组件 -->
     <template #teek-theme-enhance-top>
+      <ConfigSwitch v-model="currentStyle" @switch="handleConfigSwitch" />
+    </template>
+
+    <!-- 布局切换组件 移动端 -->
+    <template #nav-screen-content-after>
       <ConfigSwitch v-model="currentStyle" @switch="handleConfigSwitch" />
     </template>
 

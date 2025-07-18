@@ -1,6 +1,6 @@
 import Teek from "vitepress-theme-teek";
 import "vitepress-theme-teek/index.css";
-import {defineComponent, h, nextTick, onMounted, provide, ref} from "vue";
+import {defineComponent, h} from "vue";
 import { useData } from "vitepress";
 
 // 主题增强样式
@@ -73,7 +73,14 @@ export default {
         }
 
         if (!import.meta.env.SSR) {
-            const fingerprintID = await getFingerprint()
+
+            // 开发环境禁用umami统计
+            if (import.meta.env.DEV){
+                console.log(import.meta.env)
+                console.log("开发环境禁用umami统计")
+                localStorage.setItem('umami.disabled', 1);
+            }
+
             // 配置进度条
             NProgress.configure({ showSpinner: false })
 
@@ -93,7 +100,6 @@ export default {
         }
     },
 };
-
 async function getFingerprint() {
     const FingerprintJS = (await import('@fingerprintjs/fingerprintjs')).default;
     // 加载并初始化指纹生成器

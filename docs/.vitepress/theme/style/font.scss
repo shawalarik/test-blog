@@ -13,3 +13,8 @@
 
   --vp-font-family-mono: "JetBrains Mono", "Cascadia Mono", "Not Sans SC", monospace; /* mono：影响代码块的等宽字体。 */
 }
+
+body{
+  // 防止被扣子等覆盖字体设置
+  font-family: var(--vp-font-family-base)!important;
+}

@@ -101,6 +101,10 @@ export default defineConfig({
   },
   themeConfig: {
     logo: '/avatar/avatar.svg',
+    darkModeSwitchLabel: "主题",
+    sidebarMenuLabel: "菜单",
+    returnToTopLabel: "返回顶部",
+    lastUpdatedText: "上次更新时间",
     search: {
       // 用浏览器内索引进行模糊全文搜索
       provider: 'local',

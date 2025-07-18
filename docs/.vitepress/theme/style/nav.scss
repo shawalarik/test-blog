@@ -1,40 +1,37 @@
-/*
-// 茂茂导航样式
-.m-nav-layout {
-  !* 覆盖全局的 vp-layout-max-width（仅当前页面使用） *!
-  --vp-layout-max-width: 1660px;
-
-  !* layout 样式 *!
-  .container {
-    max-width: var(--vp-layout-max-width) !important;
-  }
-  .content-container,
-  .content {
-    max-width: 100% !important;
-  }
-
-  !* aside 样式 *!
-  .aside {
-    padding-left: 0;
-    max-width: 224px;
-  }
-
-  .content .copyright {
-    display: none;
-  }
-
-  !* tip *!
-  .tip {
-    .custom-block-title {
-      display: none;
-    }
-    p {
-      margin: 0;
-    }
-  }
-
-  .vp-doc h2 {
-    margin-top: 24px;
+@media (max-width: 1200px) {
+  // 隐藏省略号
+  .VPNavBarExtra{
+    display: none!important;
   }
 }
-*/
+
+@media (max-width: 1050px) {
+  // 隐藏搜索框
+  .VPNavBarSearch{
+    display: none;
+  }
+}
+
+/* 视口宽度 ≤ 960px 时生效（移动端） */
+@media (max-width: 950px) {
+  // 移动端导航栏吸顶
+  .VPNav{
+    position: sticky!important;
+  }
+}
+
+@media (max-width: 910px) {
+  // 缩小间距
+  .VPNavBar .wrapper {
+    padding: 0 8px 0 24px;
+  }
+
+  .VPNavBarMenu button{
+    padding: 0 5px!important;
+  }
+
+  .tk-theme-enhance.is-top:before{
+    margin-left: 8px;
+    margin-right: 8px;
+  }
+}
