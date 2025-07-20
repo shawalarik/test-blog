@@ -62,7 +62,6 @@ onUnmounted(() => {
 
 <style scoped lang="scss">
 /* 移除所有内联样式，改为通过CSS选择器控制 */
-
 #clock {
   order: 99;
   text-align: center;
@@ -82,6 +81,14 @@ onUnmounted(() => {
     letter-spacing: 0.05em;
     font-size: 16px;
     font-weight: bold;
+  }
+}
+
+/* 视口宽度 ≤ 767px 时生效（移动端），调整时间显示位置 */
+@media (max-width: 767px) {
+  // 移动端导航栏吸顶
+  #clock{
+    order: 0;
   }
 }
 

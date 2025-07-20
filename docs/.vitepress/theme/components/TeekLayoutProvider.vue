@@ -98,7 +98,8 @@ onMounted(()=>{
       <!-- 音乐播放器组件 -->
       <APlayer />
 
-      <CozeAi/>
+      <!-- 扣子ai组件 -->
+<!--      <CozeAi/>-->
     </template>
 
     <template #nav-bar-content-after>

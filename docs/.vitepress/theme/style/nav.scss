@@ -35,3 +35,10 @@
     margin-right: 8px;
   }
 }
+
+@media (max-width: 780px) {
+  // 缩小间距
+  .VPNavBar .wrapper {
+    padding: 0 8px 0 12px;
+  }
+}
