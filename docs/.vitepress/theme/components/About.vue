@@ -1,6 +1,6 @@
 <script setup>
 import {TkIcon} from "vitepress-theme-teek";
-import {ref, onMounted, onBeforeUnmount, computed, onUnmounted} from 'vue';
+import { ref, onMounted, onBeforeUnmount, computed, nextTick, watch } from 'vue';
 import {SocialLinks} from '../../config/SocialLinks';
 
 import {
@@ -42,8 +42,24 @@ import {
   SpringDark,
   SpringBootDark,
   NpmDark,
-  NacosDark, MybatisDark, Android, MavenDark, SvnDark
+  NacosDark, MybatisDark, Android, MavenDark, SvnDark, Star, Fork, View
 } from '../icon/TechIcons';
+
+// 响应式图标大小
+const iconSize = ref('46px');
+
+// 窗口大小变化时更新图标大小
+const handleResize = () => {
+  let result = '46px';
+  if (window.innerWidth > 900 && window.innerWidth <= 1100){
+    result = '40px';
+  }else if (window.innerWidth <= 900){
+    result = '46px';
+  }
+
+  iconSize.value = result
+};
+
 
 const profile = {
   title: '你好，我是',
@@ -57,12 +73,65 @@ const profile = {
 };
 
 const majorSkills = [
-  {name: 'Java', percent: 95, color: '#f25e62'},
-  {name: 'Oracle & MySQL', percent: 90, color: '#33a474'},
-  {name: 'HTML5 & CSS3', percent: 90, color: '#4298b4'},
-  {name: 'JavaScript & Vue.js', percent: 90, color: '#e4ae3a'},
-  {name: 'Spring', percent: 93, color: '#88619a'},
-  {name: 'Linux', percent: 85, color: '#96b466'},
+  {
+    name: '后端与数据库',
+    percent: 95,
+    color: '#f25e62',
+    tags: [
+      { name: 'Java', bg: '#ffeaea', color: '#f25e62' },
+      { name: 'Spring', bg: '#f3eaff', color: '#88619a' },
+      { name: 'Maven', bg: '#eaf6ff', color: '#4298b4' },
+      { name: 'MySQL', bg: '#eafff3', color: '#33a474' },
+      { name: 'Oracle', bg: '#fff7ea', color: '#e4ae3a' },
+    ]
+  },
+  {
+    name: '前端开发与框架',
+    percent: 93,
+    color: '#33a474',
+    tags: [
+      { name: 'HTML5', bg: '#eaf6ff', color: '#4298b4' },
+      { name: 'CSS3', bg: '#e3edfa', color: '#3976c6' },
+      { name: 'JavaScript', bg: '#fffbe6', color: '#e4ae3a' },
+      { name: 'jQuery', bg: '#e3edfa', color: '#3976c6' },
+      { name: 'Vue', bg: '#eaf6ff', color: '#4298b4' },
+      /*{ name: 'Less', bg: '#f3eaff', color: '#88619a' },*/
+      { name: 'Node.js', bg: '#f3ffe9', color: '#96b466' }
+    ]
+  },
+  {
+    name: '中间件',
+    percent: 95,
+    color: '#4298b4',
+    tags: [
+      { name: 'Redis', bg: '#ffeaea', color: '#f25e62' },
+      { name: 'RabbitMq', bg: '#f3ffe9', color: '#96b466' },
+      { name: 'Kafka', bg: '#e3edfa', color: '#3976c6' },
+    ]
+  },
+  {
+    name: '工程化与工具',
+    percent: 93,
+    color: '#e4ae3a',
+    tags: [
+      { name: 'Vite', bg: '#fffbe6', color: '#e4ae3a' },
+      { name: 'Webpack', bg: '#e3edfa', color: '#3976c6' },
+      { name: 'Git', bg: '#f3eaff', color: '#88619a' },
+      { name: 'Docker', bg: '#eafff3', color: '#33a474' }
+    ]
+  },
+  {
+    name: '运维与Linux',
+    percent: 86,
+    color: '#96b466',
+    tags: [
+      { name: 'Nginx', bg: '#e3edfa', color: '#3976c6' },
+      { name: 'HAProxy', bg: '#ffeaea', color: '#f25e62' },
+      { name: 'Kubernetes', bg: '#eafff3', color: '#33a474' },
+      { name: 'Wireshark', bg: '#f3eaff', color: '#88619a' },
+      { name: 'Fail2Ban', bg: '#fffbe6', color: '#e4ae3a' }
+    ]
+  },
 ];
 
 // techStackIcons 扩展为 46 个（8*4+14）SVG图标
@@ -114,55 +183,39 @@ const techStackIcons = [
   {name: 'Github', icon: GithubDark, small: true},
   {name: 'Postman', icon: Postman, small: true}
 ];
+
 const ossProjects = [
   {
-    name: 'Teek1',
-    previewImgs: [
-      'https://picsum.photos/200/300',
-      'https://picsum.photos/200/300',
-      'https://picsum.photos/200/300',
-      'https://picsum.photos/200/300',
-    ],
-    desc: '🎉 Teek 是一个轻量、简洁高效、灵活配置、易于扩展的 VitePress 主题 ✨，是在默认主题的基础上进行拓展，支持 VitePress 的所有功能、配置，完全可以零成本迁移过来。',
-    tech: [
-      '前端：React、Ant Design、Redux',
-      '后端：Node.js、Express、MongoDB',
-    ],
-    github: 'https://github.com/example/thrivex',
+    name: 'Vue3 Admin Template',
+    desc: '基于Vue3、TypeScript和Element Plus的后台管理系统模板，包含完整的权限管理、数据可视化等功能，助力快速搭建企业级应用。',
+    tag: { name: 'Vue3', bg: '#eaf6ff', color: '#33a474' },
+    projectsimg: 'https://fastly.picsum.photos/id/482/1080/1920.jpg?hmac=evlV0d4x4sWVknpu4iSg4ULVDAcmNBSnf6htH9RsNxw',
+    Star: 1200,
+    Fork: 456,
+    View: 3200,
+    github: 'https://github.com/example/vue3-admin'
   },
   {
-    name: 'Teek2',
-    previewImgs: [
-      'https://picsum.photos/200/300',
-      'https://picsum.photos/200/300',
-      'https://picsum.photos/200/300',
-      'https://picsum.photos/200/300',
-    ],
-    desc: '🎉 Teek 是一个轻量、简洁高效、灵活配置、易于扩展的 VitePress 主题 ✨，是在默认主题的基础上进行拓展，支持 VitePress 的所有功能、配置，完全可以零成本迁移过来。',
-    tech: [
-      '前端：Vue3、Vite、Element Plus',
-      '后端：Koa、MySQL',
-    ],
-    github: 'https://github.com/example/thrive',
+    name: 'React Component Library',
+    desc: '一个基于React的高质量UI组件库，包含常用组件如按钮、表单、弹窗等，支持自定义主题，遵循现代设计原则，提高开发效率。',
+    tag: { name: 'React', bg: '#e3edfa', color: '#3976c6' },
+    projectsimg: 'https://picsum.photos/id/180/600/400',
+    Star: 850,
+    Fork: 230,
+    View: 2100,
+    github: 'https://github.com/example/react-lib'
   },
   {
-    name: 'Teek3',
-    previewImgs: [
-      'https://picsum.photos/200/300',
-      'https://picsum.photos/200/300',
-      'https://picsum.photos/200/300',
-      'https://picsum.photos/200/300',
-    ],
-    desc: '🎉 Teek 是一个轻量、简洁高效、灵活配置、易于扩展的 VitePress 主题 ✨，是在默认主题的基础上进行拓展，支持 VitePress 的所有功能、配置，完全可以零成本迁移过来。',
-    tech: [
-      '前端：微信小程序、Vant、Echarts、Autojs',
-      '框架：Vue2、Element UI、vue-element-admin',
-      '后端：Nodejs、Eggjs、Socket.io、MySQL',
-    ],
-    github: 'https://github.com/example/campus',
-  },
+    name: 'Web Performance Tool',
+    desc: '一个用于分析和优化网页性能的工具，提供详细的性能报告和优化建议，帮助开发者快速定位并解决性能瓶颈问题。',
+    tag: { name: 'JavaScript', bg: '#fffbe6', color: '#e4ae3a' },
+    projectsimg: 'https://picsum.photos/id/1/600/400',
+    Star: 560,
+    Fork: 180,
+    View: 1500,
+    github: 'https://github.com/example/web-perf'
+  }
 ];
-const tab = ref(0);
 
 /**
  * 自定义观察器函数
@@ -189,7 +242,7 @@ const useIntersectionObserver = (targetRef, threshold = 0.2) => {
     }
   });
 
-  onUnmounted(() => {
+  onBeforeUnmount(() => {
     // 组件卸载时清理监听
     observer?.disconnect();
   });
@@ -218,7 +271,9 @@ const isMobile = ref(false);
 const checkMobile = () => {
   isMobile.value = window.innerWidth <= 600;
 };
+
 onMounted(() => {
+  handleResize(); // 初始调用一次
   // about-hero 和 skills-section 动画
   setTimeout(() => {
     aboutHeroVisible.value = true;
@@ -226,9 +281,12 @@ onMounted(() => {
   }, 60); // 延迟触发动画，避免与页面渲染冲突
   checkMobile();
   window.addEventListener('resize', checkMobile);
+  window.addEventListener('resize', handleResize);
 });
+
 onBeforeUnmount(() => {
   window.removeEventListener('resize', checkMobile);
+  window.removeEventListener('resize', handleResize);
 });
 // 移动端情况下过滤掉空的图标（占位符图标）
 const mobileTechStackIcons = computed(() => techStackIcons.filter(i => i.icon));
@@ -241,8 +299,6 @@ const techStackRows = computed(() => {
   }
   return rows;
 });
-
-console.log("techStackRows", techStackRows)
 </script>
 
 <template>
@@ -285,6 +341,10 @@ console.log("techStackRows", techStackRows)
             <div class="skill-bar-fill" :style="{ width: skill.percent + '%', background: skill.color }">
             </div>
           </div>
+          <div class="skill-bar-tags" v-if="skill.tags">
+            <span class="skill-tag" v-for="tag in skill.tags" :key="tag.name"
+                  :style="{ background: tag.bg, color: tag.color }">{{ tag.name }}</span>
+          </div>
         </div>
       </div>
       <div class="skills-right" :class="{ visible: skillsRightVisible }" ref="skillsRightRef">
@@ -293,7 +353,7 @@ console.log("techStackRows", techStackRows)
         <div class="tech-stack-grid pc" v-if="!isMobile">
           <div v-for="(row, rowIdx) in techStackRows" :key="rowIdx" class="tech-stack-row">
             <div v-for="(item, idx) in row" :key="idx" class="tech-stack-item" :class="{ empty: !item.icon }">
-              <TkIcon v-if="item.icon" :icon="item.icon" icon-type="svg" :size="item.small ? '25px' : '44px'" :title="item.name"/>
+              <TkIcon v-if="item.icon" :icon="item.icon" icon-type="svg" :size="item.small ? '32px' : iconSize" :title="item.name"/>
             </div>
           </div>
         </div>
@@ -308,36 +368,36 @@ console.log("techStackRows", techStackRows)
   </div>
 
   <!-- 开源项目区块 -->
-  <div class="open-source-section" :class="{ visible: ossSectionVisible }" ref="ossSectionRef">
+  <div class="oss-section" :class="{ visible: ossSectionVisible }" ref="ossSectionRef">
     <h2 class="oss-title">开源项目</h2>
-    <div class="oss-tabs">
-      <button v-for="(item, idx) in ossProjects" :key="item.name" :class="{ active: tab === idx }"
-              @click="tab = idx">{{ item.name }}
-      </button>
-    </div>
-    <div class="oss-card">
-      <div class="oss-left">
-        <h3 class="oss-preview-title">作品预览：</h3>
-        <div class="oss-preview-grid">
-          <img v-for="(img, i) in ossProjects[tab].previewImgs" :key="i" :src="img" class="oss-preview-img"/>
+    <div class="oss-list">
+      <div class="oss-card visible" v-for="(item, idx) in ossProjects" :key="item.name">
+        <div class="oss-img-wrap">
+          <img :src="item.projectsimg" class="oss-img" />
         </div>
-      </div>
-      <div class="oss-right">
-        <h3 class="oss-detail-title">作品详情：</h3>
-        <div class="oss-detail-desc">{{ ossProjects[tab].desc }}</div>
-        <div class="oss-tech-title">技术栈：</div>
-        <div class="oss-tech-list">
-          <div v-for="(t, i) in ossProjects[tab].tech" :key="i">{{ t }}</div>
-        </div>
-        <div class="oss-github-title">GitHub：</div>
-        <div class="oss-github-link">
-          <a :href="ossProjects[tab].github" target="_blank">{{ ossProjects[tab].github }}</a>
+        <div class="oss-content">
+          <div class="oss-name">{{ item.name }}</div>
+          <div class="oss-desc">{{ item.desc }}</div>
+          <div class="oss-data">
+            <span>
+              <TkIcon :icon="Star" icon-type="svg" size="16px" />
+              {{ item.Star }}
+            </span>
+            <span>
+              <TkIcon :icon="Fork" icon-type="svg" size="16px" />
+              {{ item.Fork }}
+            </span>
+            <span>
+              <TkIcon :icon="View" icon-type="svg" size="16px" />
+              {{ item.View }}
+            </span>
+          </div>
+          <a class="oss-btn" :href="item.github" target="_blank">查看项目</a>
         </div>
       </div>
     </div>
   </div>
 </template>
-
 
 <style scoped>
 .about-hero {
@@ -412,12 +472,10 @@ console.log("techStackRows", techStackRows)
 }
 
 .about-btn.default {
-  background: #fff;
   color: var(--vp-c-brand-1);
 }
 
 .about-btn.default:hover {
-  background: #f5f8ff;
   color: var(--vp-c-brand-1);
   box-shadow: 0 6px 24px rgba(59, 108, 255, 0.18);
   transform: translateY(-3px) scale(1.04);
@@ -474,11 +532,6 @@ console.log("techStackRows", techStackRows)
   transform: scale(1);
 }
 
-/* .skills-section:hover {
-    box-shadow: 0 12px 48px var(--vp-c-brand-1);
-    transform: translateY(-8px) scale(1.01);
-} */
-
 .skills-title {
   text-align: center;
   font-size: 2.3rem;
@@ -526,7 +579,7 @@ console.log("techStackRows", techStackRows)
 }
 
 .skill-bar-item {
-  margin-bottom: 2rem;
+  margin-bottom: 0.8rem;
 }
 
 .skill-bar-label {
@@ -549,6 +602,23 @@ console.log("techStackRows", techStackRows)
   border-radius: 8px;
   transition: width 0.7s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 6px;
+}
+
+.skill-bar-tags {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.skill-tag {
+  border-radius: 16px;
+  padding: 0.05rem 0.5rem;
+  font-size: 0.98rem;
+  font-weight: 500;
+  display: inline-block;
+  letter-spacing: 0.5px;
+  transition: background 0.18s;
 }
 
 .about-socials {
@@ -599,15 +669,8 @@ console.log("techStackRows", techStackRows)
 }
 
 .tech-stack-item:hover {
-  transform: translateY(-3px) scale(1.03);
-}
-
-.small{
-  height: fit-content;
-}
-
-.tech-stack-img {
-  object-fit: contain;
+  /* 移动端hover图标缩放 */
+  transform: translateY(-3px) scale(1.2);
 }
 
 /* 技术栈svg图标样式 */
@@ -631,16 +694,16 @@ console.log("techStackRows", techStackRows)
   pointer-events: none;
 }
 
-.open-source-section {
-  margin: 40px auto;
+.oss-section {
   max-width: 1200px;
-  padding: 0 16px;
+  margin: 0 auto;
+  padding: 32px 0;
   opacity: 0;
   transform: scale(0.8);
-  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: box-shadow 0.22s, transform 0.18s, border 0.18s, opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.open-source-section.visible {
+.oss-section.visible {
   opacity: 1;
   transform: scale(1);
 }
@@ -649,117 +712,112 @@ console.log("techStackRows", techStackRows)
   text-align: center;
   font-size: 2rem;
   font-weight: bold;
-  margin-bottom: 18px;
+  margin-bottom: 32px;
 }
 
-.oss-tabs {
+.oss-list {
   display: flex;
+  gap: 32px;
   justify-content: center;
-  align-items: center;
-  gap: 0;
-  margin-bottom: 18px;
-  background: var(--oss-tabs-bg);
-  border-radius: 12px;
-  padding: 6px;
-  width: fit-content;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.oss-tabs button {
-  background: transparent;
-  color: var(--oss-tabs-button-text);
-  border-radius: 8px;
-  padding: 7px 28px 7px 28px;
-  font-size: 1.08rem;
-  cursor: pointer;
-  font-weight: 500;
-  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
-  margin: 0;
-  outline: none;
-  box-shadow: none;
-  position: relative;
-  z-index: 1;
-}
-
-.oss-tabs button.active {
-  background: var(--oss-tabs-active-bg);
-  color: var(--oss-tabs-active-text);
-  font-weight: bold;
-  z-index: 2;
-}
-
-.oss-tabs button:not(:last-child) {
-  margin-right: 0;
+  flex-wrap: wrap;
 }
 
 .oss-card {
-  border-radius: 24px;
+  width: 356px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
   display: flex;
-  padding: 32px 36px;
-  gap: 36px;
-  align-items: flex-start;
+  flex-direction: column;
+  transition: box-shadow 0.2s, transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  opacity: 0;
+  transform: scale(0.8);
 }
 
-.oss-left {
-  flex: 1.1;
+.oss-card.visible {
+  opacity: 1;
+  transform: scale(1);
 }
 
-.oss-preview-title {
-  font-size: 1.1rem;
+.oss-card:hover {
+  box-shadow: 0 8px 32px var(--vp-c-brand-1);
+  transform: scale(1.04);
+}
+
+.oss-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 185px;
+  overflow: hidden;
+}
+
+.oss-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 500ms;
+}
+
+.oss-img:hover {
+  transform: scale(1.08);
+}
+
+.oss-tag {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  padding: 0.1rem 1rem;
+  border-radius: 14px;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.oss-content {
+  padding: 18px 20px 16px 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.oss-name {
+  color: #444;
+  font-size: 1.18rem;
   font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.oss-desc {
+  font-size: 0.98rem;
+  color: #444;
+  margin-bottom: 18px;
+  min-height: 56px;
+}
+
+.oss-data {
+  display: flex;
+  gap: 18px;
+  color: #888;
+  font-size: 0.98rem;
   margin-bottom: 12px;
 }
 
-.oss-preview-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6px;
-  border-radius: 14px;
-  width: 320px;
+.oss-data i {
+  margin-right: 4px;
 }
 
-.oss-preview-img {
-  width: 100%;
-  height: 90px;
-  object-fit: cover;
-  border-radius: 8px;
-  border: 1px solid #e5eaf3;
-  background: #fff;
+.oss-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--vp-c-brand-1);
 }
 
-.oss-right {
-  flex: 2;
-  min-width: 320px;
-}
-
-.oss-detail-title {
-  font-weight: bold;
-  margin-bottom: 6px;
-}
-
-.oss-detail-desc {
-  margin-bottom: 16px;
-}
-
-.oss-tech-title {
-  font-weight: bold;
-  margin-bottom: 6px;
-}
-
-.oss-tech-list {
-  margin-bottom: 16px;
-  font-size: 1rem;
-}
-
-.oss-github-title {
-  font-weight: bold;
-  margin-bottom: 6px;
-}
-
-.oss-github-link {
-  color: #1976d2;
-  word-break: break-all;
+.oss-btn:hover {
+  color: #539dfd;
 }
 
 @media (max-width: 900px) {
@@ -868,8 +926,8 @@ console.log("techStackRows", techStackRows)
   }
 
   .oss-card {
+    width: 390px;
     flex-direction: column;
-    padding: 18px 6px;
     gap: 18px;
   }
 
@@ -927,14 +985,6 @@ console.log("techStackRows", techStackRows)
   }
 }
 
-/* 针对PC端生效，移动端不生效 */
-@media (min-width: 769px) {
-  .skills-section:hover {
-    box-shadow: 0 12px 48px var(--vp-c-brand-1);
-    transform: translateY(-8px) scale(1.01);
-  }
-}
-
 @media (max-width: 600px) {
   .tech-stack-grid {
     gap: 0.6rem;
@@ -954,10 +1004,7 @@ console.log("techStackRows", techStackRows)
   .skills-right {
     min-width: 0;
   }
-}
 
-/* 移动端自动换行方案：用 grid 布局 */
-@media (max-width: 600px) {
   .tech-stack-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -974,16 +1021,14 @@ console.log("techStackRows", techStackRows)
     min-height: 0;
     justify-content: center;
   }
-}
 
-@media (max-width: 600px) {
   .tech-stack-grid.pc {
     display: none;
   }
 
   .tech-stack-grid.mobile {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 0.6rem;
     margin-top: 0.6rem;
     justify-items: center;
@@ -1001,12 +1046,18 @@ console.log("techStackRows", techStackRows)
 
   .tech-stack-svg,
   .tech-stack-item :deep(svg) {
-    width: 32px;
-    height: 32px;
+    /* 移动端技术栈图标大小 */
+    width: 42px;
+    height: 42px;
   }
 
   .tech-stack-item.empty {
     display: none;
   }
+}
+
+/* 移动端自动换行方案：用 grid 布局 */
+@media (max-width: 600px) {
+
 }
 </style>
