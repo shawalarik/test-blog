@@ -1,160 +1,174 @@
-<!-- banner下方天气组件 -->
+<!-- 欢迎卡片组件 -->
 <script setup lang="ts">
-import { onMounted, ref,h } from 'vue';
-import { TkMessage } from "vitepress-theme-teek";
+import {onMounted, ref} from 'vue';
+import {TkMessage} from "vitepress-theme-teek";
 
-// 天气数据
-const weatherData = ref({
-  city: '',
-  temperature: '',
-  type: '',
-  date: '',
-  week: ''
-});
+// ------------------ 天气 Hook ------------------
+function useWeather() {
+  const weatherData = ref({
+    city: '',
+    temperature: '',
+    type: '',
+    date: '',
+    week: ''
+  });
+  const error = ref(false);
+  const loading = ref(false);
 
-// 获取天气信息的函数
-const error = ref(false);
-const loading = ref(false); // 控制加载中状态
-// 获取天气信息的函数
-const getWeatherInfo = async () => {
-  loading.value = true; // 开始加载
-  try {
-    const response = await fetch('https://api.vvhan.com/api/weather');
-    const data = await response.json();
-    if (data.success) {
-      weatherData.value = {
-        city: data.city,
-        temperature: `${data.data.low}-${data.data.high}`,
-        type: data.data.type,
-        date: data.data.date,
-        week: data.data.week
-      };
-    } else {
+  const getWeatherInfo = async () => {
+    loading.value = true;
+    error.value = false;
+    try {
+      const response = await fetch('https://api.vvhan.com/api/weather');
+      const data = await response.json();
+      if (data.success) {
+        weatherData.value = {
+          city: data.city,
+          temperature: `${data.data.low}-${data.data.high}`,
+          type: data.data.type,
+          date: data.data.date,
+          week: data.data.week
+        };
+      } else {
+        error.value = true;
+        TkMessage.error('获取天气信息失败，请检查网络或者关闭代理');
+      }
+    } catch (err) {
       error.value = true;
-      TkMessage.error('获取天气信息失败，请检查网络或者关闭代理'); // 显示错误提示
+      TkMessage.error('获取天气信息失败，请检查网络或者关闭代理');
+    } finally {
+      loading.value = false;
     }
-  } catch (err) {
-    console.error('获取天气信息失败', err);
-  } finally {
-    loading.value = false; // 加载结束
-  }
-};
+  };
 
-// 储存舔狗日记内容
-const diaryContent = ref('');
+  return {weatherData, error, loading, getWeatherInfo};
+}
 
-// 获取舔狗日记的函数
-const getDiary = async () => {
-  try {
-    const response = await fetch('https://api.vvhan.com/api/text/dog?type=json');
-    const data = await response.json();
+// ------------------ 舔狗日记 Hook ------------------
+function useDiary() {
+  const diaryContent = ref('');
+  const diaryError = ref(false);
 
-    if (data.success) {
-      diaryContent.value = data.data.content; // 获取内容
-    } else {
-      console.error('获取舔狗日记失败:', data.message);
+  const getDiary = async () => {
+    diaryError.value = false;
+    try {
+      const response = await fetch('https://api.vvhan.com/api/text/dog?type=json');
+      const data = await response.json();
+      if (data.success) {
+        diaryContent.value = data.data.content;
+      } else {
+        diaryError.value = true;
+      }
+    } catch (fetchError) {
+      diaryError.value = true;
     }
-  } catch (fetchError) {
-    console.error('获取舔狗日记失败', fetchError);
-  }
-};
+  };
 
-const init = async () => {
-  await getWeatherInfo(); // 获取天气信息
-  //await getDiary(); // 获取舔狗信息
-};
+  return {diaryContent, diaryError, getDiary};
+}
 
-// 新增：控制显示选项
-const isConfigOpen = ref(true);
-const showFPS = ref(true);
-const showWeather = ref(true);
-const showDate = ref(true);
-const showTemperature = ref(true);
-const showWeek = ref(true);
-const showgetDiary = ref(false);
+// ------------------ FPS Hook ------------------
+function useFPS(enabled = true) {
+  const fps = ref(0);
+  let frameCount = 0;
+  let lastTime = 0;
 
-const fps = ref(0);        // 存储当前FPS值的响应式变量
-let frameCount = 0;        // 帧计数器
-let lastTime = 0;          // 上次计算FPS的时间戳
+  const updateFPS = (time: number) => {
+    if (!enabled) return;
 
-const updateFPS = (time: DOMHighResTimeStamp) => {
-  // 首次调用时初始化时间戳
-  if (lastTime === 0) {
-    lastTime = time;
+    if (lastTime === 0) {
+      lastTime = time;
+      requestAnimationFrame(updateFPS);
+      return;
+    }
+
+    const delta = time - lastTime;
+    frameCount += 1;
+
+    if (delta > 1000) {
+      fps.value = Math.round((frameCount * 1000) / delta);
+      frameCount = 0;
+      lastTime = time;
+    }
+
     requestAnimationFrame(updateFPS);
-    return;
+  };
+
+  if (enabled) {
+    requestAnimationFrame(updateFPS);
   }
 
-  const delta = time - lastTime;  // 计算距离上次计算的时间差（毫秒）
-  frameCount += 1;                // 每帧递增计数器
+  return {fps};
+}
 
-  // 当时间差超过1000毫秒（即1秒）时计算FPS
-  if (delta > 1000) {
-    fps.value = Math.round((frameCount * 1000) / delta);  // 计算FPS并取整
-    frameCount = 0;           // 重置计数器
-    lastTime = time;          // 更新时间戳
-  }
+// ------------------ 使用 Hook ------------------
+const {weatherData, error, loading, getWeatherInfo} = useWeather();
+const {diaryContent, diaryError, getDiary} = useDiary();
+const showFPS = ref(true);
+const {fps} = useFPS(showFPS.value);
 
-  // 请求下一帧渲染，形成循环
-  requestAnimationFrame(updateFPS);
+// ------------------ 初始化 ------------------
+const init = async () => {
+  await getWeatherInfo();
+  await getDiary();
 };
 
 onMounted(async () => {
-  // 组件挂载后启动FPS计算，计算提前，避免被请求阻塞
-  requestAnimationFrame(updateFPS);
   await init();
 });
 </script>
 
 <template>
-  <!-- 修改：欢迎卡片，包含天气信息和新功能 -->
-  <div class="info-card animate__animated animate__fadeIn welcome-card mobile-card" shadow="hover" v-if="isConfigOpen">
+  <div class="info-card animate__animated animate__fadeIn welcome-card mobile-card" shadow="hover">
     <div class="welcome-content">
-      <!-- 新增：FPS显示 -->
       <div v-if="showFPS" class="fps-display">FPS: {{ fps }}</div>
 
-      <!-- 欢迎信息 -->
-      <h2 v-if="!error && weatherData.city" class="greeting">
-        欢迎来自
-        <span class="highlight">{{ weatherData.city }}</span>
-        的小伙伴！🎉🎉🎉
-      </h2>
-      <div class="info-container">
-        <div v-if="showTemperature" class="info-item">
-          <i class="el-icon-sunny"></i>
-          <span v-if="!error && weatherData.city">
+      <template v-if="!error">
+        <h2 v-if="weatherData.city" class="greeting">
+          欢迎来自
+          <span class="highlight">{{ weatherData.city }}</span>
+          的小伙伴！🎉🎉🎉
+        </h2>
+
+        <div class="info-container">
+          <div class="info-item">
+            <i class="el-icon-sunny"></i>
+            <span v-if="weatherData.city">
               今日温度：
               <span class="highlight">{{ weatherData.temperature }}</span>
             </span>
-        </div>
-        <div v-if="showWeather" class="info-item">
-          <i class="el-icon-cloudy"></i>
-          <span v-if="!error && weatherData.city">
+          </div>
+          <div class="info-item">
+            <i class="el-icon-cloudy"></i>
+            <span v-if="weatherData.city">
               天气：
               <span class="highlight">{{ weatherData.type }}</span>
             </span>
-        </div>
-        <div v-if="showDate" class="info-item">
-          <i class="el-icon-date"></i>
-          <span v-if="!error && weatherData.city">
+          </div>
+          <div class="info-item">
+            <i class="el-icon-date"></i>
+            <span v-if="weatherData.city">
               日期：
               <span class="highlight">{{ weatherData.date }}</span>
             </span>
-        </div>
-        <div v-if="showWeek" class="info-item">
-          <i class="el-icon-calendar"></i>
-          <span v-if="!error && weatherData.city">
+          </div>
+          <div class="info-item">
+            <i class="el-icon-calendar"></i>
+            <span v-if="weatherData.city">
               星期：
               <span class="highlight">{{ weatherData.week }}</span>
             </span>
+          </div>
         </div>
-        <div v-if="showgetDiary" class="info-item">
-          <i class="el-icon-calendar"></i>
-          <h1 class="vertical-title">舔狗日记：</h1>
-          <p v-if="diaryContent" class="diary-content">{{ diaryContent }}</p>
-          <p v-else class="diary-content">加载中...</p>
+      </template>
+
+      <template v-if="!diaryError">
+        <div class="diary-container">
+          <p class="diary-content">
+            <span v-if="diaryContent">舔狗语录：{{ diaryContent }}</span>
+          </p>
         </div>
-      </div>
+      </template>
     </div>
   </div>
 </template>
@@ -226,30 +240,9 @@ onMounted(async () => {
     font-weight: bold;
   }
 
-  .config-switch {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-  }
-
-  .config-panel {
-    display: flex;
-    flex-wrap: wrap; /* 自动换行 */
-    justify-content: center; /* 水平居中对齐 */
-    align-items: center; /* 垂直居中对齐 */
-  }
-
-  .config-panel .el-checkbox {
-    width: 15%; /* 每个元素占据 15% 宽度，PC保持1列 */
-    margin: 5px; /* 元素间距 */
-    display: flex;
-    justify-content: center; /* 文字与复选框居中 */
-    align-items: center;
-  }
-
   @media (max-width: 768px) {
     .config-panel .el-checkbox {
-      width: 40%; /* 如果屏幕更小，双列显示 */
+      width: 40%;
     }
   }
 }
