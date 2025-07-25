@@ -246,4 +246,9 @@ onMounted(async () => {
     }
   }
 }
+
+.diary-container{
+  max-width: 70vw;
+  margin: 0 auto;
+}
 </style>
