@@ -1,6 +1,6 @@
 <!-- 欢迎卡片组件 -->
 <script setup lang="ts">
-import {onMounted, ref} from 'vue';
+import {onBeforeUnmount, onMounted, ref} from 'vue';
 import {TkMessage} from "vitepress-theme-teek";
 
 // ------------------ 天气 Hook ------------------
@@ -72,13 +72,14 @@ function useFPS(enabled = true) {
   const fps = ref(0);
   let frameCount = 0;
   let lastTime = 0;
+  let animationFrameId = null;
 
   const updateFPS = (time: number) => {
     if (!enabled) return;
 
     if (lastTime === 0) {
       lastTime = time;
-      requestAnimationFrame(updateFPS);
+      animationFrameId = requestAnimationFrame(updateFPS);
       return;
     }
 
@@ -91,21 +92,37 @@ function useFPS(enabled = true) {
       lastTime = time;
     }
 
-    requestAnimationFrame(updateFPS);
+    animationFrameId = requestAnimationFrame(updateFPS);
   };
 
-  if (enabled) {
-    requestAnimationFrame(updateFPS);
-  }
+  const startFPS = () => {
+    if (enabled && typeof requestAnimationFrame !== 'undefined') {
+      lastTime = 0;
+      frameCount = 0;
+      animationFrameId = requestAnimationFrame(updateFPS);
+    }
+  };
 
-  return {fps};
+  const stopFPS = () => {
+    if (animationFrameId) {
+      cancelAnimationFrame(animationFrameId);
+      animationFrameId = null;
+    }
+  };
+
+  onBeforeUnmount(() => {
+    // 组件销毁前停止 FPS 监控
+    stopFPS();
+  });
+
+  return { fps, startFPS, stopFPS };
 }
 
 // ------------------ 使用 Hook ------------------
 const {weatherData, error, loading, getWeatherInfo} = useWeather();
 const {diaryContent, diaryError, getDiary} = useDiary();
 const showFPS = ref(true);
-const {fps} = useFPS(showFPS.value);
+const {fps, startFPS, stopFPS} = useFPS(showFPS.value);
 
 // ------------------ 初始化 ------------------
 const init = async () => {
@@ -114,6 +131,8 @@ const init = async () => {
 };
 
 onMounted(async () => {
+  // 在组件挂载后启动 FPS 监控
+  startFPS();
   await init();
 });
 </script>
