@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="my-gallery" ><!-- itemscope itemtype="http://schema.org/ImageGallery" -->
+    <div class="my-gallery" style="display: none;"> <!-- 隐藏内部缩略图容器 -->
       <figure
           class="gallery-thumbnail"
           v-show="index === 0 || !singleThumbnail"
@@ -10,6 +10,7 @@
           v-for="(item, index) in items"
           :key="index"
       >
+        <!-- 内部 a 标签和 img 标签仅用于 PhotoSwipe 解析数据，不显示 -->
         <a
             v-show="nbThumbnailsDisplayed === -1 || index < nbThumbnailsDisplayed"
             :href="item.src"
@@ -17,11 +18,7 @@
             :data-size="`${item.w}x${item.h}`"
             :title="item.title"
         >
-          <img
-              :src="item.thumbnail"
-              :alt="item.alt"
-              itemprop="thumbnail"
-          />
+          <img :src="item.thumbnail" :alt="item.alt" itemprop="thumbnail" />
         </a>
       </figure>
     </div>
@@ -326,6 +323,25 @@ onMounted(() => {
   initPhotoSwipeFromDOM('.my-gallery');
 });
 </script>
+
+<style>
+/* 全局样式（无 scoped），确保 .pswp 默认隐藏 */
+.pswp {
+  display: none !important; /* 强制默认隐藏 */
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 9999 !important; /* 确保覆盖页面其他内容 */
+  background: rgba(0, 0, 0, 0.9) !important;
+}
+
+/* 打开时显示 */
+.pswp--open {
+  display: block !important;
+}
+</style>
 
 <style scoped>
 .pswp__top-bar {
