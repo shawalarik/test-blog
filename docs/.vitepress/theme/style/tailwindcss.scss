@@ -1,0 +1,13 @@
+/* .vitepress/theme/style.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 自定义样式 */
+@layer utilities {
+    /*是一个性能优化属性，告诉浏览器：如果元素不在视口中，则跳过渲染其内容，当元素进入视口时，再正常渲染*/
+    .content-auto {
+        content-visibility: auto;
+    }
+}
+

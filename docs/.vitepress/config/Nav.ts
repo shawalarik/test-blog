@@ -63,13 +63,17 @@ export const Nav: DefaultTheme.NavItem[] = [
                 link: '/Vite',
             },
             {
+                text: getNav("VitePress相关", "/svg/vitepress-logo-mini.svg"),
+                link: '/VitePress-Intro',
+            },
+            {
                 text: getNav("Teek主题", "/svg/teek-logo-mini.svg"),
                 link: '/Teek',
             },
-            {
+            /*{
                 text: getNav("Vdoing主题", "https://vuepress.vuejs.org/images/hero.png"),
                 link: '/Vdoing',
-            },
+            },*/
             {
                 text: getNav("SSL证书", "/svg/allinssl.svg"),
                 link: '/ssl',
