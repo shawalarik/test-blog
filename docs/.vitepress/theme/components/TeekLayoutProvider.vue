@@ -21,8 +21,7 @@ import RouteSwitchingLoading from "./RouteSwitchingLoading.vue"; // 过渡动画
 import {useRibbon} from "../composables/useRibbon";
 import {useRuntime} from "../composables/useRuntime";
 import {myConsoleInfo} from "../utils/WwUtils";
-import UnderConstruction from "./UnderConstruction.vue";
-import CozeAi from "./CozeAi.vue"; // 在建工程组件
+import NotFound from "./NotFound.vue";
 
 /**
 site: Ref<SiteData<T>> 站点级元数据
@@ -117,7 +116,7 @@ onMounted(()=>{
     </template>
 
     <template #not-found>
-      <UnderConstruction/>
+      <NotFound/>
     </template>
 
     <template #teek-notice-content>

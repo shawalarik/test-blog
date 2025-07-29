@@ -2,11 +2,9 @@ import {isEmpty} from "../theme/utils/WwUtils";
 import type {DefaultTheme} from "vitepress/theme";
 
 function getNav(text: string, svgPath: string) {
-    let imgTemplate
+    let imgTemplate = ''
     if (!isEmpty(svgPath)) {
         imgTemplate = `<img src="${svgPath}" alt="" style="width: 16px; height: 16px;">`
-    } else {
-        imgTemplate = ''
     }
 
     return `
@@ -26,33 +24,17 @@ export const Nav: DefaultTheme.NavItem[] = [
         text: '🏓生活',
         items: [
             {
-                // 分组标题1
-                text: '娱乐',
-                items: [
-                    {
-                        text: getNav("相册", "/svg/相册.svg"),
-                        link: '/photo',
-                    },
-                    {
-                        text: getNav("电影", "/svg/电影.svg"),
-                        link: '/movie',
-                    },
-                    {
-                        text: getNav("音乐", "/svg/音乐.svg"),
-                        link: '/music',
-                    },
-                ],
+                text: getNav("相册", "/svg/相册.svg"),
+                link: '/photo',
             },
             {
-                // 分组标题2
-                text: '小屋',
-                items: [
-                    {
-                        text: getNav("时间管理", "/svg/时间管理.svg"),
-                        link: '/time-plan',
-                    }
-                ]
-            }
+                text: getNav("电影", "/svg/电影.svg"),
+                link: '/movie',
+            },
+            {
+                text: getNav("音乐", "/svg/音乐.svg"),
+                link: '/music',
+            },
         ]
     },
     {
@@ -160,16 +142,6 @@ export const Nav: DefaultTheme.NavItem[] = [
             {
                 text: getNav("站点监控", '/svg/站点监控.svg'),
                 link: 'https://status.dl-web.top/status/monitor',
-            },
-            {
-                // 分组标题2
-                text: '其他',
-                items: [
-                    {
-                        text: getNav("VitePress相关", "/svg/时间管理.svg"),
-                        link: '/VitePress',
-                    }
-                ]
             }
         ],
     },
