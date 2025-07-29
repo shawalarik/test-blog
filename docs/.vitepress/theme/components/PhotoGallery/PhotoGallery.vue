@@ -1,5 +1,5 @@
 <template>
-  <div class="photo-gallery max-w-7xl mx-auto px-4 py-8">
+  <div class="photo-gallery max-w-[90rem] mx-auto px-4 py-8">
     <!-- 标题 -->
     <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-center mb-8 text-gray-800">我的相册</h2>
 
@@ -25,43 +25,42 @@
       <div
           v-for="(photo, index) in filteredPhotos"
           :key="photo.id || index"
-          class="content-auto group cursor-pointer overflow-hidden rounded-lg shadow-md transition-all duration-300 hover:shadow-xl"
-          @click="openModal(index)"
+          class="group cursor-pointer overflow-hidden rounded-lg shadow-md transition-all duration-300 hover:shadow-xl"
+          @click="openSwiper(index)"
       >
-        <div class="relative aspect-[5/3] overflow-hidden">
-          <img
-              :src="photo.thumbnail || photo.src"
-              :alt="photo.alt"
-              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              loading="lazy"
-          />
-          <!-- 悬停信息 -->
-          <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
-            <h3 class="text-white font-medium text-lg">{{ photo.title || '未命名' }}</h3>
-            <p class="text-white/80 text-sm mt-1">{{ photo.description || '' }}</p>
-          </div>
+      <div class="relative aspect-[5/3] overflow-hidden">
+        <img
+            :src="photo.thumbnail || photo.src"
+            :alt="photo.alt"
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            loading="lazy"
+        />
+        <!-- 悬停信息 -->
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+          <h3 class="text-white font-medium text-lg">{{ photo.title || '未命名' }}</h3>
+          <p class="text-white/80 text-sm mt-1">{{ photo.description || '' }}</p>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- 使用模态框组件 -->
-    <GalleryModal
-        :visible="showModal"
-        :images="filteredPhotos"
-        :currentIndex="currentIndex"
-        @close="showModal = false"
-        @update:currentIndex="currentIndex = $event"
-    />
+  <!-- 使用 Swiper 组件 -->
+  <MySwiper
+      v-if="showSwiper"
+      :photos="filteredPhotos"
+      :initial-index="currentIndex"
+      @close="closeSwiper"
+  />
   </div>
 </template>
 
 <script setup>
-import {ref, computed} from 'vue';
-import GalleryModal from './GalleryModal.vue'; // 导入模态框组件
-import {photos} from './PhotoGalleryData';
+import { ref, computed } from 'vue';
+import MySwiper from './MySwiper.vue'; // 导入 Swiper 组件
+import { photos } from './PhotoGalleryData';
 
 // 响应式状态
-const showModal = ref(false); // 控制模态框显示
+const showSwiper = ref(false); // 控制 Swiper 显示
 const currentIndex = ref(0); // 当前显示的图片索引
 const activeCategory = ref('全部'); // 当前选中的分类
 
@@ -79,43 +78,27 @@ const categories = computed(() => {
   return ['全部', ...Array.from(categorySet)];
 });
 
-// 方法：打开模态框
-const openModal = (index) => {
+// 打开轮播的方法（点击图片时调用）
+const openSwiper = (index) => {
+  showSwiper.value = true; // 显示轮播
   currentIndex.value = index;
-  showModal.value = true;
-  // 打开时禁止页面滚动
-  document.body.style.overflow = 'hidden';
+  document.body.style.overflow = 'hidden'; // 禁止页面滚动
 };
 
-// 方法：关闭模态框
-const closeModal = () => {
-  showModal.value = false;
-  // 关闭时恢复页面滚动
-  document.body.style.overflow = '';
-};
-
-// 方法：切换到上一张
-const prevImage = () => {
-  if (currentIndex.value > 0) {
-    currentIndex.value--;
-  }
-};
-
-// 方法：切换到下一张
-const nextImage = () => {
-  if (currentIndex.value < filteredPhotos.value.length - 1) {
-    currentIndex.value++;
-  }
+// 方法：关闭 Swiper
+const closeSwiper = () => {
+  showSwiper.value = false; // 隐藏轮播
+  document.body.style.overflow = ''; // 恢复页面滚动（之前为了禁止滚动设置了 overflow: hidden）
 };
 </script>
 
 <style scoped>
-/* 仅补充少量自定义样式，大部分依赖 Tailwind 工具类 */
+/*!* 仅补充少量自定义样式，大部分依赖 Tailwind 工具类 *!
 .photo-gallery {
-  /* 可添加组件整体样式 */
+  !* 可添加组件整体样式 *!
 }
 
-/* 适配小屏幕的按钮位置调整 */
+!* 适配小屏幕的按钮位置调整 *!
 @media (max-width: 640px) {
   .text-4xl {
     font-size: 2rem;
@@ -128,5 +111,5 @@ const nextImage = () => {
   button[class*="right-[-2rem]"] {
     right: 0.5rem;
   }
-}
+}*/
 </style>

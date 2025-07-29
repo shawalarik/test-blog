@@ -157,6 +157,14 @@ export default defineConfig({
       copyright: 'Copyright © 2025-present Evan You'*/
     }
   },
+  vue: {
+    template: {
+      compilerOptions: {
+        // 将 swiper- 开头的标签视为自定义元素（Web Components）
+        isCustomElement: (tag) => tag.startsWith('swiper-')
+      }
+    }
+  },
   vite: {
     define: {
       __VUE_PROD_DEVTOOLS__: isDev,

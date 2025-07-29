@@ -36,7 +36,7 @@
     "natural-sort": "^1.0.0",
     "nprogress": "^0.2.0",
     "oh-my-live2d": "^0.19.3",
-    "photoswipe": "^4.1.2",
+    "swiper": "^11.2.10",
     "vitepress-plugin-auto-frontmatter": "^1.0.10",
     "vitepress-plugin-group-icons": "^1.6.0"
   }
