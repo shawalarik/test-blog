@@ -63,13 +63,8 @@ const handleConfigSwitch = (config, style) => {
   watchRuntimeAndRibbon(frontmatter.value.layout, style);
 };
 
-// 处理菜单操作
-const handleAction = (action) => {
-  console.log('执行操作:', action)
-}
-
 onMounted(()=>{
-  myConsoleInfo(true, import.meta.env.TITLE, import.meta.env.BLOG_URL,'欢迎来访')
+  myConsoleInfo(true, import.meta.env.TITLE, import.meta.env.BLOG_URL, '欢迎来访')
 })
 
 </script>
@@ -77,15 +72,10 @@ onMounted(()=>{
 <template>
   <Teek.Layout>
     <template #layout-top>
-      <!-- 需要进行ssr优化 -->
-      <ClientOnly>
-        <!-- 添加全局右键菜单 -->
-        <ContextMenu/>
-      </ClientOnly>
-
+      <!-- 全局右键菜单组件 -->
+      <ContextMenu/>
       <!-- 路由切换遮罩动画组件 -->
       <RouteSwitchingLoading/>
-
       <!-- 全局问候组件 -->
       <GlobalGreet />
       <!-- 看板娘组件 -->
@@ -96,7 +86,6 @@ onMounted(()=>{
       <TitleChange />
       <!-- 音乐播放器组件 -->
       <APlayer />
-
       <!-- 扣子ai组件 -->
 <!--      <CozeAi/>-->
     </template>

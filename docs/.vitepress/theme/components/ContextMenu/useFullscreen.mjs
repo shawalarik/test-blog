@@ -1,9 +1,15 @@
+// useFullscreen.mjs
 import { ref, onMounted, onUnmounted } from 'vue';
 
-export function useFullscreen() {
-    const isFullScreen = ref(false);
+// 检查是否在客户端环境
+const isClient = typeof window !== 'undefined' && typeof document !== 'undefined';
 
-    const fullscreenApi = {
+// 定义 fullscreenApi 结构，但不立即访问 document
+let fullscreenApi = null;
+
+// 只在客户端初始化 fullscreenApi
+if (isClient) {
+    fullscreenApi = {
         request: document.documentElement.requestFullscreen ||
             document.documentElement.webkitRequestFullscreen ||
             document.documentElement.mozRequestFullScreen ||
@@ -12,7 +18,7 @@ export function useFullscreen() {
         exit: (document.exitFullscreen ||
             document.webkitExitFullscreen ||
             document.mozCancelFullScreen ||
-            document.msExitFullscreen)?.bind(document), // 关键：绑定 document 上下文,
+            document.msExitFullscreen)?.bind(document),
 
         element: () => document.fullscreenElement ||
             document.webkitFullscreenElement ||
@@ -27,11 +33,25 @@ export function useFullscreen() {
             return 'fullscreenchange';
         }
     };
+}
 
-    const checkFullscreen = () => !!fullscreenApi.element();
-    const updateStatus = () => isFullScreen.value = checkFullscreen();
+export function useFullscreen() {
+    // 服务端渲染时提供默认值
+    const isFullScreen = ref(false);
+
+    const checkFullscreen = () => {
+        if (!isClient || !fullscreenApi) return false;
+        return !!fullscreenApi.element();
+    };
+
+    const updateStatus = () => {
+        if (!isClient || !fullscreenApi) return;
+        isFullScreen.value = checkFullscreen();
+    };
 
     const toggle = () => {
+        if (!isClient || !fullscreenApi) return;
+
         if (checkFullscreen()) {
             fullscreenApi.exit?.();
         } else {
@@ -45,11 +65,8 @@ export function useFullscreen() {
     };
 
     const handleKeydown = (e) => {
-        //console.log("handleKeydown", e.key)
         if (e.key === 'F11' || e.keyCode === 122) {
-            console.log("isFullScreen.value", isFullScreen.value)
             requestAnimationFrame(updateStatus);
-            console.log("isFullScreen.value", isFullScreen.value)
         }
     };
 
@@ -60,6 +77,7 @@ export function useFullscreen() {
         document.addEventListener(changeEvent, handleFullscreenChange);
         window.addEventListener('keydown', handleKeydown);
 
+        // 保存事件引用以便清理
         window._fullscreenEvent = { changeEvent, handleFullscreenChange, handleKeydown };
     });
 
@@ -71,12 +89,17 @@ export function useFullscreen() {
         if (handleKeydown) {
             window.removeEventListener('keydown', handleKeydown);
         }
-        delete window._fullscreenEvent;
+
+        // 清理全局变量
+        if (window._fullscreenEvent) {
+            delete window._fullscreenEvent;
+        }
     });
 
+    // 返回 API，服务端也能正常工作
     return {
-        isFullScreen,
-        toggleFullscreen: toggle,
-        updateFullscreenStatus: updateStatus
+        isFullScreen: isFullScreen,
+        toggleFullscreen: isClient ? toggle : () => {}, // 服务端提供空函数
+        updateFullscreenStatus: isClient ? updateStatus : () => {} // 服务端提供空函数
     };
 }

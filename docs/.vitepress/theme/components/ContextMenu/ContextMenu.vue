@@ -250,6 +250,9 @@ const y = ref(0);
 // 缓存DOM元素引用
 let contextMenu: HTMLElement | null = null;
 
+// 检查是否在客户端环境
+const isClient = typeof window !== 'undefined' || typeof document !== 'undefined';
+
 // 子菜单可见状态
 const submenuVisible = reactive({
   'archive': false,
@@ -258,6 +261,7 @@ const submenuVisible = reactive({
 
 // 主题颜色
 const isDarkMode = computed(() => {
+  if (!isClient) return null;
   return document.documentElement.classList.contains('dark');
 });
 
@@ -267,6 +271,7 @@ const themeColor = computed(() => {
 
 
 function getContextMenu() {
+  if (!isClient) return null;
   if (!contextMenu) {
     contextMenu = document.querySelector('.context-menu') as HTMLElement;
   }
@@ -275,6 +280,8 @@ function getContextMenu() {
 
 // 显示菜单
 const showMenu = (event: MouseEvent) => {
+  if (!isClient) return null;
+
   event.preventDefault();
 
   const element = getContextMenu();
@@ -327,6 +334,8 @@ const showMenu = (event: MouseEvent) => {
 
 // 调整子菜单位置，防止溢出屏幕
 const adjustSubmenuPositions= () => {
+  if (!isClient) return null;
+
   const submenus = document.querySelectorAll('.submenu') as NodeListOf<HTMLElement>;
 
   // 使用 requestAnimationFrame 批量处理样式更新
@@ -391,6 +400,8 @@ const hideMenu = () => {
 
 // 导航到指定路由
 const navigateTo = (path: string) => {
+  if (!isClient) return null;
+
   const targetPath = withBase(path);
   const currentPath = route.path;
 
@@ -407,6 +418,7 @@ const navigateTo = (path: string) => {
 
 // 刷新页面
 const handleRefresh = () => {
+  if (!isClient) return null;
   window.location.reload();
   hideMenu();
 };
@@ -432,7 +444,6 @@ onMounted(() => {
   document.addEventListener('click', handleClick);
   document.addEventListener('keydown', handleKeydown);
   window.addEventListener('resize', handleResize);
-
 });
 
 onUnmounted(() => {
