@@ -1,5 +1,5 @@
 <template>
-  <div class="swiper-container fixed inset-0 z-50 bg-black/95 flex items-center justify-center">
+  <div class="swiper-container fixed inset-0 bg-black/95 flex items-center justify-center">
     <!-- 关闭按钮 -->
     <button
         class="absolute top-6 right-6 text-white text-4xl hover:text-gray-300 transition-colors z-10"
@@ -12,10 +12,10 @@
     <swiper-container
         init="false"
         :initial-slide="initialIndex"
-        class="w-full max-w-7xl px-4"
+        class="w-full max-w-7xl"
         @swiperslidechange="onSlideChange"
     >
-      <swiper-slide v-for="(photo, index) in photos" :key="photo.id || index">
+      <swiper-slide v-for="(photo, index) in photos" :key="photo.id || index" class="max-h-[90vh] max-w-full object-contain">
         <div class="flex justify-center items-center h-[90vh]">
           <img
               :src="photo.src"
@@ -87,27 +87,53 @@ onMounted(()=>{
   const swiperEl = document.querySelector("swiper-container");
 
   const swiperParams = {
-    slidesPerView: 1,
-    spaceBetween: 10,
-    centeredSlides: true, // 居中幻灯片
-    loop: false,
-    navigation: true, // 是否显示左右箭头
+    centeredSlides: true, // 使活动幻灯片居中
+    slidesPerView: 1,     // 一次只显示一张幻灯片
+    spaceBetween: 10,     // 幻灯片之间的间距为10px
+    loop: false,          // 不启用循环播放
+    navigation: true,    // 显示左右箭头导航
+    keyboard: {
+      enabled: true      // 启用键盘方向键控制
+    },
     //watchSlidesProgress: false, // 下方显示查看进度
     /*autoplay: {
       delay: 1000,
       disableOnInteraction: false
     },*/
-    effect: 'cube', // 淡入淡出效果 'slide', 'fade', 'cube', 'coverflow', 'flip', 'creative' or 'cards'
+    effect: 'cube', // 用立方体效果切换幻灯片， 'slide', 'fade', 'cube', 'coverflow', 'flip', 'creative' or 'cards'
     fadeEffect: {
-      crossFade: true
+      crossFade: true    // 淡入淡出效果的交叉淡入
     },
-    keyboard: {
-      enabled: true // 启用键盘翻页
+    parallax: true,               // 启用视差效果
+    lazy: {
+      enabled: true,               // 启用图片懒加载
+      loadPrevNext: true,          // 加载当前幻灯片的前后一张
     },
+    observer: true,               // 监听Swiper元素变化
+    observeParents: true,         // 监听父元素变化
+    virtualTranslate: true,       // 虚拟位移提高性能
     injectStyles:[ // 注入样式
-    ],
-/*    pagination: { // 分页
+        `
+        @media (max-width: 700px) {
+        .swiper-button-prev {
+          display: none;
+        }
 
+        .swiper-button-next {
+          display: none;
+        }
+      }
+        `
+    ],
+/*    breakpoints: {
+      640: {
+        slidesPerView: 1,          // 屏幕宽度<=640px时显示1张幻灯片
+        spaceBetween: 10,
+      },
+      1024: {
+        slidesPerView: 3,          // 屏幕宽度>=1024px时显示3张幻灯片
+        spaceBetween: 20,
+      },
     },*/
     on:{
       init(el){
@@ -129,12 +155,6 @@ onMounted(()=>{
   Object.assign(swiperEl, swiperParams)
   // 初始化 Swiper
   swiperEl.initialize()
-
-/*  swiperEl.addEventListener('swiperslidechange', (event) => {
-    console.log("swiperslidechange", event)
-    console.log("swiper.activeIndex", swiperEl.swiper.activeIndex)
-    currentSlideIndex.value = swiperEl.swiper.activeIndex;
-  })*/
 })
 
 
@@ -142,6 +162,6 @@ onMounted(()=>{
 
 <style scoped>
 .swiper-container {
-  /* 全局样式 */
+  z-index: 100;
 }
 </style>

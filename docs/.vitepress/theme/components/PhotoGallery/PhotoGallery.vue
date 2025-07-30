@@ -1,7 +1,10 @@
 <template>
   <div class="photo-gallery max-w-[90rem] mx-auto px-4 py-8">
     <!-- 标题 -->
-    <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-center mb-8 text-gray-800">我的相册</h2>
+    <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-center mb-8
+  text-gray-800 dark:text-white"> <!-- 暗色模式下文字变白 -->
+      我的相册
+    </h2>
 
     <!-- 分类筛选 -->
     <div class="flex flex-wrap justify-center gap-3 mb-8">
@@ -9,11 +12,11 @@
           v-for="category in categories"
           :key="category"
           :class="[
-          'px-4 py-2 rounded-full transition-all duration-300 text-sm',
-          activeCategory === category
-            ? 'bg-blue-500 text-white shadow-md'
-            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-        ]"
+      'px-4 py-2 rounded-full transition-all duration-300 text-sm',
+      activeCategory === category
+        ? 'bg-blue-500 text-white shadow-md'
+        : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700'
+    ]"
           @click="activeCategory = category"
       >
         {{ category }}
@@ -28,36 +31,37 @@
           class="group cursor-pointer overflow-hidden rounded-lg shadow-md transition-all duration-300 hover:shadow-xl"
           @click="openSwiper(index)"
       >
-      <div class="relative aspect-[5/3] overflow-hidden">
-        <img
-            :src="photo.thumbnail || photo.src"
-            :alt="photo.alt"
-            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-            loading="lazy"
-        />
-        <!-- 悬停信息 -->
-        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
-          <h3 class="text-white font-medium text-lg">{{ photo.title || '未命名' }}</h3>
-          <p class="text-white/80 text-sm mt-1">{{ photo.description || '' }}</p>
+        <div class="relative aspect-[5/3] overflow-hidden">
+          <img
+              :src="photo.thumbnail || photo.src"
+              :alt="photo.alt"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              loading="lazy"
+          />
+          <!-- 悬停信息 -->
+          <div
+              class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+            <h3 class="text-white font-medium text-lg">{{ photo.title || '未命名' }}</h3>
+            <p class="text-white/80 text-sm mt-1">{{ photo.description || '' }}</p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- 使用 Swiper 组件 -->
-  <MySwiper
-      v-if="showSwiper"
-      :photos="filteredPhotos"
-      :initial-index="currentIndex"
-      @close="closeSwiper"
-  />
+    <!-- 使用 Swiper 组件 -->
+    <MySwiper
+        v-if="showSwiper"
+        :photos="filteredPhotos"
+        :initial-index="currentIndex"
+        @close="closeSwiper"
+    />
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import {ref, computed} from 'vue';
 import MySwiper from './MySwiper.vue'; // 导入 Swiper 组件
-import { photos } from './PhotoGalleryData';
+import {photos} from './PhotoGalleryData';
 
 // 响应式状态
 const showSwiper = ref(false); // 控制 Swiper 显示
