@@ -22,6 +22,7 @@ import {useRibbon} from "../composables/useRibbon";
 import {useRuntime} from "../composables/useRuntime";
 import {myConsoleInfo} from "../utils/WwUtils";
 import NotFound from "./NotFound.vue";
+import BackTop from "./BackTop.vue";
 
 /**
 site: Ref<SiteData<T>> 站点级元数据
@@ -92,6 +93,10 @@ onMounted(()=>{
 
     <template #nav-bar-content-after>
       <Clock/>
+    </template>
+
+    <template #teek-right-bottom-before>
+      <BackTop/>
     </template>
 
     <!-- 布局切换组件 -->

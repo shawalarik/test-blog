@@ -23,7 +23,6 @@ import "./style/index.scss"; // 引入全局样式
 import "virtual:group-icons.css"; //代码组图标样式
 
 import TeekLayoutProvider from "./components/TeekLayoutProvider.vue"; // 布局组件
-import Confetti from "./components/Confetti.vue"; //导入五彩纸屑组件
 import sendVisitStatistics from './utils/statistics.mjs' // 信息统计
 import NProgress from 'nprogress' // 路由进度条
 import 'nprogress/nprogress.css' // 路由进度条样式

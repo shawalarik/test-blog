@@ -9,6 +9,7 @@ import { SocialLinks } from "./config/SocialLinks.js";
 import {generateEnvDefines} from "./theme/utils/WwUtils.js"; // 工具类
 import config from "./env.mjs"; // 全局变量
 import { plugings } from "./plugins.mjs"; // 插件
+import rewritesJson from "./rewrites.json"; // 插件
 
 // 是否为开发模式
 const isDev = process.argv.includes('dev');
@@ -56,6 +57,7 @@ const teekConfig = defineTeekConfig({
     copiedDone: (TkMessage) => TkMessage.success("代码已复制 🎉"),
   },
   vitePlugins: {
+    permalink: true, // 是否开启永久链接
     sidebarOption: {
       initItems: false, //这条命令注释后，才会让文档和目录的样式保持一致
       collapsed: true, //打开侧边栏自动收缩功能
@@ -99,6 +101,7 @@ export default defineConfig({
       detailsLabel: '详细信息'
     }
   },
+  //rewrites: rewritesJson.rewrites, // 路由重写
   themeConfig: {
     logo: '/avatar/avatar.svg',
     darkModeSwitchLabel: "主题",
@@ -150,6 +153,7 @@ export default defineConfig({
     },*/
     // https://vitepress.dev/reference/default-theme-config
     nav: Nav,
+    //sidebar: sidebar,
     socialLinks: SocialLinks, // 社交链接配置
     //sidebar: [],
     footer: {

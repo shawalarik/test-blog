@@ -8,11 +8,17 @@ import AutoFrontmatter from "vitepress-plugin-auto-frontmatter";
 import {Wallpaper, BlogCover} from "./config/Wallpaper.js";
 import {cleanDistMusic} from "../../plugs/clean-dist.mjs";
 import inspect from 'vite-plugin-inspect'
+import SidebarPermalinkPlugin from "vitepress-plugin-sidebar-permalink";
 
 // 检查是否有 --inspect 参数
 const isEnableInspectPluging = false
 
 export const plugings =  [
+/*    SidebarPermalinkPlugin({
+        rewritesPath: "docs/.vitepress/rewrites.json",//文件生成位置
+        dir: "docs/",
+        ignoreDirs: []  //忽略目录
+    }),*/
     groupIconVitePlugin(), //代码组图标
 
     AutoFrontmatter({
