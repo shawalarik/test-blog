@@ -9,11 +9,13 @@ import {Wallpaper, BlogCover} from "./config/Wallpaper.js";
 import {cleanDistMusic} from "../../plugs/clean-dist.mjs";
 import inspect from 'vite-plugin-inspect'
 import SidebarPermalinkPlugin from "vitepress-plugin-sidebar-permalink";
+import {VitePluginVitePressRewrites} from "../../plugs/vitepress-plugin-test/index";
 
 // 检查是否有 --inspect 参数
 const isEnableInspectPluging = false
 
-export const plugings =  [
+export const plugins =  [
+    VitePluginVitePressRewrites(),
 /*    SidebarPermalinkPlugin({
         rewritesPath: "docs/.vitepress/rewrites.json",//文件生成位置
         dir: "docs/",

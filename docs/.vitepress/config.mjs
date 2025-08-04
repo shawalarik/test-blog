@@ -8,7 +8,7 @@ import { Comment } from "./config/Comment"; // 导入Nav模块
 import { SocialLinks } from "./config/SocialLinks.js";
 import {generateEnvDefines} from "./theme/utils/WwUtils.js"; // 工具类
 import config from "./env.mjs"; // 全局变量
-import { plugings } from "./plugins.mjs"; // 插件
+import { plugins } from "./plugins.mjs"; // 插件
 import rewritesJson from "./rewrites.json"; // 插件
 
 // 是否为开发模式
@@ -57,7 +57,7 @@ const teekConfig = defineTeekConfig({
     copiedDone: (TkMessage) => TkMessage.success("代码已复制 🎉"),
   },
   vitePlugins: {
-    permalink: true, // 是否开启永久链接
+    permalink: false, // 是否开启永久链接
     sidebarOption: {
       initItems: false, //这条命令注释后，才会让文档和目录的样式保持一致
       collapsed: true, //打开侧边栏自动收缩功能
@@ -101,7 +101,14 @@ export default defineConfig({
       detailsLabel: '详细信息'
     }
   },
-  //rewrites: rewritesJson.rewrites, // 路由重写
+  rewrites: {
+    map: {
+      '01.指南/vite/00.Webpack 与 Vite 的关系.md': 'Vite/vite-Webpack.md',
+    },
+    inv: {
+      'Vite/vite-Webpack.md': '01.指南/vite/00.Webpack 与 Vite 的关系.md',
+    }
+  }, // 路由重写
   themeConfig: {
     logo: '/avatar/avatar.svg',
     darkModeSwitchLabel: "主题",
@@ -251,6 +258,6 @@ export default defineConfig({
       // 标记 APlayer 为外部依赖，不在 SSR 中处理
       external: []
     },
-    plugins: plugings
+    plugins: plugins
   }
 })
