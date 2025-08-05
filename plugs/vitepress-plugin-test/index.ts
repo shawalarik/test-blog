@@ -16,7 +16,7 @@ export function VitePluginVitePressRewrites(options: PermalinkOption = {}): Plug
     return {
         name: "vite-plugin-vitepress-rewrites",
         // 在 Vite 配置解析完成后执行
-        config(config: any) {
+        configResolved(config: any) {
             console.log("configResolved 执行")
 
             // 防止 vitepress build 时重复执行
@@ -36,6 +36,8 @@ export function VitePluginVitePressRewrites(options: PermalinkOption = {}): Plug
 
             // 初始化用户原有配置（确保结构完整）
             const originalRewrites = vitepressConfig.userConfig.rewrites || { map: {}, inv: {} };
+
+            vitepressConfig.userConfig.rewrites = dynamicRewrites.map
 
             // 合并用户手动配置的 rewrites 和动态生成的 rewrites
             vitepressConfig.rewrites = {
@@ -90,8 +92,8 @@ export function VitePluginVitePressRewrites(options: PermalinkOption = {}): Plug
         }
 
         console.log("============== 路由重写规则生成完毕 ==============")
-        console.log("pathToPermalink", pathToPermalink)
-        console.log("permalinkToPath", permalinkToPath)
+        //console.log("pathToPermalink", pathToPermalink)
+        //console.log("permalinkToPath", permalinkToPath)
 
         return {
             map: {

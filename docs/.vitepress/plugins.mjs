@@ -15,7 +15,7 @@ import {VitePluginVitePressRewrites} from "../../plugs/vitepress-plugin-test/ind
 const isEnableInspectPluging = false
 
 export const plugins =  [
-    VitePluginVitePressRewrites(),
+    //VitePluginVitePressRewrites(),
 /*    SidebarPermalinkPlugin({
         rewritesPath: "docs/.vitepress/rewrites.json",//文件生成位置
         dir: "docs/",

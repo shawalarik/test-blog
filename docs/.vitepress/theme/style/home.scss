@@ -65,3 +65,8 @@
 .tk-banner-content{
   padding-top: 0;
 }
+
+/* 去掉fixed会频发触发重排影响性能 */
+.tk-banner-bg-image.full, .tk-banner-bg-image.part{
+  background: var(--tk-banner-img-bg);
+}
