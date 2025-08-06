@@ -123,7 +123,7 @@ onMounted(()=>{
       <BannerImgArrow v-if="frontmatter.layout === 'home'" />
     </template>
 
-    <template #teek-home-banner-content-before>
+    <template #banner-title>
       <TextGlitch :text=title />
     </template>
 
