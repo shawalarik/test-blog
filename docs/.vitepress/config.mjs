@@ -10,7 +10,8 @@ import {generateEnvDefines} from "./theme/utils/WwUtils.js"; // 工具类
 import config from "./env.mjs"; // 全局变量
 import { plugins } from "./plugins.mjs"; // 插件
 import rewritesJson from "./rewrites.json";
-import {VitePluginVitePressRewrites} from "../../plugs/vitepress-plugin-test/index.js"; // 插件
+import {VitePluginVitePressRewrites} from "../../plugs/vitepress-plugin-test/index.js";
+import {genSidebar} from "vitepress-plugin-sidebar-permalink/sidebar"; // 插件
 
 // 是否为开发模式
 const isDev = process.argv.includes('dev');
@@ -59,6 +60,7 @@ const teekConfig = defineTeekConfig({
   },
   vitePlugins: {
     permalink: true, // 是否开启永久链接
+    sidebar: true, // 是否开启侧边栏
     sidebarOption: {
       initItems: false, //这条命令注释后，才会让文档和目录的样式保持一致
       collapsed: true, //打开侧边栏自动收缩功能
@@ -71,6 +73,11 @@ const teekConfig = defineTeekConfig({
     },
   },
 });
+
+/*// 生成侧边栏，先引入插件生成rewritesJson再写下列代码
+const sidebarOptions = { collapsed: true }
+const sidebar = genSidebar(navLinks, 'docs/articles', rewritesJson.rewrites, sidebarOptions) //'docs/articles'为md文件所在目录
+console.log("sidebar", sidebar)*/
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({

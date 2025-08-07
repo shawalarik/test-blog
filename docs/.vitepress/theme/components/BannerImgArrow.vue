@@ -44,11 +44,17 @@ $namespace: banner;
   bottom: 120px;
   left: 50%;
   transform: translateX(-50%);
+  opacity: 0.6;
+  transition: opacity 0.3s;
 
   &__icon {
     cursor: pointer;
     animation: bounce-in 3s 2s infinite;
   }
+}
+
+.#{$namespace}-arrow:hover {
+  opacity: 1;
 }
 
 @keyframes bounce-in {
