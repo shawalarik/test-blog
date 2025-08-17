@@ -11,7 +11,11 @@ import config from "./env.mjs"; // 全局变量
 import { plugins } from "./plugins.mjs"; // 插件
 import rewritesJson from "./rewrites.json";
 import {VitePluginVitePressRewrites} from "../../plugs/vitepress-plugin-test/index.js";
-import {genSidebar} from "vitepress-plugin-sidebar-permalink/sidebar"; // 插件
+import {genSidebar} from "vitepress-plugin-sidebar-permalink/sidebar";
+import {FriendLink} from "./config/FriendLink";
+import {SocialDate} from "./config/SocialDate";
+import {FooterGroup} from "./config/FooterGroup";
+import {FooterInfo} from "./config/FooterInfo"; // 插件
 
 // 是否为开发模式
 const isDev = process.argv.includes('dev');
@@ -37,6 +41,39 @@ const env = loadEnv(
 console.log('env:', env)*/
 
 const teekConfig = defineTeekConfig({
+  teekHome: true,
+  // 原vitePress风格主页，文档类
+  vpHome: false,
+  backTopDone: TkMessage => TkMessage.success("返回顶部"),
+  windowTransition: true,
+  /*windowTransition: {
+    // 是否开启首页文章列表过渡效果
+    post: true,
+    // 是否开启首页卡片列表过渡效果
+    card: true,
+    // 是否开启归档页过渡效果
+    archives: true,
+    // 是否开启 Feature 过渡效果
+    feature: true
+  },*/
+  author: {
+    name: "威威", // 作者名称
+    //link: "https://github.com/Kele-Bingtang",
+  },
+  blogger: {
+    // 博主信息，显示在首页侧边栏
+    avatar: "/avatar/avatar.webp",
+    shape: "circle", // 头像风格：square 为方形头像，circle 为圆形头像，circle-rotate 可支持鼠标悬停旋转
+    name: "威威",
+    slogan: "人心中的成见是一座大山~",
+    circleBgImg: "/avatar/avatarBg.webp", // 头像圆形背景图
+  },
+  toComment: {
+    enabled: true, // 是否启动滚动到评论区功能
+    done: TkMessage => TkMessage.success("已抵达评论区"), // 滚动到评论区后的回调
+  },
+  // 如果想重写侧边栏展开/折叠触发器组件，则使用 teek-sidebar-trigger 插槽。
+  sidebarTrigger: true,
   comment: Comment,
   notice: {
     enabled: true, // 是否启用公告功能
@@ -52,10 +89,128 @@ const teekConfig = defineTeekConfig({
   riskLink: {
     enabled: true,
   },
+  category: {
+    path: "/categories",
+  },
+  tag: {
+    path: "/tags",
+  },
+  archive: {
+    path: "/archives",
+  },
+  page: {
+    pageSize: 15,
+  },
+  post: {
+    postStyle: "list", // card 和 list 文章列表风格
+    excerptPosition: "top", // 文章摘要位置
+    showMore: true, // 是否显示更多按钮
+    moreLabel: "阅读全文 >", // 更多按钮文字
+    coverImgMode: "default", // 文章封面图模式
+    showCapture: false, // 是否在摘要位置显示文章部分文字，当为 true 且不使用 frontmatter.describe 和 <!-- more --> 时，会自动截取前 300 个字符作为摘要
+  },
+  topArticle: {
+    enabled: true, // 是否启用精选文章卡片
+    limit: 5, // 一页显示的数量
+    autoPage: false, // 是否自动翻页
+    pageSpeed: 4000, // 翻页间隔时间，单位：毫秒。autoPage 为 true 时生效
+    dateFormat: "yyyy-MM-dd hh:mm:ss", // 精选文章的日期格式
+  },
+  friendLink: FriendLink, // 友链配置
+  social: SocialDate, //社交信息配置
+  footerGroup: FooterGroup,
+  footerInfo: FooterInfo,
+  // 站点信息卡片配置
+  docAnalysis: {
+    enabled: true,
+    createTime: "2021-10-19",
+    wordCount: true,
+    readingTime: true,
+    statistics: {
+      provider: "", // busuanzi
+      siteView: true,
+      pageView: true,
+    },
+    overrideInfo: [
+      {
+        key: "lastActiveTime",
+        label: "活跃时间",
+        value: (originValue, currentValue) => {
+          return currentValue
+        },
+        show: true,
+      },
+      {
+        // 本站被访问了
+        key: 'viewCount', show: false,
+        value: (originValue, currentValue) => {
+          //console.log("viewCount", originValue, currentValue)
+          return currentValue
+        },
+      },
+      {
+        // 本站曾来访过
+        key: 'visitCount', show: false,
+        value: (originValue, currentValue) => {
+          //console.log("visitCount", originValue, currentValue)
+          return currentValue
+        },
+      },
+      {key: 'viewCountUnit', show: true}, // 次
+      {key: 'visitCountUnit', show: true}, // 人
+      // 运行时间
+      {
+        key: 'runtime', show: true,
+        value: (originValue, currentValue) => {
+          // 示例使用
+          const previousDateStr = '2025-06-15';
+          // 解析输入的日期字符串（格式：YYYY-MM-DD）
+          const [year, month, day] = previousDateStr.split('-').map(Number);
+          // 创建日期对象（注意：月份从 0 开始，所以要减 1）
+          const previousDate = new Date(year, month - 1, day);
+          // 获取今天的日期（忽略时间部分）
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+          // 设置 previousDate 的时间为 00:00:00，确保只比较日期
+          previousDate.setHours(0, 0, 0, 0);
+          // 计算时间差（毫秒）
+          const timeDiff = today.getTime() - previousDate.getTime();
+          // 转换为天数（1 天 = 24 * 60 * 60 * 1000 毫秒）
+          const daysDifference = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+          return daysDifference + "天";
+        }
+      },
+
+    ],
+    //appendInfo: [{ key: "index", label: "序号", value: "天客 99" }],
+  },
+  articleShare: {
+    enabled: true, // 是否开启文章链接分享功能
+    text: "分享此页面", // 分享按钮文本
+    copiedText: "链接已复制", // 复制成功文本
+    query: false, // 是否包含查询参数
+    hash: false, // 是否包含哈希值
+  },
+  articleBottomTip: () => {
+    return {
+      type: "tip",
+      // title: "声明",
+      text: `<p>作者：威威</p>
+             <p>版权：此文章版权归 威威 所有，如有转载，请注明出处!</p>
+             <p style="margin-bottom: 0">链接：可点击右上角分享此页面复制文章链接</p>
+            `,
+    };
+  },
+  articleUpdate: {
+    enabled: true, // 是否启用文章最近更新栏
+    limit: 3, // 文章最近更新栏显示数量
+  },
   // 新版代码块配置
   codeBlock: {
     disabled: false, // 是否禁用新版代码块
     collapseHeight: 700, // 超出高度后自动折叠，设置 true 则默认折叠，false 则默认不折叠
+    overlay: true, // 代码块底部是否显示展开/折叠遮罩层
+    overlayHeight: 400, // 当出现遮罩层时，指定代码块显示高度，当 overlay 为 true 时生效
     copiedDone: (TkMessage) => TkMessage.success("代码已复制 🎉"),
   },
   vitePlugins: {

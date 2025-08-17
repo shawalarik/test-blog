@@ -95,12 +95,13 @@ onMounted(()=>{
       <Clock/>
     </template>
 
-    <template #teek-right-bottom-before>
+    <!-- 回到顶部组件插槽 -->
+    <template #teek-back-top>
       <BackTop/>
     </template>
 
     <!-- 布局切换组件 -->
-    <template #teek-theme-enhance-top>
+    <template #teek-theme-enhance-bottom>
       <ConfigSwitch v-model="currentStyle" @switch="handleConfigSwitch" />
     </template>
 
@@ -123,7 +124,7 @@ onMounted(()=>{
       <BannerImgArrow v-if="frontmatter.layout === 'home'" />
     </template>
 
-    <template #banner-title>
+    <template #teek-home-banner-name>
       <TextGlitch :text=title />
     </template>
 
@@ -135,6 +136,15 @@ onMounted(()=>{
     <template #teek-archives-top-before>
       <ContributeChart />
     </template>
+
+<!--    <template #teek-sidebar-trigger="{ active, icon, toggleSideBar }">
+      &lt;!&ndash; 如下是 Teek 当前实现的部分内容，这些 class 会激活 Teek 的内置样式 &ndash;&gt;
+      <div :class="{ active: active }" class="tk-sidebar-trigger is-active" @click="toggleSideBar">
+        <div class="tk-right-bottom-button__button">
+          <TkIcon :icon="icon" />
+        </div>
+      </div>
+    </template>-->
   </Teek.Layout>
 </template>
 

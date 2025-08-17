@@ -10,22 +10,6 @@ import {SocialLinks} from "./SocialLinks";
 
 // 博客基础配置
 const teekBlogCommonConfig: TeekConfig = {
-    teekHome: true,
-    // 原vitePress风格主页，文档类
-    vpHome: false,
-    backTopDone: TkMessage => TkMessage.success("返回顶部"),
-    author: {
-        name: "威威", // 作者名称
-        //link: "https://github.com/Kele-Bingtang",
-    },
-    blogger: {
-        // 博主信息，显示在首页侧边栏
-        avatar: "/avatar/avatar.webp",
-        shape: "circle", // 头像风格：square 为方形头像，circle 为圆形头像，circle-rotate 可支持鼠标悬停旋转
-        name: "威威",
-        slogan: "人心中的成见是一座大山~",
-        circleBgImg: "/avatar/avatarBg.webp", // 头像圆形背景图
-    },
     banner: {
         enabled: true,
         //features: [], //用于在首页展示一些功能介绍,也就是首页三个功能块
@@ -51,129 +35,13 @@ const teekBlogCommonConfig: TeekConfig = {
         switchShuffle: false, // 描述信息是否随机切换，为 false 时按顺序切换。descStyle 为 switch 时生效
         typesShuffle: false, // 描述信息是否随机打字，为 false 时按顺序打字，descStyle 为 types 时生效
     },
-    category: {
-        path: "/categories",
-    },
-    tag: {
-        path: "/tags",
-    },
-    archive: {
-        path: "/archives",
-    },
     // 首页顶部按 F11 开启壁纸模式
     wallpaper: {
         enabled: true, // 是否启用壁纸模式
         hideBanner: false, // 开启壁纸模式后，全屏是否显示打字机文案，
         hideMask: true, // 开启壁纸模式后，是否隐藏 Banner 或 bodyBgImage 的遮罩层，则确保 banner.mask 和 bodyBgImage.mask 为 true 才生效
         hideWaves: false, // 开启壁纸模式后，是否隐藏 Banner 波浪组件，仅 banner.bgStyle = 'fullImg' 生效
-    },
-    page: {
-        pageSize: 15,
-    },
-    post: {
-        postStyle: "list", // card 和 list 文章列表风格
-        excerptPosition: "top", // 文章摘要位置
-        showMore: true, // 是否显示更多按钮
-        moreLabel: "阅读全文 >", // 更多按钮文字
-        coverImgMode: "default", // 文章封面图模式
-        showCapture: false, // 是否在摘要位置显示文章部分文字，当为 true 且不使用 frontmatter.describe 和 <!-- more --> 时，会自动截取前 300 个字符作为摘要
-    },
-    topArticle: {
-        enabled: true, // 是否启用精选文章卡片
-        limit: 5, // 一页显示的数量
-        autoPage: false, // 是否自动翻页
-        pageSpeed: 4000, // 翻页间隔时间，单位：毫秒。autoPage 为 true 时生效
-        dateFormat: "yyyy-MM-dd hh:mm:ss", // 精选文章的日期格式
-    },
-    friendLink: FriendLink, // 友链配置
-    social: SocialDate, //社交信息配置
-    footerGroup: FooterGroup,
-    footerInfo: FooterInfo,
-    // 站点信息卡片配置
-    docAnalysis: {
-        enabled: true,
-        createTime: "2021-10-19",
-        wordCount: true,
-        readingTime: true,
-        statistics: {
-            provider: "", // busuanzi
-            siteView: true,
-            pageView: true,
-        },
-        overrideInfo: [
-            {
-                key: "lastActiveTime",
-                label: "活跃时间",
-                value: (originValue, currentValue) => {
-                    return currentValue
-                },
-                show: true,
-            },
-            {
-                // 本站被访问了
-                key: 'viewCount', show: false,
-                value: (originValue, currentValue) => {
-                    //console.log("viewCount", originValue, currentValue)
-                    return currentValue
-                },
-            },
-            {
-                // 本站曾来访过
-                key: 'visitCount', show: false,
-                value: (originValue, currentValue) => {
-                    //console.log("visitCount", originValue, currentValue)
-                    return currentValue
-                },
-            },
-            {key: 'viewCountUnit', show: true}, // 次
-            {key: 'visitCountUnit', show: true}, // 人
-            // 运行时间
-            {
-                key: 'runtime', show: true,
-                value: (originValue, currentValue) => {
-                    // 示例使用
-                    const previousDateStr = '2025-06-15';
-                    // 解析输入的日期字符串（格式：YYYY-MM-DD）
-                    const [year, month, day] = previousDateStr.split('-').map(Number);
-                    // 创建日期对象（注意：月份从 0 开始，所以要减 1）
-                    const previousDate = new Date(year, month - 1, day);
-                    // 获取今天的日期（忽略时间部分）
-                    const today = new Date();
-                    today.setHours(0, 0, 0, 0);
-                    // 设置 previousDate 的时间为 00:00:00，确保只比较日期
-                    previousDate.setHours(0, 0, 0, 0);
-                    // 计算时间差（毫秒）
-                    const timeDiff = today.getTime() - previousDate.getTime();
-                    // 转换为天数（1 天 = 24 * 60 * 60 * 1000 毫秒）
-                    const daysDifference = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-                    return daysDifference + "天";
-                }
-            },
-
-        ],
-        //appendInfo: [{ key: "index", label: "序号", value: "天客 99" }],
-    },
-    articleShare: {
-        enabled: true, // 是否开启文章链接分享功能
-        text: "分享此页面", // 分享按钮文本
-        copiedText: "链接已复制", // 复制成功文本
-        query: false, // 是否包含查询参数
-        hash: false, // 是否包含哈希值
-    },
-    articleBottomTip: () => {
-        return {
-            type: "tip",
-            // title: "声明",
-            text: `<p>作者：威威</p>
-             <p>版权：此文章版权归 威威 所有，如有转载，请注明出处!</p>
-             <p style="margin-bottom: 0">链接：可点击右上角分享此页面复制文章链接</p>
-            `,
-        };
-    },
-    articleUpdate: {
-        enabled: true, // 是否启用文章最近更新栏
-        limit: 3, // 文章最近更新栏显示数量
-    },
+    }
 };
 
 // Teek 主题配置
