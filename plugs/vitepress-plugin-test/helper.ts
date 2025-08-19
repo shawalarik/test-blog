@@ -1,5 +1,5 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
-import { basename, extname, resolve } from "node:path";
+import { basename, resolve } from "node:path";
 import matter from "gray-matter";
 import type { PermalinkOption } from "./types";
 

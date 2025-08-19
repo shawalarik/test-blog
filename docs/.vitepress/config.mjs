@@ -11,7 +11,6 @@ import config from "./env.mjs"; // 全局变量
 import { plugins } from "./plugins.mjs"; // 插件
 import rewritesJson from "./rewrites.json";
 import {VitePluginVitePressRewrites} from "../../plugs/vitepress-plugin-test/index.js";
-import {genSidebar} from "vitepress-plugin-sidebar-permalink/sidebar";
 import {FriendLink} from "./config/FriendLink";
 import {SocialDate} from "./config/SocialDate";
 import {FooterGroup} from "./config/FooterGroup";
