@@ -1,28 +1,30 @@
 <template>
-  <TkPageCard :title="noticeContent.title">
-    <div class="announcement-card">
-      <!-- 公告内容 -->
-      <div class="announcement-content">
-        <h3 class="announcement-title">
-          {{ noticeContent.subtitle }}
-        </h3>
+  <div class="notice-card-container">
+    <TkPageCard :title="noticeContent.title">
+      <div class="announcement-card">
+        <!-- 公告内容 -->
+        <div class="announcement-content">
+          <h3 class="announcement-title">
+            {{ noticeContent.subtitle }}
+          </h3>
 
-        <p class="announcement-text">
-          {{ noticeContent.content }}
-        </p>
+          <p class="announcement-text">
+            {{ noticeContent.content }}
+          </p>
 
-        <!-- 底部操作区 -->
-        <div class="announcement-footer">
-          <a class="announcement-button" :href="noticeContent.operationButtonPath" :target="getTargetValue()">
-            <span>{{ noticeContent.operationButtonName }}</span>
-            <svg class="button-icon" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
-            </svg>
-          </a>
+          <!-- 底部操作区 -->
+          <div class="announcement-footer">
+            <a class="announcement-button" :href="noticeContent.operationButtonPath" :target="getTargetValue()">
+              <span>{{ noticeContent.operationButtonName }}</span>
+              <svg class="button-icon" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+              </svg>
+            </a>
+          </div>
         </div>
       </div>
-    </div>
-  </TkPageCard>
+    </TkPageCard>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -59,6 +61,10 @@ const getTargetValue = (): string => {
 </script>
 
 <style scoped>
+.notice-card-container{
+  margin-top: var(--tk-home-info-gap);;
+}
+
 .announcement-card {
   --primary-color: #6366f1;
   --primary-hover: #4f46e5;

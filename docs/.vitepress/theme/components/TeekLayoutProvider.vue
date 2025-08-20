@@ -121,7 +121,7 @@ onMounted(()=>{
     </template>
 
     <!-- 自定义公告卡片 -->
-    <template #teek-home-card-before>
+    <template #teek-home-card-my-after>
       <NoticeCard />
     </template>
 
