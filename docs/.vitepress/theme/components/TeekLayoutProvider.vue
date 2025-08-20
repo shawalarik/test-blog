@@ -23,6 +23,7 @@ import {useRuntime} from "../composables/useRuntime";
 import {myConsoleInfo} from "../utils/WwUtils";
 import NotFound from "./NotFound.vue";
 import BackTop from "./BackTop.vue";
+import NoticeCard from "./NoticeCard.vue";
 
 /**
 site: Ref<SiteData<T>> 站点级元数据
@@ -117,6 +118,11 @@ onMounted(()=>{
     <template #teek-notice-content>
       <!-- 公告组件 -->
       <NoticeContent />
+    </template>
+
+    <!-- 自定义公告卡片 -->
+    <template #teek-home-card-before>
+      <NoticeCard />
     </template>
 
     <template #teek-home-banner-feature-after>
