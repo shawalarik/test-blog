@@ -140,7 +140,10 @@ onMounted(async () => {
 <template>
   <div class="info-card animate__animated animate__fadeIn welcome-card mobile-card" shadow="hover">
     <div class="welcome-content">
-      <div v-if="showFPS" class="fps-display">FPS: {{ fps }}</div>
+      <div v-if="showFPS" class="fps-display">
+        <span class="fps-label">FPS:</span>
+        <span>{{ fps }}</span>
+      </div>
 
       <template v-if="!error">
         <h2 v-if="weatherData.city" class="greeting">
@@ -257,6 +260,11 @@ onMounted(async () => {
   .fps-display {
     font-size: 0.9rem;
     font-weight: bold;
+  }
+
+  .fps-label{
+    /* 隔离重绘范围 */
+    display: inline-block;
   }
 
   @media (max-width: 768px) {

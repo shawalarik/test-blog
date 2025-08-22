@@ -1,21 +1,25 @@
 <template>
-  <div id="clock" class="flex items-center">
-    <!--    <span class="date mr-2">{{ date }}</span>
-        <span class="time">:</span>-->
-    <span class="time font-bold">{{ time }}</span>
+  <div id="clock">
+    <div class="time">
+      <span class="hour">{{ hours }}</span>
+      <span class="separator">:</span>
+      <span class="minute">{{ minutes }}</span>
+      <span class="separator">:</span>
+      <span class="second">{{ seconds }}</span>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {onMounted, onUnmounted, ref} from "vue";
-
-// 日期时间状态
-const time = ref<string>('00:00:00');
-const date = ref<string>('2023-01-01 星期日');
-const week = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+import { onMounted, onUnmounted, shallowRef } from "vue";
 
 // 定时器管理
-const timerID = ref<number | null>(null);
+const timerID = shallowRef<number | null>(null);
+
+// 时间状态 - 拆分小时、分钟、秒
+const hours = shallowRef<string>('00');
+const minutes = shallowRef<string>('00');
+const seconds = shallowRef<string>('00');
 
 // 初始化时钟
 const initClock = () => {
@@ -26,20 +30,27 @@ const initClock = () => {
 };
 
 // 动画循环函数
-function animateClock(timestamp: number) {
-  const cd = new Date();
-  time.value = zeroPadding(cd.getHours(), 2) + ':' +
-      zeroPadding(cd.getMinutes(), 2) + ':' +
-      zeroPadding(cd.getSeconds(), 2);
+function animateClock() {
+  const now = new Date();
+  const currentSeconds = now.getSeconds();
 
-  date.value = zeroPadding(cd.getFullYear(), 4) + '-' +
-      zeroPadding(cd.getMonth() + 1, 2) + '-' +
-      zeroPadding(cd.getDate(), 2) + ' ' +
-      week[cd.getDay()];
-
-  if (timerID.value !== null) {
-    timerID.value = requestAnimationFrame(animateClock);
+  // 只有当秒数变化时才更新（避免同一秒内多次更新）
+  if (currentSeconds !== parseInt(seconds.value)) {
+    seconds.value = zeroPadding(currentSeconds, 2);
   }
+
+  // 分钟和小时变化频率低，单独判断更新
+  const currentMinutes = now.getMinutes();
+  if (currentMinutes !== parseInt(minutes.value)) {
+    minutes.value = zeroPadding(currentMinutes, 2);
+  }
+
+  const currentHours = now.getHours();
+  if (currentHours !== parseInt(hours.value)) {
+    hours.value = zeroPadding(currentHours, 2);
+  }
+
+  timerID.value = requestAnimationFrame(animateClock);
 }
 
 // 数字补零函数
@@ -47,7 +58,7 @@ function zeroPadding(num: number, digit: number): string {
   return String(num).padStart(digit, '0');
 }
 
-onMounted(()=>{
+onMounted(() => {
   // 组件挂载时初始化
   initClock();
 })
@@ -61,26 +72,24 @@ onUnmounted(() => {
 </script>
 
 <style scoped lang="scss">
-/* 移除所有内联样式，改为通过CSS选择器控制 */
 #clock {
   order: 99;
   text-align: center;
   margin-left: 15px;
   display: flex;
   align-items: center;
-  //font-family: 'Share Tech Mono', monospace;
-
-  .date {
-    letter-spacing: 0.1em;
-    margin-bottom: 0;
-    font-size: 14px;
-    white-space: nowrap;
-  }
 
   .time {
+    /* 隔离渲染范围 */
+    contain: content;
     letter-spacing: 0.05em;
     font-size: 16px;
     font-weight: bold;
+  }
+
+  .time span{
+    /* 将每个部分用 inline-block 包裹，形成独立“绘制单元”，避免局部更新，整个重绘的问题 */
+    display: inline-block;
   }
 }
 
