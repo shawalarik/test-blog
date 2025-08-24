@@ -1,7 +1,7 @@
 ---
 date: 2025-07-14 11:33:31
 title: 评价插件配置
-permalink: /front/blog/5ecfd3
+permalink: /note/blog/5ecfd3
 categories:
   - 指南
   - comment

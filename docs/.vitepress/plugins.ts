@@ -28,51 +28,75 @@ export const plugins =  [
         recoverTransform: true, // false 只添加不存在的字段
         // 返回一个新的 frontmatter 或只返回 undefined，如果返回 {}，则清空 MD 文件本身存在的 frontmatter
         transform: (frontMatter: Record<string, any>, fileInfo: FileInfo) => {
+            // 辅助函数：获取路径按 / 分割后的第一个有效分组（忽略空字符串）
+            const getFirstPathSegment = (path: string): string => {
+                // 按 / 分割并过滤空字符串（处理开头/结尾的斜杠或连续斜杠）
+                const segments = path.split('/').filter(segment => segment.trim() !== '');
+                return segments.length > 0 ? segments[0] : '';
+            };
+
             // 转换函数：支持移除指定层级前缀后再添加新前缀
             const transformByRules = (rules: TransformRule[]) => {
                 for (const rule of rules) {
                     const { folderName, prefix, removeLevel } = rule;
-                    // 标准化前缀（确保以 / 开头）
-                    const normalizedPrefix = prefix.startsWith('/') ? prefix : `/${prefix}`;
 
-                    // 检查是否匹配当前规则
-                    if (
-                        fileInfo.relativePath.startsWith(folderName) &&
-                        frontMatter.permalink &&
-                        !frontMatter.permalink.startsWith(normalizedPrefix)
-                    ) {
-                        // 处理日期：减去8小时抵消时区转换
-                        if (frontMatter.date) {
-                            const originalDate = new Date(frontMatter.date);
-                            originalDate.setHours(originalDate.getHours() - 8);
-                            frontMatter.date = originalDate;
-                        }
-
-                        // 处理permalink：先移除指定层级，再添加新前缀
-                        let originalPermalink = frontMatter.permalink;
-
-                        // 步骤1：如果需要移除层级，按 / 分割后处理
-                        if (removeLevel !== undefined && removeLevel > 0) {
-                            // 分割permalink（处理空字符串和开头的 /）
-                            const parts = originalPermalink.split('/').filter(part => part); // 过滤空值
-
-                            // 确保移除的层级不超过实际存在的层级
-                            const actualRemoveLevel = Math.min(removeLevel, parts.length) - 1;
-
-                            // 移除前N个层级，再重新拼接
-                            const remainingParts = parts.slice(actualRemoveLevel);
-                            originalPermalink = remainingParts.length > 0
-                                ? `/${remainingParts.join('/')}`  // 重新添加开头的 /
-                                : '/';  // 若移除后为空，默认为根路径
-                        }
-
-                        // 步骤2：添加新前缀
-                        const newPermalink = `${normalizedPrefix}${originalPermalink}`;
-                        const newFrontMatter = { ...frontMatter, permalink: newPermalink };
-
-                        console.log(`处理后permalink：${newPermalink}`);
-                        return newFrontMatter;
+                    // 1. 检查文件路径是否匹配文件夹规则
+                    if (!fileInfo.relativePath.startsWith(folderName)) {
+                        continue;
                     }
+
+                    // 2. 检查 permalink 是否存在
+                    if (!frontMatter.permalink) {
+                        continue;
+                    }
+
+                    // 标准化前缀（确保以 / 开头）
+                    let normalizedPrefix = prefix.startsWith('/') ? prefix : `/${prefix}`;
+                    if (prefix === ""){
+                        normalizedPrefix = ""
+                    }
+
+                    // 3. 核心调整：按 / 分组，比较第一个前缀是否一致
+                    // 获取目标前缀的第一个分组（如 "/teek" → "teek"）
+                    const targetFirstSegment = getFirstPathSegment(normalizedPrefix);
+                    // 获取当前 permalink 的第一个分组（如 "/teek/guide" → "teek"）
+                    const currentFirstSegment = getFirstPathSegment(frontMatter.permalink);
+
+                    // 若第一个分组相同，说明已包含目标前缀，无需处理
+                    if (currentFirstSegment === targetFirstSegment) {
+                        continue;
+                    }
+
+                    // 4. 处理日期：减去8小时抵消时区转换
+                    if (frontMatter.date) {
+                        const originalDate = new Date(frontMatter.date);
+                        originalDate.setHours(originalDate.getHours() - 8);
+                        frontMatter.date = originalDate;
+                    }
+
+                    // 5. 处理 permalink：先移除指定层级，再添加新前缀
+                    let originalPermalink = frontMatter.permalink;
+
+                    if (removeLevel !== undefined && removeLevel > 0) {
+                        // 分割permalink（处理空字符串和开头的 /）
+                        const parts = originalPermalink.split('/').filter(part => part);
+                        console.log("parts", parts)
+                        // 确保移除的层级不超过实际存在的层级
+                        const actualRemoveLevel = Math.min(removeLevel, parts.length);
+                        // 移除前N个层级，再重新拼接
+                        const remainingParts = parts.slice(actualRemoveLevel);
+                        originalPermalink = remainingParts.length > 0
+                            ? `/${remainingParts.join('/')}`
+                            : '/';
+                    }
+
+                    // 6. 拼接新 permalink 并返回结果
+                    const newPermalink = `${normalizedPrefix}${originalPermalink}`;
+                    const newFrontMatter = { ...frontMatter, permalink: newPermalink };
+
+                    console.log(`原permalink：${frontMatter.permalink} → 新permalink：${newPermalink}`);
+                    return newFrontMatter;
+
                 }
                 // 没有匹配的规则，返回undefined（不修改数据）
                 return undefined;
@@ -80,7 +104,11 @@ export const plugins =  [
 
             // 定义需要处理的所有规则（可扩展多个）
             const rules: TransformRule[] = [
-                { folderName: "95.Teek", prefix: "/teekaaa", removeLevel: 1 },
+/*                { folderName: "95.Teek", prefix: "/teek", removeLevel: 2 },
+                { folderName: "20.工具资源/01.SSL证书", prefix: "/tool", removeLevel: 1 },
+                { folderName: "10.笔记专栏/99.博客搭建", prefix: "/note", removeLevel: 1 },*/
+                { folderName: "01.前端/03.Vdoing", prefix: "/front/vdoing" },
+
                 // { folderName: "80.Frontend", prefix: "/frontend" },
                 // { folderName: "70.Backend", prefix: "/backend" }
             ];
