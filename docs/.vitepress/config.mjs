@@ -8,7 +8,7 @@ import { Comment } from "./config/Comment"; // 导入Nav模块
 import { SocialLinks } from "./config/SocialLinks.js";
 import { generateEnvDefines } from "./theme/utils/WwUtils.js"; // 工具类
 import config from "./env.mjs"; // 全局变量
-import { plugins } from "./plugins.mjs"; // 插件
+import { plugins } from "./plugins"; // 插件
 import { FriendLink } from "./config/FriendLink";
 import { SocialDate } from "./config/SocialDate";
 import { FooterGroup } from "./config/FooterGroup";
@@ -250,6 +250,11 @@ export default defineConfig({
     image: {
       // 默认禁用；设置为 true 可为所有图片启用懒加载。
       lazyLoading: true,
+    },
+    frontmatter: {
+      dateOptions: {
+        timezone: 'UTC'  // 强制按 UTC 解析和处理 date
+      }
     },
     // 更改容器默认值标题
     container: {

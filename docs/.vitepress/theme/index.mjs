@@ -14,10 +14,11 @@ import "vitepress-theme-teek/theme-chalk/tk-table.css"; // 表格样式
 import "vitepress-theme-teek/theme-chalk/tk-mark.css"; // 文章 mark 标签样式
 import "vitepress-theme-teek/theme-chalk/tk-blockquote.css"; //引用样式
 import "vitepress-theme-teek/theme-chalk/tk-index-rainbow.css"; // Vitepress 首页彩虹渐变样式
-import "vitepress-theme-teek/theme-chalk/tk-doc-fade-in.css"; // 文档淡入效果样式
+//import "vitepress-theme-teek/theme-chalk/tk-doc-fade-in.css"; // 文档淡入效果样式
 import "vitepress-theme-teek/theme-chalk/tk-banner-desc-gradient.css"; // Banner 描述渐变样式
 import "vitepress-theme-teek/theme-chalk/tk-nav-blur.css"; // 导航栏毛玻璃样式
 import "vitepress-theme-teek/tk-plus/banner-full-img-scale.scss"; // Banner 全屏图片放大样式
+import "vitepress-theme-teek/tk-plus/fade-up-animation.scss"; // Banner 描述渐变样式
 //import "vitepress-theme-teek/vp-plus/container-flow.scss"; // Markdown 容器流体样式
 import "./style/index.scss"; // 引入全局样式
 import "virtual:group-icons.css"; //代码组图标样式

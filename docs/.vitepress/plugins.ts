@@ -4,13 +4,20 @@ import { visualizer } from "rollup-plugin-visualizer"; // 导入可视化分析�
 import compress from 'vite-plugin-compression';
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
 import { scanMusicPlugin } from '../../plugs/scan-music.mjs';
-import AutoFrontmatter from "vitepress-plugin-auto-frontmatter";
+import AutoFrontmatter, {FileInfo} from "vitepress-plugin-auto-frontmatter";
 import {Wallpaper, BlogCover} from "./config/Wallpaper.js";
 import {cleanDistMusic} from "../../plugs/clean-dist.mjs";
 import inspect from 'vite-plugin-inspect'
 
 // 检查是否有 --inspect 参数
 const isEnableInspectPluging = false
+
+// 定义规则类型
+interface TransformRule {
+    folderName: string;        // 匹配的文件夹名称
+    prefix: string;            // 要添加的前缀
+    removeLevel?: number;      // 可选：要移除的前缀层级（以 / 分割）
+}
 
 export const plugins =  [
     groupIconVitePlugin(), //代码组图标
@@ -19,16 +26,77 @@ export const plugins =  [
         // exclude 指定的对象如果在 markdown frontmatter 存在，则忽略该文件。当 include 和 exclude 存在相同文件时，exclude 优先级高
         //exclude: { coverImg: true},
         recoverTransform: true, // false 只添加不存在的字段
-        transform: (frontmatter) => {
-            // 如果文件本身存在了 coverImg，则不生成
-            if (frontmatter.coverImg) return; // 随机获取 coverImg
+        // 返回一个新的 frontmatter 或只返回 undefined，如果返回 {}，则清空 MD 文件本身存在的 frontmatter
+        transform: (frontMatter: Record<string, any>, fileInfo: FileInfo) => {
+            // 转换函数：支持移除指定层级前缀后再添加新前缀
+            const transformByRules = (rules: TransformRule[]) => {
+                for (const rule of rules) {
+                    const { folderName, prefix, removeLevel } = rule;
+                    // 标准化前缀（确保以 / 开头）
+                    const normalizedPrefix = prefix.startsWith('/') ? prefix : `/${prefix}`;
+
+                    // 检查是否匹配当前规则
+                    if (
+                        fileInfo.relativePath.startsWith(folderName) &&
+                        frontMatter.permalink &&
+                        !frontMatter.permalink.startsWith(normalizedPrefix)
+                    ) {
+                        // 处理日期：减去8小时抵消时区转换
+                        if (frontMatter.date) {
+                            const originalDate = new Date(frontMatter.date);
+                            originalDate.setHours(originalDate.getHours() - 8);
+                            frontMatter.date = originalDate;
+                        }
+
+                        // 处理permalink：先移除指定层级，再添加新前缀
+                        let originalPermalink = frontMatter.permalink;
+
+                        // 步骤1：如果需要移除层级，按 / 分割后处理
+                        if (removeLevel !== undefined && removeLevel > 0) {
+                            // 分割permalink（处理空字符串和开头的 /）
+                            const parts = originalPermalink.split('/').filter(part => part); // 过滤空值
+
+                            // 确保移除的层级不超过实际存在的层级
+                            const actualRemoveLevel = Math.min(removeLevel, parts.length) - 1;
+
+                            // 移除前N个层级，再重新拼接
+                            const remainingParts = parts.slice(actualRemoveLevel);
+                            originalPermalink = remainingParts.length > 0
+                                ? `/${remainingParts.join('/')}`  // 重新添加开头的 /
+                                : '/';  // 若移除后为空，默认为根路径
+                        }
+
+                        // 步骤2：添加新前缀
+                        const newPermalink = `${normalizedPrefix}${originalPermalink}`;
+                        const newFrontMatter = { ...frontMatter, permalink: newPermalink };
+
+                        console.log(`处理后permalink：${newPermalink}`);
+                        return newFrontMatter;
+                    }
+                }
+                // 没有匹配的规则，返回undefined（不修改数据）
+                return undefined;
+            };
+
+            // 定义需要处理的所有规则（可扩展多个）
+            const rules: TransformRule[] = [
+                { folderName: "95.Teek", prefix: "/teekaaa", removeLevel: 1 },
+                // { folderName: "80.Frontend", prefix: "/frontend" },
+                // { folderName: "70.Backend", prefix: "/backend" }
+            ];
+
+            // 应用规则转换
+            return transformByRules(rules);
+
+/*            // 如果文件本身存在了 coverImg，则不生成
+            if (frontMatter.coverImg) return; // 随机获取 coverImg
             const list = [...Wallpaper, ...BlogCover];
             const coverImg = list[Math.floor(Math.random() * list.length)];
-            const transformResult = { ...frontmatter, coverImg };
+            const transformResult = { ...frontMatter, coverImg };
             console.log("transformResult", transformResult)
             return Object.keys(transformResult).length
                 ? transformResult
-                : undefined;
+                : undefined;*/
         },
     }),
     cleanDistMusic(),
@@ -78,26 +146,8 @@ export const plugins =  [
         // 基础配置
         enabled: false, // 是否启用插件，可用于条件开启
         build: false,   // 构建时是否启用
-        server: false,  // 开发服务器是否启用
-
         // 路径配置
         outputDir: '.', // 输出目录
-        filename: 'inspect.html',    // 输出文件名
-
-        // 功能选项
-        showPluginData: true,       // 显示插件内部数据
-        showModuleDependencies: true, // 显示模块依赖
-        hideDefaultPlugins: false,  // 隐藏 Vite 默认插件
-
-        // 性能优化
-        depth: 3, // 依赖图深度，-1 表示无限
-        ignore: [/node_modules/], // 忽略的模块匹配模式
-
-        // 自定义钩子
-        onInspect: (inspectResult) => {
-            // 可在此处处理 inspect 结果
-            console.log('Inspect completed:', inspectResult)
-        }
     }),
     /*viteImagemin({
       gifsicle: {

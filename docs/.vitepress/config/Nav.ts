@@ -55,10 +55,6 @@ export const Nav: DefaultTheme.NavItem[] = [
             {
                 text: getNav("Vdoing主题", "/img/png/vdoing.png"),
                 link: '/vdoing',
-            },
-            {
-                text: getNav("博客搭建", "/svg/blog.svg"),
-                link: '/blog',
             }
         ],
     },
@@ -75,8 +71,8 @@ export const Nav: DefaultTheme.NavItem[] = [
         text: "📕笔记专栏",
         items: [
             {
-                text: getNav("SSL证书", "/svg/allinssl.svg"),
-                link: '/ssl',
+                text: getNav("博客搭建", "/svg/blog.svg"),
+                link: '/blog',
             },
             {
                 text: getNav("友人专栏", "/svg/朋友.svg"),
@@ -87,6 +83,10 @@ export const Nav: DefaultTheme.NavItem[] = [
     {
         text: "🧰工具资源", // 目录页链接，此处 link 是 vdoing 主题新增的配置项，有二级导航时，可以点击一级导航跳到目录页
         items: [
+            {
+                text: getNav("SSL证书", "/svg/allinssl.svg"),
+                link: '/ssl',
+            },
             {
                 text: getNav("Linux", "/svg/linux.svg"),
                 link: '/linux',
