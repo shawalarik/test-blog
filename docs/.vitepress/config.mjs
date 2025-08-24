@@ -1,20 +1,19 @@
 import path from "path";
-import {defineConfig, loadEnv} from 'vitepress'
+import { defineConfig } from 'vitepress'
 import { defineTeekConfig } from "vitepress-theme-teek/config";
 //import {teekConfig} from "./config/TeekConfig";
 import { Head } from "./config/Head"; // 导入页面head配置
 import { Nav } from "./config/Nav"; // 导入Nav模块
 import { Comment } from "./config/Comment"; // 导入Nav模块
 import { SocialLinks } from "./config/SocialLinks.js";
-import {generateEnvDefines} from "./theme/utils/WwUtils.js"; // 工具类
+import { generateEnvDefines } from "./theme/utils/WwUtils.js"; // 工具类
 import config from "./env.mjs"; // 全局变量
 import { plugins } from "./plugins.mjs"; // 插件
-import rewritesJson from "./rewrites.json";
-import {VitePluginVitePressRewrites} from "../../plugs/vitepress-plugin-test/index.js";
-import {FriendLink} from "./config/FriendLink";
-import {SocialDate} from "./config/SocialDate";
-import {FooterGroup} from "./config/FooterGroup";
-import {FooterInfo} from "./config/FooterInfo"; // 插件
+import { FriendLink } from "./config/FriendLink";
+import { SocialDate } from "./config/SocialDate";
+import { FooterGroup } from "./config/FooterGroup";
+import { FooterInfo } from "./config/FooterInfo";
+import { createRewrites } from "vitepress-theme-teek/config";
 
 // 是否为开发模式
 const isDev = process.argv.includes('dev');
@@ -216,10 +215,13 @@ const teekConfig = defineTeekConfig({
     permalink: true, // 是否开启永久链接
     sidebar: true, // 是否开启侧边栏
     sidebarOption: {
-      initItems: false, //这条命令注释后，才会让文档和目录的样式保持一致
-      collapsed: true, //打开侧边栏自动收缩功能
+      initItems: false, // 是否初始化第一层 items
       // ignoreList: ["nav"], //忽略的文件夹和文件
       ignoreWarn: true, // 忽略警告
+      collapsed: true, // 是否默认折叠侧边栏
+      resolveRule: "rewrites",
+      // 检查同目录下前缀不同的文件（以同目录访问到的第一个文件的permalink的一级前缀作为基准）
+      checkRewritesPrefix: true
     },
     autoFrontmatter: true, // 自动生成 frontmatter
     permalinkOption: {
@@ -227,11 +229,6 @@ const teekConfig = defineTeekConfig({
     },
   },
 });
-
-/*// 生成侧边栏，先引入插件生成rewritesJson再写下列代码
-const sidebarOptions = { collapsed: true }
-const sidebar = genSidebar(navLinks, 'docs/articles', rewritesJson.rewrites, sidebarOptions) //'docs/articles'为md文件所在目录
-console.log("sidebar", sidebar)*/
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -263,6 +260,10 @@ export default defineConfig({
       detailsLabel: '详细信息'
     }
   },
+  // 使用路由重写
+  rewrites: createRewrites({
+    srcDir: 'docs'
+  }),
   //rewrites: rewritesJson.rewrites, // 路由重写
   themeConfig: {
     logo: '/avatar/avatar.svg',
@@ -315,7 +316,6 @@ export default defineConfig({
     },*/
     // https://vitepress.dev/reference/default-theme-config
     nav: Nav,
-    //sidebar: sidebar,
     socialLinks: SocialLinks, // 社交链接配置
     //sidebar: [],
     footer: {

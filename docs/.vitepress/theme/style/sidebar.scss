@@ -94,10 +94,10 @@
 }
 
 //使用混合器为侧边栏一级标题应用渐变文本
-.VPSidebarItem.level-0 .text {
+/*.VPSidebarItem.level-0 .text {
     // @include var.text-gradient;
     color: var(--vp-c-brand-1) !important;
-}
+}*/
 
 // 您可能还想为其他元素应用相同的渐变效果
 .VPSidebarItem.level-0 .item:hover .text {

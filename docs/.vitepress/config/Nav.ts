@@ -38,31 +38,45 @@ export const Nav: DefaultTheme.NavItem[] = [
         ]
     },
     {
-        text: "📖笔记专栏",
+        text: getNav("Teek主题", "/svg/teek-logo-mini.svg"),
+        link: '/teek',
+    },
+    {
+        text: "📖前端",
         items: [
             {
                 text: getNav("Vite相关", "/svg/vite.svg"),
-                link: '/Vite',
+                link: '/vite',
             },
             {
                 text: getNav("VitePress相关", "/svg/vitepress-logo-mini.svg"),
-                link: '/VitePress-Intro',
+                link: '/vitePress',
             },
             {
-                text: getNav("Teek主题", "/svg/teek-logo-mini.svg"),
-                link: '/Teek',
-            },
-            /*{
-                text: getNav("Vdoing主题", "https://vuepress.vuejs.org/images/hero.png"),
-                link: '/Vdoing',
-            },*/
-            {
-                text: getNav("SSL证书", "/svg/allinssl.svg"),
-                link: '/ssl',
+                text: getNav("Vdoing主题", "/img/png/vdoing.png"),
+                link: '/vdoing',
             },
             {
                 text: getNav("博客搭建", "/svg/blog.svg"),
                 link: '/blog',
+            }
+        ],
+    },
+    {
+        text: "💻后端",
+        items: [
+            {
+                text: getNav("Java", "/svg/java.svg"),
+                link: '/java',
+            },
+        ],
+    },
+    {
+        text: "📕笔记专栏",
+        items: [
+            {
+                text: getNav("SSL证书", "/svg/allinssl.svg"),
+                link: '/ssl',
             },
             {
                 text: getNav("友人专栏", "/svg/朋友.svg"),
@@ -96,7 +110,7 @@ export const Nav: DefaultTheme.NavItem[] = [
         ],
     },
     {
-        text: "👏文章索引",
+        text: "🗂️文章索引",
         items: [
             {
                 text: getNav("📃文章分类", null),
