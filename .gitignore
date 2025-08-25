@@ -1,7 +1,15 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
 /docs/.vitepress/cache/
 node_modules/
 stats.html
-*.log
 
 # Build and Release Folders
 bin-debug/
@@ -23,6 +31,10 @@ docs/.vuepress/dist
 docs/.vuepress/.cache
 docs/.vuepress/.temp
 dist/
+
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
 
 # Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
 # should NOT be excluded as they contain compiler settings and other important

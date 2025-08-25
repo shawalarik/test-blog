@@ -321,7 +321,7 @@ export default defineConfig({
     },*/
     // https://vitepress.dev/reference/default-theme-config
     nav: Nav,
-    socialLinks: SocialLinks, // 社交链接配置
+    socialLinks: SocialLinks.filter(item => item.name === "Gitee"), // 社交链接配置
     //sidebar: [],
     footer: {
 /*      message: 'Released under the MIT License.',

@@ -1,3 +1,8 @@
+// 减小菜单分组间距
+.VPNav .VPNavBarMenuGroup .button{
+  padding: 0 10px;
+}
+
 @media (max-width: 1200px) {
   // 隐藏省略号
   .VPNavBarExtra{

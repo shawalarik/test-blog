@@ -1,7 +1,13 @@
 import {isEmpty} from "../theme/utils/WwUtils";
 import type {DefaultTheme} from "vitepress/theme";
 
-function getNav(text: string, svgPath: string) {
+/**
+ * 生成导航栏的文本和图标
+ * @param text 导航栏的文本
+ * @param svgPath 导航栏的图标路径（可选，可以直接在文本中使用emoji表情）
+ * @returns 导航栏的文本和图标
+ */
+function getNav(text: string, svgPath?: string) {
     let imgTemplate = ''
     if (!isEmpty(svgPath)) {
         imgTemplate = `<img src="${svgPath}" alt="" style="width: 16px; height: 16px;">`
@@ -38,10 +44,6 @@ export const Nav: DefaultTheme.NavItem[] = [
         ]
     },
     {
-        text: getNav("Teek主题", "/svg/teek-logo-mini.svg"),
-        link: '/teek',
-    },
-    {
         text: "📖前端",
         items: [
             {
@@ -55,7 +57,11 @@ export const Nav: DefaultTheme.NavItem[] = [
             {
                 text: getNav("Vdoing主题", "/img/png/vdoing.png"),
                 link: '/vdoing',
-            }
+            },
+            {
+                text: getNav("Teek主题", "/svg/teek-logo-mini.svg"),
+                link: '/teek',
+            },
         ],
     },
     {
@@ -68,7 +74,7 @@ export const Nav: DefaultTheme.NavItem[] = [
         ],
     },
     {
-        text: "📕笔记专栏",
+        text: "📕笔记",
         items: [
             {
                 text: getNav("博客搭建", "/svg/blog.svg"),
@@ -110,35 +116,35 @@ export const Nav: DefaultTheme.NavItem[] = [
         ],
     },
     {
-        text: "🗂️文章索引",
+        text: "🗂️文章",
         items: [
-            {
-                text: getNav("📃文章分类", null),
-                link: '/categories',
-            },
-            {
-                text: getNav("🔖文章标签", null),
-                link: '/tags',
-            },
             {
                 text: getNav("归档页", '/svg/归档.svg'),
                 link: '/archives',
             },
             {
+                text: getNav("📃文章分类"),
+                link: '/categories',
+            },
+            {
+                text: getNav("🔖文章标签"),
+                link: '/tags',
+            },
+            {
                 text: getNav("文章清单", '/svg/清单.svg'),
                 link: '/articleOverview',
             },
-            {
+            /*{
                 text: getNav("站点登录", '/svg/登录.svg'),
                 link: '/login',
-            }
+            }*/
         ],
     },
     {
         text: "🍷关于",
         items: [
             {
-                text: getNav("👋关于我", null),
+                text: getNav("👋关于我"),
                 link: '/about-me',
             },
             {
@@ -146,7 +152,7 @@ export const Nav: DefaultTheme.NavItem[] = [
                 link: '/friend-link',
             },
             {
-                text: getNav("🌐网站导航", null),
+                text: getNav("🌐网站导航"),
                 link: '/websites',
             },
             {

@@ -1,12 +1,8 @@
 // @ts-ignore
 import type {TeekConfig} from "vitepress-theme-teek/config";
 import {FooterInfo} from "./FooterInfo";
-import {FooterGroup} from "./FooterGroup";
-import {FriendLink} from "./FriendLink";
 import {Typewriter} from "./Typewriter";
 import {Wallpaper} from "./Wallpaper";
-import {SocialDate} from "./SocialDate";
-import {SocialLinks} from "./SocialLinks";
 
 // 博客基础配置
 const teekBlogCommonConfig: TeekConfig = {
