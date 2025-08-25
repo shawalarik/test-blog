@@ -1,8 +1,8 @@
 <script setup name="TeekLayoutProvider">
-import {isClient} from "vitepress-theme-teek";
+import { isClient, useEventListener, useStorage } from "vitepress-theme-teek";
 import Teek, { teekConfigContext } from "vitepress-theme-teek";
-import {useData, useRoute, useRouter} from "vitepress";
-import {watch, nextTick, ref, provide, onMounted} from "vue";
+import { useData } from "vitepress";
+import { watch, nextTick, ref, provide, onMounted } from "vue";
 import {
   teekDocConfig,
   teekBlogConfig,
@@ -25,25 +25,24 @@ import TextGlitch from "./TextGlitch.vue"; // 首页文字特效组件
 import Clock from "./Clock.vue"; // 时钟组件
 import ContextMenu from "./ContextMenu/ContextMenu.vue"; // 右键菜单组件
 import RouteSwitchingLoading from "./RouteSwitchingLoading.vue"; // 过渡动画组件
-import {useRibbon} from "../composables/useRibbon";
-import {useRuntime} from "../composables/useRuntime";
-import {myConsoleInfo} from "../utils/WwUtils";
+import { useRuntime } from "../composables/useRuntime";
+import { myConsoleInfo } from "../utils/WwUtils";
 import NotFound from "./NotFound.vue";
 import BackTop from "./BackTop.vue";
 import NoticeCard from "./NoticeCard.vue";
 
 /**
-site: Ref<SiteData<T>> 站点级元数据
-theme: Ref<T>  .vitepress/config.js 中的 themeConfig
-page: Ref<PageData> 页面级元数据
-frontmatter: Ref<PageData['frontmatter']>  页面 frontmatter
-params: Ref<PageData['params']> 动态路由参数
-title: Ref<string>
-description: Ref<string>
-lang: Ref<string>
-isDark: Ref<boolean>
-dir: Ref<string>
-localeIndex: Ref<string>*/
+ site: Ref<SiteData<T>> 站点级元数据
+ theme: Ref<T>  .vitepress/config.js 中的 themeConfig
+ page: Ref<PageData> 页面级元数据
+ frontmatter: Ref<PageData['frontmatter']>  页面 frontmatter
+ params: Ref<PageData['params']> 动态路由参数
+ title: Ref<string>
+ description: Ref<string>
+ lang: Ref<string>
+ isDark: Ref<boolean>
+ dir: Ref<string>
+ localeIndex: Ref<string>*/
 const { frontmatter,title } = useData();
 
 const configMap = {
@@ -52,7 +51,7 @@ const configMap = {
   // 博客预设
   "blog": teekBlogConfig,
   // 博客小图
-  "blog-park": teekBlogParkConfig,
+  "blog-part": teekBlogParkConfig,
   // 博客大图
   "blog-full": teekBlogFullConfig,
   // 博客全图
@@ -61,28 +60,32 @@ const configMap = {
   "blog-card": teekBlogCardConfig,
 }
 
-// 默认大图
-const currentStyle = ref();
-const teekConfig = ref();
+// 默认大图 useStorage("tk:style", "blog-full")
+const currentStyle = ref("blog-full");
+const teekConfig = ref(configMap[currentStyle.value]);
 
-const getThemeConfig = () => {
-  let localTeekStyle = undefined
-  if (isClient){
-    localTeekStyle = window.localStorage.getItem("teek-style")
-  }
-
-  if (localTeekStyle !== undefined && Object.keys(configMap).includes(localTeekStyle) ) {
-    currentStyle.value = localTeekStyle
-  }else {
+/*const handleStyleConfig = () => {
+  console.info("handleStyleConfig currentStyle", currentStyle.value);
+  // 如果输入了异常值则使用默认值
+  if (!Object.keys(configMap).includes(currentStyle.value)) {
     currentStyle.value = "blog-full"
   }
   teekConfig.value = configMap[currentStyle.value]
+
+  console.info("handleStyleConfig currentStyle", currentStyle.value);
 }
-getThemeConfig()
+
+useEventListener(() => window, "storage", (event) => {
+  console.info("useEventListener", event, currentStyle.value);
+  // isTrusted 浏览器原生行为时触发（不包括通过dispatchEvent手动派发的storage事件）
+  // event.isTrusted &&
+  if ( event.key === "tk:style"){
+    handleStyleConfig()
+  }
+});*/
+
 provide(teekConfigContext, teekConfig);
 
-// 彩带背景
-const { start: startRibbon, stop: stopRibbon } = useRibbon({ immediate: false, clickReRender: true });
 // 页脚运行时间
 const { start: startRuntime, stop: stopRuntime } = useRuntime("2025-06-15 00:00:00", {});
 
@@ -90,20 +93,16 @@ const watchRuntimeAndRibbon = async (layout, style) => {
   if (!isClient) return;
   await nextTick();
   console.log("watchRuntimeAndRibbon", layout, style);
-  //startRibbon()
   startRuntime()
 };
 
 watch(frontmatter, async newVal => watchRuntimeAndRibbon(newVal.layout, currentStyle.value), { immediate: true });
 
 const handleConfigSwitch = (config, style) => {
-  console.log("style", style);
+  console.log("handleConfigSwitch style", style);
   teekConfig.value = config;
-  if (isClient){
-    window.localStorage.setItem("teek-style", style)
-  }
 
-  watchRuntimeAndRibbon(frontmatter.value.layout, style);
+  //watchRuntimeAndRibbon(frontmatter.value.layout, style);
 };
 
 onMounted(()=>{
