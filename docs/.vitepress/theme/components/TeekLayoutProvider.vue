@@ -3,7 +3,14 @@ import {isClient} from "vitepress-theme-teek";
 import Teek, { teekConfigContext } from "vitepress-theme-teek";
 import {useData, useRoute, useRouter} from "vitepress";
 import {watch, nextTick, ref, provide, onMounted} from "vue";
-import { teekBlogFullConfig } from "../../config/TeekConfig";
+import {
+  teekDocConfig,
+  teekBlogConfig,
+  teekBlogParkConfig,
+  teekBlogFullConfig,
+  teekBlogBodyConfig,
+  teekBlogCardConfig,
+} from "../../config/TeekConfig";
 import ConfigSwitch from "./ConfigSwitch.vue"; // 右上角布局切换组件
 import ContributeChart from "./ContributeChart.vue"; // 贡献图组件
 import NoticeContent from "./NoticeContent.vue"; //导入公告组件
@@ -39,9 +46,39 @@ dir: Ref<string>
 localeIndex: Ref<string>*/
 const { frontmatter,title } = useData();
 
-// 默认卡片风
-const currentStyle = ref("blog-full");
-const teekConfig = ref(teekBlogFullConfig);
+const configMap = {
+  // 文档预设
+  "doc": teekDocConfig,
+  // 博客预设
+  "blog": teekBlogConfig,
+  // 博客小图
+  "blog-park": teekBlogParkConfig,
+  // 博客大图
+  "blog-full": teekBlogFullConfig,
+  // 博客全图
+  "blog-body": teekBlogBodyConfig,
+  // 博客卡片
+  "blog-card": teekBlogCardConfig,
+}
+
+// 默认大图
+const currentStyle = ref();
+const teekConfig = ref();
+
+const getThemeConfig = () => {
+  let localTeekStyle = undefined
+  if (isClient){
+    localTeekStyle = window.localStorage.getItem("teek-style")
+  }
+
+  if (localTeekStyle !== undefined && Object.keys(configMap).includes(localTeekStyle) ) {
+    currentStyle.value = localTeekStyle
+  }else {
+    currentStyle.value = "blog-full"
+  }
+  teekConfig.value = configMap[currentStyle.value]
+}
+getThemeConfig()
 provide(teekConfigContext, teekConfig);
 
 // 彩带背景
@@ -60,7 +97,11 @@ const watchRuntimeAndRibbon = async (layout, style) => {
 watch(frontmatter, async newVal => watchRuntimeAndRibbon(newVal.layout, currentStyle.value), { immediate: true });
 
 const handleConfigSwitch = (config, style) => {
+  console.log("style", style);
   teekConfig.value = config;
+  if (isClient){
+    window.localStorage.setItem("teek-style", style)
+  }
 
   watchRuntimeAndRibbon(frontmatter.value.layout, style);
 };
