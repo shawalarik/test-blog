@@ -61,10 +61,17 @@ const teekConfig = defineTeekConfig({
   blogger: {
     // 博主信息，显示在首页侧边栏
     avatar: "/avatar/avatar.webp",
-    shape: "circle", // 头像风格：square 为方形头像，circle 为圆形头像，circle-rotate 可支持鼠标悬停旋转
+    // 头像风格：square 为方形头像，circle 为圆形头像，circle-rotate 可支持鼠标悬停旋转，circle-rotate-last 将会持续旋转 59s
+    shape: "circle",
     name: "威威",
     slogan: "人心中的成见是一座大山~",
     circleBgImg: "/avatar/avatarBg.webp", // 头像圆形背景图
+    circleSize: 100,
+    status: {
+      icon: "😪",
+      size: 24,
+      title: "困"
+    }
   },
   toComment: {
     enabled: true, // 是否启动滚动到评论区功能

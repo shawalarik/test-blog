@@ -30,6 +30,7 @@ import { myConsoleInfo } from "../utils/WwUtils";
 import NotFound from "./NotFound.vue";
 import BackTop from "./BackTop.vue";
 import NoticeCard from "./NoticeCard.vue";
+import Fps from "./Fps.vue";
 
 /**
  site: Ref<SiteData<T>> 站点级元数据
@@ -175,7 +176,8 @@ onMounted(()=>{
     </template>
 
     <template #teek-home-banner-after>
-      <InformationCard />
+      <Fps />
+<!--      <InformationCard />-->
     </template>
 
     <!--  归档页插槽  -->
