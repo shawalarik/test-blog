@@ -8,16 +8,10 @@ import AutoFrontmatter, {FileInfo} from "vitepress-plugin-auto-frontmatter";
 import {Wallpaper, BlogCover} from "./config/Wallpaper.js";
 import {cleanDistMusic} from "../../plugs/clean-dist.mjs";
 import inspect from 'vite-plugin-inspect'
+import { useTransformByRules, type TransformRule } from "./theme/composables/useTransform";
 
 // 检查是否有 --inspect 参数
 const isEnableInspectPluging = false
-
-// 定义规则类型
-interface TransformRule {
-    folderName: string;        // 匹配的文件夹名称
-    prefix: string;            // 要添加的前缀
-    removeLevel?: number;      // 可选：要移除的前缀层级（以 / 分割）
-}
 
 export const plugins =  [
     groupIconVitePlugin(), //代码组图标
@@ -28,93 +22,16 @@ export const plugins =  [
         recoverTransform: true, // false 只添加不存在的字段
         // 返回一个新的 frontmatter 或只返回 undefined，如果返回 {}，则清空 MD 文件本身存在的 frontmatter
         transform: (frontMatter: Record<string, any>, fileInfo: FileInfo) => {
-            // 辅助函数：获取路径按 / 分割后的第一个有效分组（忽略空字符串）
-            const getFirstPathSegment = (path: string): string => {
-                // 按 / 分割并过滤空字符串（处理开头/结尾的斜杠或连续斜杠）
-                const segments = path.split('/').filter(segment => segment.trim() !== '');
-                return segments.length > 0 ? segments[0] : '';
-            };
-
-            // 转换函数：支持移除指定层级前缀后再添加新前缀
-            const transformByRules = (rules: TransformRule[]) => {
-                for (const rule of rules) {
-                    const { folderName, prefix, removeLevel } = rule;
-
-                    // 1. 检查文件路径是否匹配文件夹规则
-                    if (!fileInfo.relativePath.startsWith(folderName)) {
-                        continue;
-                    }
-
-                    // 2. 检查 permalink 是否存在
-                    if (!frontMatter.permalink) {
-                        continue;
-                    }
-
-                    // 标准化前缀（确保以 / 开头）
-                    let normalizedPrefix = prefix.startsWith('/') ? prefix : `/${prefix}`;
-                    if (prefix === ""){
-                        normalizedPrefix = ""
-                    }
-
-                    // 3. 核心调整：按 / 分组，比较第一个前缀是否一致
-                    // 获取目标前缀的第一个分组（如 "/teek" → "teek"）
-                    const targetFirstSegment = getFirstPathSegment(normalizedPrefix);
-                    // 获取当前 permalink 的第一个分组（如 "/teek/guide" → "teek"）
-                    const currentFirstSegment = getFirstPathSegment(frontMatter.permalink);
-
-                    // 若第一个分组相同，说明已包含目标前缀，无需处理
-                    if (currentFirstSegment === targetFirstSegment) {
-                        continue;
-                    }
-
-                    // 4. 处理日期：减去8小时抵消时区转换
-                    if (frontMatter.date) {
-                        const originalDate = new Date(frontMatter.date);
-                        originalDate.setHours(originalDate.getHours() - 8);
-                        frontMatter.date = originalDate;
-                    }
-
-                    // 5. 处理 permalink：先移除指定层级，再添加新前缀
-                    let originalPermalink = frontMatter.permalink;
-
-                    if (removeLevel !== undefined && removeLevel > 0) {
-                        // 分割permalink（处理空字符串和开头的 /）
-                        const parts = originalPermalink.split('/').filter(part => part);
-                        console.log("parts", parts)
-                        // 确保移除的层级不超过实际存在的层级
-                        const actualRemoveLevel = Math.min(removeLevel, parts.length);
-                        // 移除前N个层级，再重新拼接
-                        const remainingParts = parts.slice(actualRemoveLevel);
-                        originalPermalink = remainingParts.length > 0
-                            ? `/${remainingParts.join('/')}`
-                            : '/';
-                    }
-
-                    // 6. 拼接新 permalink 并返回结果
-                    const newPermalink = `${normalizedPrefix}${originalPermalink}`;
-                    const newFrontMatter = { ...frontMatter, permalink: newPermalink };
-
-                    console.log(`原permalink：${frontMatter.permalink} → 新permalink：${newPermalink}`);
-                    return newFrontMatter;
-
-                }
-                // 没有匹配的规则，返回undefined（不修改数据）
-                return undefined;
-            };
 
             // 定义需要处理的所有规则（可扩展多个）
             const rules: TransformRule[] = [
-/*                { folderName: "95.Teek", prefix: "/teek", removeLevel: 2 },
-                { folderName: "20.工具资源/01.SSL证书", prefix: "/tool", removeLevel: 1 },
-                { folderName: "10.笔记专栏/99.博客搭建", prefix: "/note", removeLevel: 1 },*/
-                { folderName: "01.前端/03.Vdoing", prefix: "/front/vdoing" },
-
-                // { folderName: "80.Frontend", prefix: "/frontend" },
-                // { folderName: "70.Backend", prefix: "/backend" }
+                // { folderName: "95.Teek", prefix: "/teek" }, // 添加前缀
+                // { folderName: "20.工具资源/01.SSL证书", prefix: "/tool", removeLevel: 1 }, // 移除一层前缀后再添加前缀
+                // { folderName: "10.笔记专栏/99.博客搭建", prefix: "/note", clear: true }, // 清空 permalink，优先级最高
+                // { folderName: "01.前端/01.vite/", prefix: "/testa/$uuid5/$uuid1/$uuid10/$uuid99", removeLevel: 99}, // 清空前缀并且添加前缀使用随机数
             ];
-
             // 应用规则转换
-            return transformByRules(rules);
+            return useTransformByRules(frontMatter, fileInfo, rules);
 
 /*            // 如果文件本身存在了 coverImg，则不生成
             if (frontMatter.coverImg) return; // 随机获取 coverImg
