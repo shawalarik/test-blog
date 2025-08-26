@@ -27,6 +27,8 @@ import TeekLayoutProvider from "./components/TeekLayoutProvider.vue"; // 布局�
 import sendVisitStatistics from './utils/statistics.mjs' // 信息统计
 import NProgress from 'nprogress' // 路由进度条
 import 'nprogress/nprogress.css' // 路由进度条样式
+//import { useLenis } from "lenis/vue";
+import { useMyLenis } from "./composables/useLenis";
 
 export default {
     /**
@@ -72,6 +74,9 @@ export default {
         }
 
         if (!import.meta.env.SSR) {
+
+            //const { lenisInstance,onScroll } = useMyLenis()
+            //console.log("lenisInstance", lenisInstance);
 
             // 开发环境禁用umami统计
             if (import.meta.env.DEV){
