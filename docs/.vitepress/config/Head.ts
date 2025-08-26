@@ -41,6 +41,25 @@ export const Head =[
             "data-website-id": "0b67009b-c85f-400f-b4f7-a2db22ee9698"
         },
     ],
+    // jquery
+    [
+        "script",
+        {
+            src: "https://myhkw.cn/player/js/jquery.min.js",
+        },
+    ],
+    // 音乐
+    [
+        "script",
+        {
+            src: "https://myhkw.cn/api/player/1752767006160",
+            id: "myhk",
+            key: "1752767006160",
+            m: "1"
+        },
+    ],
+
+
 /*    // 阿里在线矢量库
     [
         "link",

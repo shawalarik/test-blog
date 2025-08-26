@@ -1,7 +1,7 @@
 /* var.scss */
 :root {
   // 主页最大宽度
-  --tk-home-max-width: 75%;
+  --tk-home-max-width: max(75%, 1330px); /* 现代浏览器会使用这个值 */
 
   --vp-c-brand-1: var(--vp-c-indigo-2);
 

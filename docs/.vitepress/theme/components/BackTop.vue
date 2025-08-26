@@ -46,7 +46,6 @@ const isHovered = ref(false);
 
 // 处理触摸结束：延迟清除 hover，避免与点击冲突
 const handleTouchEnd = () => {
-  console.log('touch end');
   // 延迟清除，确保点击事件已触发
   setTimeout(() => {
     isHovered.value = false;
