@@ -24,13 +24,14 @@ export const plugins =  [
         transform: (frontMatter: Record<string, any>, fileInfo: FileInfo) => {
             // 定义需要处理的所有规则（可扩展多个）
             const rules: TransformRule[] = [
-                // { folderName: "95.Teek", prefix: "/teek" }, // 添加前缀
+                { folderName: "95.Teek", prefix: "/teek" }, // 添加前缀
                 // { folderName: "20.工具资源/01.SSL证书", prefix: "/tool", removeLevel: 1 }, // 移除一层前缀后再添加前缀
                 // { folderName: "10.笔记专栏/99.博客搭建", prefix: "/note", clear: true }, // 清空 permalink，优先级最高
                 // { folderName: "01.前端/01.vite/", prefix: "/testa/$uuid5/$uuid1/$uuid10/$uuid99", removeLevel: 99}, // 清空前缀并且添加前缀使用随机数
                 // { folderName: "01.前端/01.vite/00.Webpack与Vite.md", clear: true}, // 清空前缀并且添加前缀使用随机数
                 // { folderName: "01.前端/01.vite/00.Webpack与Vite.md", prefix: "/test-$uuid4-$uuid2/aaa/", removeLevel: 99}, // 清空前缀并且添加前缀使用随机数
-                // { folderName: "01.前端/01.vite/00.Webpack与Vite.md", prefix: "/aaa-$uuid4/", removeLevel: 99}, // 清空前缀并且添加前缀使用随机数
+                { folderName: "02.后端/05.java", prefix: "/backend/java/$uuid5", removeLevel: 99}, // 清空前缀并且添加前缀使用随机数
+                { folderName: "20.工具资源/02.Linux", prefix: "/tool/linux/$uuid5", removeLevel: 99}, // 清空前缀并且添加前缀使用随机数
                 //{ folderName: "*", clear: true}, // * 代表所有文件都匹配
             ];
             // 应用规则转换
