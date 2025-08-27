@@ -1,11 +1,18 @@
 import { FileInfo } from "vitepress-plugin-auto-frontmatter";
 
-// 定义规则类型
+/**
+ * 定义规则类型
+ * 如果第一个分组相同（即第一个斜杠的内容，只匹配一级，自动忽略纯空格），说明已包含目标前缀，不处理直接跳过
+ * @param folderName 文件或文件夹名称
+ * @param prefix 可选：要添加的前缀，可以是多级的，/test-$uuid4-$uuid2/aaa/$uuid10/，其中 $uuid5 为随机数字加小写字母，最后的数字代表几位，最大十位
+ * @param removeLevel 可选：要移除的前缀层级（以 / 分割），适合移除前缀并添加的场景（可以填写一个很大的数，那么就会全部清空再添加前缀）
+ * @param clear 可选，是否清空 permalink，适合只想要清空的场景。true=清空，默认false（此时填写prefix无效，clear优先级高）
+ */
 export interface TransformRule {
-  folderName: string;        // 匹配文件或文件夹名称
-  prefix: string;            // 要添加的前缀
-  removeLevel?: number;      // 可选：要移除的前缀层级（以 / 分割），可以填写一个很大的数，那么就会全部清空然后添加前缀，适合移除前缀并添加的场景
-  clear?: boolean;           // 可选，是否清空 permalink，适合只想要清空使用。true=清空（即使填了prefix也会清空，clear优先级高），默认false
+  folderName: string;
+  prefix?: string;
+  removeLevel?: number;
+  clear?: boolean;
 }
 
 /**
@@ -13,7 +20,6 @@ export interface TransformRule {
  * @param path
  */
 const getFirstPathSegment = (path: string): string => {
-  // 按 / 分割并过滤空字符串（处理开头/结尾的斜杠或连续斜杠）
   const segments = path.split('/').filter(segment => segment.trim() !== '');
   return segments.length > 0 ? segments[0] : '';
 };
@@ -57,18 +63,41 @@ const replaceUuidPlaceholder = (str: string): string => {
   });
 };
 
+/**
+ * 清理路径中的无效层级（纯空格、空字符串）
+ * @param path 原始路径（如 "/    /testawe/a/$uuid1"）
+ * @returns 清理后的路径（如 "/testawe/a/$uuid1"）
+ */
+const cleanPathSpaces = (path: string): string => {
+  // 1. 按 / 分割路径
+  const segments = path.split('/');
+  // 2. 过滤无效层级：排除空字符串和纯空格（trim后为空）
+  const validSegments = segments.filter(segment => segment.trim() !== '');
+  // 3. 重新拼接路径（确保以 / 开头，结尾无多余 /）
+  return validSegments.length > 0 ? `/${validSegments.join('/')}` : '';
+};
+
+/**
+ * 根据规则转换 permalink
+ * @param frontMatter 原始 frontMatter
+ * @param fileInfo 文件信息
+ * @param rules 规则数组
+ * @returns 转换后的 frontMatter
+ */
 export const useTransformByRules = (frontMatter: Record<string, any>, fileInfo: FileInfo, rules: TransformRule[]) => {
 
   // 转换函数：支持移除指定层级前缀后再添加新前缀，新增clear清空逻辑 + UUID占位符替换
   for (const rule of rules) {
-    const { folderName, prefix, removeLevel, clear = false } = rule; // 解构时给clear默认值false
+    const { folderName, prefix = "", removeLevel, clear = false } = rule; // 解构时给clear默认值false
 
     // 1. 检查文件路径是否匹配文件夹规则（精确匹配单个文件时，需完全一致）
-    if (!fileInfo.relativePath.startsWith(folderName)) {
+    if (!fileInfo.relativePath.startsWith(folderName) && folderName !== '*') {
       continue;
     }
 
-    // 处理日期：减去8小时抵消时区转换（原有逻辑不变）
+    //console.log(`folderName：${folderName}`, `prefix: ${prefix}`, `removeLevel: ${removeLevel}`, `clear: ${clear}`);
+
+    // 处理日期：减去8小时抵消时区转换
     if (frontMatter.date) {
       const originalDate = new Date(frontMatter.date);
       originalDate.setHours(originalDate.getHours() - 8);
@@ -82,36 +111,34 @@ export const useTransformByRules = (frontMatter: Record<string, any>, fileInfo: 
       return newFrontMatter;
     }
 
-/*    // 3. 非clear模式：检查permalink是否存在（原有逻辑不变）
-    if (!frontMatter.permalink) {
-      continue;
-    }*/
-
-    // 4. 新增！替换prefix中的$UUID/$UUID10占位符
-    let normalizedPrefix = replaceUuidPlaceholder(prefix);
-    // 原有：标准化前缀（确保以 / 开头）
-    normalizedPrefix = normalizedPrefix.startsWith('/') ? normalizedPrefix : `/${normalizedPrefix}`;
-    if (prefix === ""){
-      normalizedPrefix = ""
-    }
-
+    // 兼容null和undefined，避免空字符串替换报错
     let originalPermalink = frontMatter.permalink;
     if (originalPermalink === null || originalPermalink === undefined) {
       originalPermalink = "";
     }
 
-    // 5. 核心调整：按 / 分组，比较第一个前缀是否一致（原有逻辑不变）
-    // 获取目标前缀的第一个分组（如 "/test/12345" → "test"）
-    const targetFirstSegment = getFirstPathSegment(normalizedPrefix);
-    // 获取当前 permalink 的第一个分组（如 "/old/path" → "old"）
-    const currentFirstSegment = getFirstPathSegment(originalPermalink);
+    let normalizedPrefix = "";
+    const finalPrefix = cleanPathSpaces(prefix);
+    // 前缀不为空的情况才需要处理
+    if (finalPrefix !== "") {
+      // 4.替换prefix中的$UUID/$UUID10占位符，'/test/$UUID10' → '/test/a3k9m2x8p1'
+      normalizedPrefix = replaceUuidPlaceholder(finalPrefix);
+      // 原有：标准化前缀（确保以 / 开头）
+      normalizedPrefix = normalizedPrefix.startsWith('/') ? normalizedPrefix : `/${normalizedPrefix}`;
 
-    // 若第一个分组相同，说明已包含目标前缀，无需处理（原有逻辑不变）
-    if (currentFirstSegment === targetFirstSegment) {
-      continue;
+      // 5. 核心调整：按 / 分组，比较第一个前缀是否一致
+      // 获取目标前缀的第一个分组（如 "/test/12345" → "test"）
+      const targetFirstSegment = getFirstPathSegment(normalizedPrefix);
+      // 获取当前 permalink 的第一个分组（如 "/old/path" → "old"）
+      const currentFirstSegment = getFirstPathSegment(originalPermalink);
+
+      // 若第一个分组相同，说明已包含目标前缀，无需处理
+      if (currentFirstSegment === targetFirstSegment) {
+        continue;
+      }
     }
 
-    // 7. 处理 permalink：先移除指定层级，再添加新前缀（原有逻辑不变）
+    // 7. 处理 permalink：先移除指定层级，再添加新前缀
     if (removeLevel !== undefined && removeLevel > 0) {
       // 分割permalink（处理空字符串和开头的 /）
       const parts = originalPermalink.split('/').filter(part => part);
@@ -124,7 +151,7 @@ export const useTransformByRules = (frontMatter: Record<string, any>, fileInfo: 
         : ''; // 移除所有层级后，originalPermalink为 ""
     }
 
-    // 8. 拼接新 permalink 并返回结果（原有逻辑不变，此时prefix已替换占位符）
+    // 8. 拼接新 permalink 并返回结果（此时prefix已替换占位符）
     const newPermalink = `${normalizedPrefix}${originalPermalink}`;
     const newFrontMatter = { ...frontMatter, permalink: newPermalink };
 
