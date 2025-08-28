@@ -1,4 +1,5 @@
 import { FileInfo } from "vitepress-plugin-auto-frontmatter";
+import { BlogCover, Wallpaper } from "../../config/Wallpaper";
 
 /**
  * 定义规则类型
@@ -78,13 +79,47 @@ const cleanPathSpaces = (path: string): string => {
 };
 
 /**
+ * 处理日期：减去8小时抵消时区转换
+ * @param frontMatter 原始 frontMatter
+ * @returns 转换后的 frontMatter
+ */
+export const handleDate = (frontMatter: Record<string, any>): void => {
+  // 处理日期：减去8小时抵消时区转换
+  if (frontMatter.date) {
+    const originalDate = new Date(frontMatter.date);
+    originalDate.setHours(originalDate.getHours() - 8);
+    frontMatter.date = originalDate;
+  }
+}
+
+/**
+ * 处理封面图
+ * @param frontMatter 原始 frontMatter
+ * @param coverList 封面图列表
+ * @param isForce 是否强制替换封面图
+ * @returns 转换后的 frontMatter
+ */
+export const handleCoverImg = (frontMatter: Record<string, any>, coverList: string[], isForce = false): void => {
+  // 原始封面图
+  let coverImg = frontMatter.coverImg
+
+  // 如果文件本身的 coverImg 不存在于 coverList 中，则随机获取一个
+  if (isForce || !coverList.includes(coverImg)) {
+    // 随机获取 coverImg
+    coverImg = coverList[Math.floor(Math.random() * coverList.length)];
+    console.log("文件 coverImg 更改为 =>", coverImg);
+    frontMatter.coverImg = coverImg
+  }
+}
+
+/**
  * 根据规则转换 permalink
  * @param frontMatter 原始 frontMatter
  * @param fileInfo 文件信息
  * @param rules 规则数组
  * @returns 转换后的 frontMatter
  */
-export const useTransformByRules = (frontMatter: Record<string, any>, fileInfo: FileInfo, rules: TransformRule[]) => {
+export const handleTransformByRules = (frontMatter: Record<string, any>, fileInfo: FileInfo, rules: TransformRule[]): void => {
 
   // 转换函数：支持移除指定层级前缀后再添加新前缀，新增clear清空逻辑 + UUID占位符替换
   for (const rule of rules) {
@@ -98,17 +133,16 @@ export const useTransformByRules = (frontMatter: Record<string, any>, fileInfo: 
     //console.log(`folderName：${folderName}`, `prefix: ${prefix}`, `removeLevel: ${removeLevel}`, `clear: ${clear}`);
 
     // 处理日期：减去8小时抵消时区转换
-    if (frontMatter.date) {
+/*    if (frontMatter.date) {
       const originalDate = new Date(frontMatter.date);
       originalDate.setHours(originalDate.getHours() - 8);
       frontMatter.date = originalDate;
-    }
+    }*/
 
     // 2. 如果clear为true，直接清空permalink并返回（优先级最高）
     if (clear) {
-      const newFrontMatter = { ...frontMatter, permalink: '' };
+      frontMatter.permalink = ''
       console.log(`匹配规则：${folderName}（clear=true）→ 清空permalink`);
-      return newFrontMatter;
     }
 
     // 兼容null和undefined，避免空字符串替换报错
@@ -153,11 +187,8 @@ export const useTransformByRules = (frontMatter: Record<string, any>, fileInfo: 
 
     // 8. 拼接新 permalink 并返回结果（此时prefix已替换占位符）
     const newPermalink = `${normalizedPrefix}${originalPermalink}`;
-    const newFrontMatter = { ...frontMatter, permalink: newPermalink };
+    frontMatter.permalink = newPermalink
 
     console.log(`原permalink：${frontMatter.permalink} → 新permalink：${newPermalink}`);
-    return newFrontMatter;
   }
-  // 没有匹配的规则，返回undefined（不修改数据）
-  return undefined;
 }

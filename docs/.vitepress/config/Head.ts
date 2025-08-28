@@ -41,7 +41,7 @@ export const Head =[
             "data-website-id": "0b67009b-c85f-400f-b4f7-a2db22ee9698"
         },
     ],
-    // jquery
+/*    // jquery
     [
         "script",
         {
@@ -57,7 +57,7 @@ export const Head =[
             key: "1752767006160",
             m: "1"
         },
-    ],
+    ],*/
 
 
 /*    // 阿里在线矢量库

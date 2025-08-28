@@ -5,6 +5,7 @@ permalink: /backend/java/00282
 categories:
   - 后端
   - java
+coverImg: /home/bg13.webp
 ---
 ![image-20220522171355473](https://tva1.sinaimg.cn/large/e6c9d24egy1h2hat6hcrvj21fi0dcdhg.jpg)
 

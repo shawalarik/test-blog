@@ -5,7 +5,7 @@ permalink: /tool/docker/gt2mx
 categories:
   - Docker
   - rsync
-coverImg: /home/bg5.webp
+coverImg: /home/bg20.webp
 ---
 
 有些人可能对图床这个没什么概念，所谓图床，英文叫法应该叫：ImageHost，也就是储存图片的中枢，可以理解为：用户存储图片后，系统提供该图片的直接链接，用来通过网络访问显示该图片。

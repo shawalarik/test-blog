@@ -5,6 +5,7 @@ permalink: /backend/java/rl7no
 categories:
   - 后端
   - java
+coverImg: /home/bg19.webp
 ---
 ![image-20220524160923707](https://tva1.sinaimg.cn/large/e6c9d24ely1h2jk6p4i6hj21fa0h677n.jpg)
 

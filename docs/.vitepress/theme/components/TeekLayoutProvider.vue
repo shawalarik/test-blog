@@ -128,7 +128,7 @@ onMounted(()=>{
       <!-- 网页标题切换组件 -->
       <TitleChange />
       <!-- 音乐播放器组件 -->
-<!--      <APlayer />-->
+      <APlayer />
       <!-- 扣子ai组件 -->
 <!--      <CozeAi/>-->
     </template>

@@ -5,6 +5,7 @@ permalink: /backend/java/kfi0y
 categories:
   - 后端
   - java
+coverImg: /blogCover/05.webp
 ---
 ![image-20220521153312361](https://tva1.sinaimg.cn/large/e6c9d24egy1h2g2a4fy7rj21fc0hkwsb.jpg)
 

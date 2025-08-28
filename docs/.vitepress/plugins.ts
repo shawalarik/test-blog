@@ -8,7 +8,7 @@ import AutoFrontmatter, {FileInfo} from "vitepress-plugin-auto-frontmatter";
 import {Wallpaper, BlogCover} from "./config/Wallpaper.js";
 import {cleanDistMusic} from "../../plugs/clean-dist.mjs";
 import inspect from 'vite-plugin-inspect'
-import { useTransformByRules, type TransformRule } from "./theme/composables/useTransform";
+import { handleTransformByRules, type TransformRule, handleDate, handleCoverImg } from "./theme/utils/handleTransform";
 
 // 检查是否有 --inspect 参数
 const isEnableInspectPluging = false
@@ -22,6 +22,9 @@ export const plugins =  [
         recoverTransform: true, // false 只添加不存在的字段
         // 返回一个新的 frontmatter 或只返回 undefined，如果返回 {}，则清空 MD 文件本身存在的 frontmatter
         transform: (frontMatter: Record<string, any>, fileInfo: FileInfo) => {
+            // 创建副本用于比较
+            let oriFrontMatter: Record<string, any> = {...frontMatter};
+
             // 定义需要处理的所有规则（可扩展多个）
             const rules: TransformRule[] = [
                 { folderName: "95.Teek", prefix: "/teek" }, // 添加前缀
@@ -34,18 +37,26 @@ export const plugins =  [
                 { folderName: "20.工具资源/02.Linux", prefix: "/tool/linux/$uuid5", removeLevel: 99}, // 清空前缀并且添加前缀使用随机数
                 //{ folderName: "*", clear: true}, // * 代表所有文件都匹配
             ];
-            // 应用规则转换
-            return useTransformByRules(frontMatter, fileInfo, rules);
+            // 根据规则处理 permalink
+            handleTransformByRules(frontMatter, fileInfo, rules);
 
-/*            // 如果文件本身存在了 coverImg，则不生成
-            if (frontMatter.coverImg) return; // 随机获取 coverImg
-            const list = [...Wallpaper, ...BlogCover];
-            const coverImg = list[Math.floor(Math.random() * list.length)];
-            const transformResult = { ...frontMatter, coverImg };
-            console.log("transformResult", transformResult)
-            return Object.keys(transformResult).length
-                ? transformResult
-                : undefined;*/
+            // 获取封面图列表
+            const coverList = [...Wallpaper, ...BlogCover];
+            // 处理封面图
+            handleCoverImg(frontMatter, coverList)
+
+            // 比较处理前后的对象是否一致
+            if (JSON.stringify(oriFrontMatter) === JSON.stringify(frontMatter)) {
+                return undefined; // 一致则返回 undefined，不修改文件
+            }
+
+            // 如果发生了变更需要处理日期，减去8小时抵消时区转换
+            handleDate(frontMatter)
+
+            console.log("发生变更的文件：", fileInfo.relativePath);
+            console.log("frontMatter   ", frontMatter);
+
+            return frontMatter;
         },
     }),
     cleanDistMusic(),

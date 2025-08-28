@@ -5,7 +5,7 @@ permalink: /tool/docker/d9qyc
 categories:
   - 工具资源
   - Docker
-coverImg: /home/bg22.webp
+coverImg: /home/bg08.webp
 ---
 
 ## 背景
