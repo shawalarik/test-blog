@@ -3,15 +3,16 @@ import { visualizer } from "rollup-plugin-visualizer"; // 导入可视化分析�
 //import viteImagemin from "vite-plugin-imagemin"; // 导入图片压缩插件
 import compress from 'vite-plugin-compression';
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
-import { scanMusicPlugin } from '../../plugs/scan-music.mjs';
+import { scanMusicPlugin } from '../../plugs/scan-music/scan-music';
 import AutoFrontmatter, {FileInfo} from "vitepress-plugin-auto-frontmatter";
-import {cleanDistMusic} from "../../plugs/clean-dist.mjs";
+import { cleanDistMusic } from "../../plugs/clean-dist";
 import inspect from 'vite-plugin-inspect'
+import { PluginOption } from "vite";
 
 // 检查是否有 --inspect 参数
 const isEnableInspectPluging = false
 
-export const plugins =  [
+export const plugins: PluginOption[] =  [
     groupIconVitePlugin(), //代码组图标
 /*    AutoFrontmatter({
         pattern: "**!/!*.md",

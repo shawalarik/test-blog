@@ -1,3 +1,5 @@
+import { HeadConfig } from "vitepress/types/shared";
+
 const description = [
     "欢迎来到 vitepress-theme-teek 使用文档",
     "Teek 是一个基于 VitePress 构建的主题，是在默认主题的基础上进行拓展，支持 VitePress 的所有功能、配置",
@@ -14,7 +16,7 @@ const noScripTemplate = `
   </div>
 `
 
-export const Head =[
+export const Head:HeadConfig[] =[
     ['link', { rel: 'icon', href: '/favicon.ico' }],
     ["meta", { name: "author", content: "威威" }],
     [

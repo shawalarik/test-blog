@@ -1,0 +1,195 @@
+// vite-plugins/scan-music.js
+import fs from "fs";
+import path from "path";
+import { promisify } from "util";
+import compressor from "./audio-compressor";
+import { Plugin, ResolvedConfig } from "vite";
+
+const fsExists = promisify(fs.exists);
+const readdir = promisify(fs.readdir);
+
+// 在函数顶部附近添加类型定义
+interface AudioItem {
+  name: string;
+  artist: string;
+  url: string;
+  cover: string;
+}
+
+export function scanMusicPlugin(options = { musicDir: "music", showDetail: false }): Plugin & { name: string } {
+  const { musicDir, showDetail } = options;
+  const musicExt = [".mp3", ".wav", ".flac", ".opus"];
+  const coverExts = [".webp", ".jpg", ".jpeg", ".png"];
+  const isProduction = process.env.NODE_ENV === "production";
+  let resolvedConfig: ResolvedConfig | undefined;
+  let audioData: AudioItem[] = [];
+  let isServerBuild = false;
+  let compressionExecuted = false; // 标记压缩是否已执行
+
+  async function processAudioFiles() {
+    try {
+      // 开发模式：直接使用原始音频文件
+      if (!isProduction) {
+        console.log("开发模式：直接使用原始音频文件");
+        if (showDetail) {
+          console.log("音频数据", audioData);
+        }
+        await processOriginalAudio();
+        return;
+      }
+
+      // 生产模式：执行压缩并使用压缩后的音频
+      if (!compressionExecuted) {
+        console.log("生产模式：执行压缩并使用压缩后的音频");
+        await compressor.compressDirectory().then(result => {
+          console.log(`压缩统计:`);
+          console.log(`- 总音频文件: ${result.totalFiles}`);
+          console.log(`- 成功压缩: ${result.compressedFiles}`);
+          console.log(`- 跳过文件: ${result.skippedFiles}`);
+        });
+        await processCompressedAudio();
+        compressionExecuted = true;
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        console.warn(`音频处理失败: ${error.message}`);
+      } else {
+        console.warn("音频处理失败:", error);
+      }
+    }
+  }
+
+  // 处理原始音频文件（开发模式）
+  async function processOriginalAudio() {
+    if (!resolvedConfig) {
+      console.warn("配置未解析，无法处理原始音频文件");
+      return;
+    }
+    const baseDir = path.resolve(resolvedConfig.root, "public", musicDir);
+    const originalPath = baseDir;
+    audioData = [];
+
+    if (!(await fsExists(originalPath))) {
+      console.warn(`原始音乐目录 ${originalPath} 不存在`);
+      return;
+    }
+
+    const files = await readdir(originalPath);
+    for (const file of files) {
+      const ext = path.extname(file).toLowerCase();
+      if (!musicExt.includes(ext)) continue;
+
+      const baseName = path.basename(file, ext);
+      const [artist, name] = baseName.split("-").map(s => s.trim());
+
+      let coverUrl = "";
+      for (const cExt of coverExts) {
+        const coverFilePath = path.join(originalPath, baseName + cExt);
+        if (await fsExists(coverFilePath)) {
+          coverUrl = `/${musicDir}/${baseName}${cExt}`;
+          break;
+        }
+      }
+
+      audioData.push({
+        name: name || baseName,
+        artist: artist || "未知艺术家",
+        url: `/${musicDir}/${file}`, // 直接使用原始文件
+        cover: coverUrl,
+      });
+    }
+  }
+
+  // 处理压缩后的音频文件（生产模式）
+  async function processCompressedAudio() {
+    if (!resolvedConfig) {
+      console.warn("配置未解析，无法处理压缩音频文件");
+      return;
+    }
+    const baseDir = path.resolve(resolvedConfig.root, "public", musicDir);
+    const musicPath = path.resolve(baseDir, "compressed");
+    const compressedCoverDir = path.resolve(musicPath); // 压缩目录下的封面文件夹
+    audioData = [];
+
+    // 创建压缩封面目录（如果不存在）
+    await fs.promises.mkdir(compressedCoverDir, { recursive: true });
+
+    if (!(await fsExists(musicPath))) {
+      console.warn(`压缩音乐目录 ${musicPath} 不存在`);
+      return;
+    }
+
+    const files = await readdir(musicPath);
+    for (const file of files) {
+      const ext = path.extname(file).toLowerCase();
+      if (!musicExt.includes(ext)) continue;
+
+      const baseName = path.basename(file, ext).replace(/_压缩$/, "");
+      const [artist, name] = baseName.split("-").map(s => s.trim());
+
+      let coverUrl = "";
+      let coverFileName = "";
+
+      for (const cExt of coverExts) {
+        const originalCoverPath = path.join(baseDir, baseName + cExt);
+
+        if (await fsExists(originalCoverPath)) {
+          // 构建压缩目录中的封面路径
+          coverFileName = `${baseName}${cExt}`;
+          const compressedCoverPath = path.join(compressedCoverDir, coverFileName);
+
+          // 复制封面图片到压缩目录
+          await fs.promises.copyFile(originalCoverPath, compressedCoverPath);
+
+          // 更新封面 URL 指向新位置
+          coverUrl = `/${musicDir}/compressed/${coverFileName}`;
+          break;
+        }
+      }
+
+      audioData.push({
+        name: name || baseName,
+        artist: artist || "未知艺术家",
+        url: `/${musicDir}/compressed/${file}`,
+        cover: coverUrl,
+      });
+    }
+  }
+
+  return {
+    name: "vite-plugin-scan-music",
+    enforce: "pre",
+
+    async configResolved(config: ResolvedConfig) {
+      resolvedConfig = config;
+      isServerBuild = Boolean(config.build.ssr);
+      console.log(
+        `音频扫描插件-当前环境: ${isProduction ? "生产" : "开发"} | 构建类型: ${isServerBuild ? "服务器" : "客户端"}`
+      );
+      // 开发模式：直接使用原始音频文件
+      // 生产模式：只在服务器构建时处理音频
+      if (!isProduction || !isServerBuild) {
+        console.log("开始处理音频文件...");
+        await processAudioFiles();
+        console.log("音频处理完成");
+      }
+    },
+
+    resolveId(id: string) {
+      if (id === "$internal/music-data") {
+        return id;
+      }
+    },
+
+    load(id: string) {
+      if (id === "$internal/music-data") {
+        if (!isServerBuild) {
+          console.log(`\n加载音频数据: ${audioData.length} 首`);
+          return `export const audio = ${JSON.stringify(audioData, null, 2)};`;
+        } else {
+          return `export const audio = [];`;
+        }
+      }
+    },
+  };
+}

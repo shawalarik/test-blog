@@ -1,6 +1,7 @@
 import path from "path";
 import { defineConfig } from 'vitepress'
-import { defineTeekConfig } from "vitepress-theme-teek/config";
+// @ts-ignore-error
+import { defineTeekConfig, createRewrites } from "vitepress-theme-teek/config";
 //import {teekConfig} from "./config/TeekConfig";
 import { Head } from "./config/Head"; // 导入页面head配置
 import { Nav } from "./config/Nav"; // 导入Nav模块
@@ -13,7 +14,8 @@ import { FriendLink } from "./config/FriendLink";
 import { SocialDate } from "./config/SocialDate";
 import { FooterGroup } from "./config/FooterGroup";
 import { FooterInfo } from "./config/FooterInfo";
-import { createRewrites } from "vitepress-theme-teek/config";
+import { BlogCover, Wallpaper } from "./config/Wallpaper";
+import { Message } from "vitepress-theme-teek/es/components/common/Message/src/message";
 
 // 是否为开发模式
 const isDev = process.argv.includes('dev');
@@ -42,6 +44,7 @@ const teekConfig = defineTeekConfig({
   teekHome: true,
   // 原vitePress风格主页，文档类
   vpHome: false,
+  loading: false, // 启用 Loading 动画，为 false 则关闭 Loading 动画
   backTopDone: TkMessage => TkMessage.success("返回顶部"),
   windowTransition: true,
   /*windowTransition: {
@@ -75,7 +78,7 @@ const teekConfig = defineTeekConfig({
   },
   toComment: {
     enabled: true, // 是否启动滚动到评论区功能
-    done: TkMessage => TkMessage.success("已抵达评论区"), // 滚动到评论区后的回调
+    done: (TkMessage: Message) => TkMessage.success("已抵达评论区"), // 滚动到评论区后的回调
   },
   // 如果想重写侧边栏展开/折叠触发器组件，则使用 teek-sidebar-trigger 插槽。
   sidebarTrigger: true,
@@ -140,25 +143,26 @@ const teekConfig = defineTeekConfig({
       {
         key: "lastActiveTime",
         label: "活跃时间",
-        value: (originValue, currentValue) => {
-          return currentValue
+        value: (originValue: string | number, currentValue: string | number): string => {
+          return String(currentValue);
         },
         show: true,
       },
       {
         // 本站被访问了
         key: 'viewCount', show: false,
-        value: (originValue, currentValue) => {
+        value: (originValue: string | number, currentValue: string | number): string => {
           //console.log("viewCount", originValue, currentValue)
-          return currentValue
+          return String(currentValue);
+
         },
       },
       {
         // 本站曾来访过
         key: 'visitCount', show: false,
-        value: (originValue, currentValue) => {
+        value: (originValue: string | number, currentValue: string | number): string => {
           //console.log("visitCount", originValue, currentValue)
-          return currentValue
+          return String(currentValue);
         },
       },
       {key: 'viewCountUnit', show: true}, // 次
@@ -166,7 +170,7 @@ const teekConfig = defineTeekConfig({
       // 运行时间
       {
         key: 'runtime', show: true,
-        value: (originValue, currentValue) => {
+        value: (originValue: string | number, currentValue: string | number): string => {
           // 示例使用
           const previousDateStr = '2025-06-15';
           // 解析输入的日期字符串（格式：YYYY-MM-DD）
@@ -212,7 +216,7 @@ const teekConfig = defineTeekConfig({
   },
   // 新版代码块配置
   codeBlock: {
-    disabled: false, // 是否禁用新版代码块
+    enabled: true, // 是否禁用新版代码块
     collapseHeight: 700, // 超出高度后自动折叠，设置 true 则默认折叠，false 则默认不折叠
     overlay: true, // 代码块底部是否显示展开/折叠遮罩层
     overlayHeight: 400, // 当出现遮罩层时，指定代码块显示高度，当 overlay 为 true 时生效
@@ -241,7 +245,7 @@ const teekConfig = defineTeekConfig({
       // 是否开启强制覆盖封面图
       enableForceCoverImg: false,
       // 封面图列表
-      coverImgList: ["1.webp", "2.webp", "3.webp", "4.webp", 'https://vp.teek.top/blog/bg1.webp'],
+      coverImgList: [...Wallpaper, ...BlogCover],
       // 是否开启生成永久链接
       enablePermalink: false,
       // 处理永久链接的规则
@@ -252,7 +256,6 @@ const teekConfig = defineTeekConfig({
       enableHandleTimezone: true,
     },
     permalinkOption: {
-      notFoundDelayLoad: 1000, // 1秒后加载
     },
   },
 });
@@ -279,9 +282,6 @@ export default defineConfig({
       lazyLoading: true,
     },
     frontmatter: {
-      dateOptions: {
-        timezone: 'UTC'  // 强制按 UTC 解析和处理 date
-      }
     },
     // 更改容器默认值标题
     container: {

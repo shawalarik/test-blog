@@ -234,10 +234,10 @@
 </template>
 
 <script setup lang="ts">
-import {ref, onMounted, onUnmounted, computed, reactive, nextTick} from 'vue';
+import { ref, onMounted, onUnmounted, computed, reactive } from 'vue';
 import { useRouter, useRoute, withBase } from 'vitepress'; // 引入 VitePress 路由
-import {Website} from "./Website"
-import {useFullscreen} from "./useFullscreen.mjs"
+import { Website } from "./Website"
+import { useFullscreen } from "./useFullscreen"
 // 自定义处理全屏事件hook
 const { isFullScreen, toggleFullscreen } = useFullscreen();
 const useWebsite = ref(Website)

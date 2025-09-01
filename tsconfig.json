@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "types": ["node", "vite/client"]
+  },
+  "exclude": ["**/node_modules", "**/dist", "**/*.md"]
+}

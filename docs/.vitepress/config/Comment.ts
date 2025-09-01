@@ -1,5 +1,7 @@
 // 评论配置
-export const Comment = {
+import { CommentConfig } from "vitepress-theme-teek/es/config/interface";
+
+export const Comment:CommentConfig<"twikoo"> = {
   provider: "twikoo",
   options: {
     // twikoo 配置，官网：https://twikoo.js.org/

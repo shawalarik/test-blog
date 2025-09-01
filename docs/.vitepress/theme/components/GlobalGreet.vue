@@ -29,7 +29,7 @@ const greet = () => {
   )}`;
   const message = getGreetingMessage(hours, timeStr);
 
-  TkMessage.primary({showClose: true, message, duration, plain: true,offset: 80 });
+  TkMessage.primary({showClose: true, message, duration, plain: true, offset: 120 });
 };
 
 const getGreetingMessage = (hours: number, timeStr: string) => {
@@ -60,7 +60,11 @@ const getGreetingMessage = (hours: number, timeStr: string) => {
 };
 
 onMounted(() => {
-  watch(route, greet, { immediate: true });
+  watch(route, (value) => {
+    if (value.path === "/") {
+      greet()
+    }
+  }, { immediate: true });
 });
 </script>
 

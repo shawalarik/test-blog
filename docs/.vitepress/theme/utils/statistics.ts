@@ -24,6 +24,7 @@ const sendVisitStatistics = async (router, siteData, visitorId) => {
 
     //console.log(JSON.stringify(siteData._rawValue))
     const route = router.route
+    // @ts-ignore-error
     const siteId = import.meta.env.SITE_ID || 'YOUR_SITE_ID' // 替换为您的网站ID
     const pageUrl = route.path // VitePress 提供的相对路径
     const pageTitle = isNotEmpty(route.data.title) ? route.data.title : siteData._rawValue.title
@@ -60,6 +61,7 @@ const sendVisitStatistics = async (router, siteData, visitorId) => {
     console.log("记录信息", data)
 
     // 发送POST请求到统计API
+    // @ts-ignore-error
     fetch(import.meta.env.VISIT_URL || '/api/visit/record', {
         method: 'POST',
         headers: {

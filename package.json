@@ -9,6 +9,11 @@
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs"
   },
+  "pnpm": {
+    "overrides": {
+      "vite": "^7.0.4"
+    }
+  },
   "devDependencies": {
     "@eslint/js": "^9.24.0",
     "@mdit-vue/shared": "^2.1.4",

@@ -24,7 +24,7 @@ import "./style/index.scss"; // 引入全局样式
 import "virtual:group-icons.css"; //代码组图标样式
 
 import TeekLayoutProvider from "./components/TeekLayoutProvider.vue"; // 布局组件
-import sendVisitStatistics from './utils/statistics.mjs' // 信息统计
+import sendVisitStatistics from './utils/statistics' // 信息统计
 import NProgress from 'nprogress' // 路由进度条
 import 'nprogress/nprogress.css' // 路由进度条样式
 //import { useLenis } from "lenis/vue";
@@ -44,7 +44,7 @@ export default {
     Layout: defineComponent({
         name: "LayoutProvider",
         setup() {
-            const props = {};
+            const props: {class?: string} = {};
             const { frontmatter } = useData();
 
             // 根据元数据动态应用 CSS 类，实现页面级样式定制
@@ -73,16 +73,19 @@ export default {
             throw err;
         }
 
+        // @ts-ignore-error
         if (!import.meta.env.SSR) {
 
             //const { lenisInstance,onScroll } = useMyLenis()
             //console.log("lenisInstance", lenisInstance);
 
             // 开发环境禁用umami统计
+            // @ts-ignore-error
             if (import.meta.env.DEV){
+                // @ts-ignore-error
                 console.log(import.meta.env)
                 console.log("开发环境禁用umami统计")
-                localStorage.setItem('umami.disabled', 1);
+                localStorage.setItem('umami.disabled', "1");
             }
 
             // 配置进度条
