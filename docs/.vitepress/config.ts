@@ -239,11 +239,11 @@ const teekConfig = defineTeekConfig({
       // 同名key覆盖
       recoverTransform: false,
       // 是否开启自动生成 categories
-      categories: false,
+      categories: true,
       // 是否开启添加文档封面图
-      enableCoverImg: false,
+      enableCoverImg: true,
       // 是否开启强制覆盖封面图
-      enableForceCoverImg: false,
+      enableForceCoverImg: true,
       // 封面图列表
       coverImgList: [...Wallpaper, ...BlogCover],
       // 是否开启生成永久链接
@@ -251,9 +251,10 @@ const teekConfig = defineTeekConfig({
       // 处理永久链接的规则
       permalinkRules: [
         //{ folderName: "01.指南/01.简介/", prefix: "/$path-$uuid2/teek/$uuid1/$uuid", removeLevel: 99 }, // 添加前缀
+        { folderName: "01.前端/01.vite", prefix: "/$path/test", removeLevel: 1 }
       ],
       // 是否开启处理时区
-      enableHandleTimezone: true,
+      enableHandleTimezone: true
     },
     permalinkOption: {
     },
