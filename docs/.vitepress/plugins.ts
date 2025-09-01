@@ -5,60 +5,24 @@ import compress from 'vite-plugin-compression';
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
 import { scanMusicPlugin } from '../../plugs/scan-music.mjs';
 import AutoFrontmatter, {FileInfo} from "vitepress-plugin-auto-frontmatter";
-import {Wallpaper, BlogCover} from "./config/Wallpaper.js";
 import {cleanDistMusic} from "../../plugs/clean-dist.mjs";
 import inspect from 'vite-plugin-inspect'
-import { handleTransformByRules, type TransformRule, handleDate, handleCoverImg } from "./theme/utils/handleTransform";
 
 // 检查是否有 --inspect 参数
 const isEnableInspectPluging = false
 
 export const plugins =  [
     groupIconVitePlugin(), //代码组图标
-    AutoFrontmatter({
-        pattern: "**/*.md",
+/*    AutoFrontmatter({
+        pattern: "**!/!*.md",
         // exclude 指定的对象如果在 markdown frontmatter 存在，则忽略该文件。当 include 和 exclude 存在相同文件时，exclude 优先级高
-        //exclude: { coverImg: true},
+        exclude: { coverImg: true},
         recoverTransform: true, // false 只添加不存在的字段
         // 返回一个新的 frontmatter 或只返回 undefined，如果返回 {}，则清空 MD 文件本身存在的 frontmatter
         transform: (frontMatter: Record<string, any>, fileInfo: FileInfo) => {
-            // 创建副本用于比较
-            let oriFrontMatter: Record<string, any> = {...frontMatter};
-
-            // 定义需要处理的所有规则（可扩展多个）
-            const rules: TransformRule[] = [
-                { folderName: "95.Teek", prefix: "/teek" }, // 添加前缀
-                // { folderName: "20.工具资源/01.SSL证书", prefix: "/tool", removeLevel: 1 }, // 移除一层前缀后再添加前缀
-                // { folderName: "10.笔记专栏/99.博客搭建", prefix: "/note", clear: true }, // 清空 permalink，优先级最高
-                // { folderName: "01.前端/01.vite/", prefix: "/testa/$uuid5/$uuid1/$uuid10/$uuid99", removeLevel: 99}, // 清空前缀并且添加前缀使用随机数
-                // { folderName: "01.前端/01.vite/00.Webpack与Vite.md", clear: true}, // 清空前缀并且添加前缀使用随机数
-                // { folderName: "01.前端/01.vite/00.Webpack与Vite.md", prefix: "/test-$uuid4-$uuid2/aaa/", removeLevel: 99}, // 清空前缀并且添加前缀使用随机数
-                { folderName: "02.后端/05.java", prefix: "/backend/java/$uuid5", removeLevel: 99}, // 清空前缀并且添加前缀使用随机数
-                { folderName: "20.工具资源/02.Linux", prefix: "/tool/linux/$uuid5", removeLevel: 99}, // 清空前缀并且添加前缀使用随机数
-                //{ folderName: "*", clear: true}, // * 代表所有文件都匹配
-            ];
-            // 根据规则处理 permalink
-            handleTransformByRules(frontMatter, fileInfo, rules);
-
-            // 获取封面图列表
-            const coverList = [...Wallpaper, ...BlogCover];
-            // 处理封面图
-            handleCoverImg(frontMatter, coverList)
-
-            // 比较处理前后的对象是否一致
-            if (JSON.stringify(oriFrontMatter) === JSON.stringify(frontMatter)) {
-                return undefined; // 一致则返回 undefined，不修改文件
-            }
-
-            // 如果发生了变更需要处理日期，减去8小时抵消时区转换
-            handleDate(frontMatter)
-
-            console.log("发生变更的文件：", fileInfo.relativePath);
-            console.log("frontMatter   ", frontMatter);
-
             return frontMatter;
         },
-    }),
+    }),*/
     cleanDistMusic(),
 /*    visualizer({
         filename: "stats.html",
