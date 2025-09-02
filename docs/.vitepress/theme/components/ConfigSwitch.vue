@@ -1,13 +1,13 @@
-<!-- 布局切换组件 -->
 <script setup lang="ts" name="ConfigSwitch">
 import {
   TkSegmented,
   TkMessage,
   magicIcon,
   isClient,
-  useMediaQuery,
-  TkThemeEnhanceBaseTemplate,
+  TkThemeEnhanceBaseTemplate as BaseTemplate,
   useClipboard,
+  useStorage,
+  useCommon
 } from "vitepress-theme-teek";
 import { nextTick, ref, watch } from "vue";
 import {
@@ -16,7 +16,7 @@ import {
   teekBlogParkConfig,
   teekBlogFullConfig,
   teekBlogBodyConfig,
-  teekBlogCardConfig,
+  teekBlogCardConfig
 } from "../../config/TeekConfig";
 
 const ns = "config-switch";
@@ -24,20 +24,17 @@ const tipInfo = {
   title: "配置切换",
   desc: "配置切换是 Teek 文档项目通过插槽额外实现的功能，并非是 Teek 增强面板自带的功能。",
   tips: [
-    {
-      title: "说明 1",
-      content: "这里预设了一些 Teek 的配置模板，点击可快速切换查看效果",
-    },
+    { title: "说明 1", content: "这里预设了一些 Teek 的配置模板，点击可快速切换查看效果" },
     {
       title: "说明 2",
-      content: "您可以点击 Copy 按钮来复制配置项到您的项目 config.mts 文件里，这给第一次使用 Teek 的用户提供开箱帮助",
+      content: "您可以点击 Copy 按钮来复制配置项到您的项目 config.mts 文件里，这给第一次使用 Teek 的用户提供开箱帮助"
     },
     {
       title: "说明 3",
       content:
-        "除了这里提供的配置模板，Teek 文档自己单独使用了一些公共配置项，具体请看 Teek 的 config.mts 文件，也就是说您要完全达到当前预览的效果，需要 Copy 当前的配置模板 + Teek 文档单独的配置",
-    },
-  ],
+        "除了这里提供的配置模板，Teek 文档自己单独使用了一些公共配置项，具体请看 Teek 的 config.mts 文件，也就是说您要完全达到当前预览的效果，需要 Copy 当前的配置模板 + Teek 文档单独的配置"
+    }
+  ]
 };
 const segmentedOptions = [
   { value: "doc", label: "文档预设", title: "文档默认风格" },
@@ -45,19 +42,20 @@ const segmentedOptions = [
   { value: "blog-part", label: "博客小图", title: "首页 Banner 小图" },
   { value: "blog-full", label: "博客大图", title: "首页 Banner 大图 + 评论" },
   { value: "blog-body", label: "博客全图", title: "全站背景图 + 碎片化文章页" },
-  { value: "blog-card", label: "博客卡片", title: "首页卡片文章列表 + 左侧卡片栏列表" },
+  { value: "blog-card", label: "博客卡片", title: "首页卡片文章列表 + 左侧卡片栏列表" }
 ];
 
 const emit = defineEmits<{
-  switch: [config: typeof teekBlogFullConfig, style: string];
+  switch: [config: typeof teekDocConfig, style: string];
 }>();
 
 // 默认文档风格
-const themeStyle = defineModel({ default: "blog-full" });
-const teekConfig = ref(teekBlogFullConfig);
+const themeStyle = defineModel({ default: "doc" });
+const currentStyle = useStorage("tk:configStyle", "doc");
+const teekConfig = ref(teekDocConfig);
 
 const { copy, copied } = useClipboard();
-const isMobile = useMediaQuery("(max-width: 768px)");
+const { isMobile } = useCommon();
 
 const update = async (style: string) => {
   if (style === "doc") teekConfig.value = teekDocConfig;
@@ -79,7 +77,14 @@ const update = async (style: string) => {
   else navDom?.classList.remove("full-img-nav-bar");
 };
 
-watch(themeStyle, update);
+watch(themeStyle, update, { immediate: true });
+watch(
+  currentStyle,
+  newVal => {
+    newVal && (themeStyle.value = newVal);
+  },
+  { immediate: true }
+);
 
 const handleCopy = async () => {
   await copy(JSON.stringify(teekConfig.value, null, 2));
@@ -90,7 +95,7 @@ const handleCopy = async () => {
 </script>
 
 <template>
-  <TkThemeEnhanceBaseTemplate
+  <BaseTemplate
     :class="ns"
     :icon="magicIcon"
     :title="tipInfo.title"
@@ -104,8 +109,8 @@ const handleCopy = async () => {
         <button @click="handleCopy">Copy</button>
       </div>
     </template>
-    <TkSegmented v-model="themeStyle" :options="segmentedOptions" />
-  </TkThemeEnhanceBaseTemplate>
+    <TkSegmented v-model="currentStyle" :options="segmentedOptions" />
+  </BaseTemplate>
 </template>
 
 <style lang="scss">
@@ -115,13 +120,11 @@ $namespace: config-switch;
   @media (max-width: 768px) {
     margin-top: 10px;
   }
-
   h3 {
     display: inline-block;
     font-size: 12px;
     opacity: 0.8;
   }
-
   button {
     font-size: 14px;
     font-weight: 500;

@@ -9,7 +9,7 @@ import {
   teekBlogParkConfig,
   teekBlogFullConfig,
   teekBlogBodyConfig,
-  teekBlogCardConfig,
+  teekBlogCardConfig
 } from "../../config/TeekConfig";
 import ConfigSwitch from "./ConfigSwitch.vue"; // 右上角布局切换组件
 import ContributeChart from "./ContributeChart.vue"; // 贡献图组件
@@ -58,32 +58,11 @@ const configMap = {
   // 博客全图
   "blog-body": teekBlogBodyConfig,
   // 博客卡片
-  "blog-card": teekBlogCardConfig,
+  "blog-card": teekBlogCardConfig
 };
 
-// 默认大图 useStorage("tk:style", "blog-full")
 const currentStyle = ref("blog-full");
 const teekConfig = ref(configMap[currentStyle.value]);
-
-/*const handleStyleConfig = () => {
-  console.info("handleStyleConfig currentStyle", currentStyle.value);
-  // 如果输入了异常值则使用默认值
-  if (!Object.keys(configMap).includes(currentStyle.value)) {
-    currentStyle.value = "blog-full"
-  }
-  teekConfig.value = configMap[currentStyle.value]
-
-  console.info("handleStyleConfig currentStyle", currentStyle.value);
-}
-
-useEventListener(() => window, "storage", (event) => {
-  console.info("useEventListener", event, currentStyle.value);
-  // isTrusted 浏览器原生行为时触发（不包括通过dispatchEvent手动派发的storage事件）
-  // event.isTrusted &&
-  if ( event.key === "tk:style"){
-    handleStyleConfig()
-  }
-});*/
 
 provide(teekConfigContext, teekConfig);
 
@@ -93,7 +72,6 @@ const { start: startRuntime, stop: stopRuntime } = useRuntime("2025-06-15 00:00:
 const watchRuntimeAndRibbon = async (layout, style) => {
   if (!isClient) return;
   await nextTick();
-  console.log("watchRuntimeAndRibbon", layout, style);
   startRuntime();
 };
 
