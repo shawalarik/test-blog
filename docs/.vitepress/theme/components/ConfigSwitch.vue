@@ -49,10 +49,26 @@ const emit = defineEmits<{
   switch: [config: typeof teekDocConfig, style: string];
 }>();
 
+const configMap = {
+  // 文档预设
+  doc: teekDocConfig,
+  // 博客预设
+  blog: teekBlogConfig,
+  // 博客小图
+  "blog-part": teekBlogParkConfig,
+  // 博客大图
+  "blog-full": teekBlogFullConfig,
+  // 博客全图
+  "blog-body": teekBlogBodyConfig,
+  // 博客卡片
+  "blog-card": teekBlogCardConfig
+};
+
 // 默认文档风格
-const themeStyle = defineModel({ default: "doc" });
-const currentStyle = useStorage("tk:configStyle", "doc");
-const teekConfig = ref(teekDocConfig);
+const defaultStyle = "blog-full";
+const themeStyle = defineModel({ default: defaultStyle });
+const currentStyle = useStorage("tk:configStyle", defaultStyle);
+const teekConfig = ref(configMap[themeStyle.value]);
 
 const { copy, copied } = useClipboard();
 const { isMobile } = useCommon();

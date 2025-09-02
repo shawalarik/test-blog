@@ -46,36 +46,20 @@ import Fps from "./Fps.vue";
  localeIndex: Ref<string>*/
 const { frontmatter, title } = useData();
 
-const configMap = {
-  // 文档预设
-  doc: teekDocConfig,
-  // 博客预设
-  blog: teekBlogConfig,
-  // 博客小图
-  "blog-part": teekBlogParkConfig,
-  // 博客大图
-  "blog-full": teekBlogFullConfig,
-  // 博客全图
-  "blog-body": teekBlogBodyConfig,
-  // 博客卡片
-  "blog-card": teekBlogCardConfig
-};
-
-const currentStyle = ref("blog-full");
-const teekConfig = ref(configMap[currentStyle.value]);
-
+// 后续通过 handleConfigSwitch 方法改变配置这里传递空引用给 provide 即可
+const teekConfig = ref({});
 provide(teekConfigContext, teekConfig);
 
 // 页脚运行时间
 const { start: startRuntime, stop: stopRuntime } = useRuntime("2025-06-15 00:00:00", {});
 
-const watchRuntimeAndRibbon = async (layout, style) => {
+const watchRuntimeAndRibbon = async layout => {
   if (!isClient) return;
   await nextTick();
   startRuntime();
 };
 
-watch(frontmatter, async newVal => watchRuntimeAndRibbon(newVal.layout, currentStyle.value), { immediate: true });
+watch(frontmatter, async newVal => watchRuntimeAndRibbon(newVal.layout), { immediate: true });
 
 const handleConfigSwitch = (config, style) => {
   console.log("handleConfigSwitch style", style);
@@ -121,12 +105,12 @@ onMounted(() => {
 
     <!-- 布局切换组件 -->
     <template #teek-theme-enhance-bottom>
-      <ConfigSwitch v-model="currentStyle" @switch="handleConfigSwitch" />
+      <ConfigSwitch @switch="handleConfigSwitch" />
     </template>
 
     <!-- 布局切换组件 移动端 -->
     <template #nav-screen-content-after>
-      <ConfigSwitch v-model="currentStyle" @switch="handleConfigSwitch" />
+      <ConfigSwitch @switch="handleConfigSwitch" />
     </template>
 
     <template #not-found>
