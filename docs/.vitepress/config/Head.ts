@@ -16,7 +16,7 @@ const noScripTemplate = `
   </div>
 `;
 
-const share = [
+const share: HeadConfig[] = [
   // 页面标题（分享时显示的标题）
   ["meta", { property: "og:title", content: "威威 Blog" }],
   // 页面类型（网站类型，如 article、website）
@@ -34,7 +34,7 @@ const share = [
   ["meta", { property: "og:site_name", content: "博客" }]
 ];
 
-const weChatShare = [
+const weChatShare: HeadConfig[] = [
   // 微信分享标题（优先级高于 og:title）
   ["meta", { name: "wechat-share-title", content: "威威 Blog" }],
   // 微信分享描述（优先级高于 og:description）
@@ -44,6 +44,7 @@ const weChatShare = [
 ];
 
 const music = [
+  ["link", { rel: "preconnect", href: "https://myhkw.cn" }],
   // jquery
   [
     "script",
@@ -64,6 +65,7 @@ const music = [
 ];
 
 const icon = [
+  ["link", { rel: "preload", href: "https://at.alicdn.com/t/c/font_4899452_xj7acblxpxj.js", as: "script" }],
   // 阿里在线矢量库
   [
     "link",
@@ -84,8 +86,32 @@ const icon = [
 ];
 
 export const Head: HeadConfig[] = [
+  // 资源预加载
+  ["link", { rel: "preload", href: "/favicon.ico", as: "image/x-icon" }],
+  // 图标
   ["link", { rel: "icon", href: "/favicon.ico" }],
+  // 作者信息
   ["meta", { name: "author", content: "威威" }],
+  // 版权声明
+  ["meta", { name: "copyright", content: "© 2025 威威 Blog. All Rights Reserved." }],
+  // 规范网址，告诉搜索引擎站点的首选域名
+  ["link", { rel: "canonical", href: "https://dl-web.top" }],
+  // Android 添加到主屏幕
+  ["meta", { name: "application-name", content: "威威 Blog" }],
+  // 站点的索引策略，index:允许索引；follow:允许跟踪链接
+  ["meta", { name: "robots", content: "index, follow" }],
+  // 移动设备适配声明，向搜索引擎明确站点对移动设备友好
+  ["meta", { name: "mobile-agent", content: "format=html5; url=https://dl-web.top" }],
+  // 防点击劫持，禁止其他网站通过 iframe 嵌入你的站点
+  ["meta", { httpEquiv: "X-Frame-Options", content: "DENY" }],
+  // 防 MIME 类型嗅探，阻止浏览器猜测资源类型，避免恶意文件执行
+  ["meta", { httpEquiv: "X-Content-Type-Options", content: "nosniff" }],
+  // 引荐来源策略
+  ["meta", { name: "referrer", content: "strict-origin-when-cross-origin" }],
+  // 声明适配深色模式
+  ["meta", { name: "color-scheme", content: "light dark" }],
+  // 站点语言
+  ["meta", { httpEquiv: "Content-Language", content: "zh-CN" }],
   [
     "meta",
     {
@@ -93,14 +119,9 @@ export const Head: HeadConfig[] = [
       content: "width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"
     }
   ],
-  [
-    "meta",
-    {
-      name: "description",
-      description
-    }
-  ],
+  ["meta", { name: "description", description }],
   ["meta", { name: "keywords", description }],
+  ["meta", { name: "baidu-site-verification", content: "codeva-WuvZdxzMaM" }],
   // umami统计
   [
     "script",
@@ -111,5 +132,26 @@ export const Head: HeadConfig[] = [
   ],
   ...share,
   ...weChatShare,
-  ["noscript", {}, noScripTemplate] // 禁用js跳转
+  ["noscript", {}, noScripTemplate], // 禁用js跳转
+  [
+    "script",
+    { type: "application/ld+json" },
+    JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Blog",
+      name: "威威 Blog",
+      url: "https://dl-web.top",
+      author: {
+        "@type": "Person",
+        name: "威威"
+      },
+      keywords: ["博客", "前端", "后端", "vitepress"],
+      description: "个人博客，全栈分享",
+      image: "https://dl-web.top/avatar/avatar.webp",
+      publisher: {
+        "@type": "Person",
+        name: "威威"
+      }
+    })
+  ]
 ];
