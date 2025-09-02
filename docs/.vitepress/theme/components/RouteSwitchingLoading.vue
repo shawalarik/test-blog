@@ -1,7 +1,7 @@
 <template>
   <!-- Transition 控制整个遮罩的进入/离开 -->
   <Transition name="fade" mode="out-in">
-    <div v-if="isTransitioning" class="transition-mask">
+    <div v-show="isTransitioning" class="transition-mask">
       <div class="loader">
         <div class="spinner"></div>
         <p>Loading...</p>
@@ -98,7 +98,7 @@ onMounted(handleRouteComplete);
 /* ✅ 添加过渡类 */
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.3s ease;
+  transition: opacity 0.25s ease;
 }
 
 .fade-enter-from,
