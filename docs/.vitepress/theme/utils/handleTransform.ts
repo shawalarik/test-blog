@@ -21,8 +21,8 @@ export interface TransformRule {
  * @param path
  */
 const getFirstPathSegment = (path: string): string => {
-  const segments = path.split('/').filter(segment => segment.trim() !== '');
-  return segments.length > 0 ? segments[0] : '';
+  const segments = path.split("/").filter(segment => segment.trim() !== "");
+  return segments.length > 0 ? segments[0] : "";
 };
 
 /**
@@ -31,13 +31,13 @@ const getFirstPathSegment = (path: string): string => {
  * @returns 指定长度的随机字符串
  */
 const generateRandomString = (length: number): string => {
-  if (length <= 0) return '';
+  if (length <= 0) return "";
   const maxLen = 10;
   const actualLength = Math.min(length, maxLen); // 最大10位
 
-  const chars = '0123456789abcdefghijklmnopqrstuvwxyz';
+  const chars = "0123456789abcdefghijklmnopqrstuvwxyz";
   const charsLength = chars.length;
-  let result = '';
+  let result = "";
 
   for (let i = 0; i < actualLength; i++) {
     result += chars[Math.floor(Math.random() * charsLength)];
@@ -71,11 +71,11 @@ const replaceUuidPlaceholder = (str: string): string => {
  */
 const cleanPathSpaces = (path: string): string => {
   // 1. 按 / 分割路径
-  const segments = path.split('/');
+  const segments = path.split("/");
   // 2. 过滤无效层级：排除空字符串和纯空格（trim后为空）
-  const validSegments = segments.filter(segment => segment.trim() !== '');
+  const validSegments = segments.filter(segment => segment.trim() !== "");
   // 3. 重新拼接路径（确保以 / 开头，结尾无多余 /）
-  return validSegments.length > 0 ? `/${validSegments.join('/')}` : '';
+  return validSegments.length > 0 ? `/${validSegments.join("/")}` : "";
 };
 
 /**
@@ -90,7 +90,7 @@ export const handleDate = (frontMatter: Record<string, any>): void => {
     originalDate.setHours(originalDate.getHours() - 8);
     frontMatter.date = originalDate;
   }
-}
+};
 
 /**
  * 处理封面图
@@ -101,16 +101,16 @@ export const handleDate = (frontMatter: Record<string, any>): void => {
  */
 export const handleCoverImg = (frontMatter: Record<string, any>, coverList: string[], isForce = false): void => {
   // 原始封面图
-  let coverImg = frontMatter.coverImg
+  let coverImg = frontMatter.coverImg;
 
   // 如果文件本身的 coverImg 不存在于 coverList 中，则随机获取一个
   if (isForce || !coverList.includes(coverImg)) {
     // 随机获取 coverImg
     coverImg = coverList[Math.floor(Math.random() * coverList.length)];
     console.log("文件 coverImg 更改为 =>", coverImg);
-    frontMatter.coverImg = coverImg
+    frontMatter.coverImg = coverImg;
   }
-}
+};
 
 /**
  * 根据规则转换 permalink
@@ -119,21 +119,24 @@ export const handleCoverImg = (frontMatter: Record<string, any>, coverList: stri
  * @param rules 规则数组
  * @returns 转换后的 frontMatter
  */
-export const handleTransformByRules = (frontMatter: Record<string, any>, fileInfo: FileInfo, rules: TransformRule[]): void => {
-
+export const handleTransformByRules = (
+  frontMatter: Record<string, any>,
+  fileInfo: FileInfo,
+  rules: TransformRule[]
+): void => {
   // 转换函数：支持移除指定层级前缀后再添加新前缀，新增clear清空逻辑 + UUID占位符替换
   for (const rule of rules) {
     const { folderName, prefix = "", removeLevel, clear = false } = rule; // 解构时给clear默认值false
 
     // 1. 检查文件路径是否匹配文件夹规则（精确匹配单个文件时，需完全一致）
-    if (!fileInfo.relativePath.startsWith(folderName) && folderName !== '*') {
+    if (!fileInfo.relativePath.startsWith(folderName) && folderName !== "*") {
       continue;
     }
 
     //console.log(`folderName：${folderName}`, `prefix: ${prefix}`, `removeLevel: ${removeLevel}`, `clear: ${clear}`);
 
     // 处理日期：减去8小时抵消时区转换
-/*    if (frontMatter.date) {
+    /*    if (frontMatter.date) {
       const originalDate = new Date(frontMatter.date);
       originalDate.setHours(originalDate.getHours() - 8);
       frontMatter.date = originalDate;
@@ -141,7 +144,7 @@ export const handleTransformByRules = (frontMatter: Record<string, any>, fileInf
 
     // 2. 如果clear为true，直接清空permalink并返回（优先级最高）
     if (clear) {
-      frontMatter.permalink = ''
+      frontMatter.permalink = "";
       console.log(`匹配规则：${folderName}（clear=true）→ 清空permalink`);
     }
 
@@ -158,7 +161,7 @@ export const handleTransformByRules = (frontMatter: Record<string, any>, fileInf
       // 4.替换prefix中的$UUID/$UUID10占位符，'/test/$UUID10' → '/test/a3k9m2x8p1'
       normalizedPrefix = replaceUuidPlaceholder(finalPrefix);
       // 原有：标准化前缀（确保以 / 开头）
-      normalizedPrefix = normalizedPrefix.startsWith('/') ? normalizedPrefix : `/${normalizedPrefix}`;
+      normalizedPrefix = normalizedPrefix.startsWith("/") ? normalizedPrefix : `/${normalizedPrefix}`;
 
       // 5. 核心调整：按 / 分组，比较第一个前缀是否一致
       // 获取目标前缀的第一个分组（如 "/test/12345" → "test"）
@@ -175,20 +178,18 @@ export const handleTransformByRules = (frontMatter: Record<string, any>, fileInf
     // 7. 处理 permalink：先移除指定层级，再添加新前缀
     if (removeLevel !== undefined && removeLevel > 0) {
       // 分割permalink（处理空字符串和开头的 /）
-      const parts = originalPermalink.split('/').filter(part => part);
+      const parts = originalPermalink.split("/").filter(part => part);
       // 确保移除的层级不超过实际存在的层级（removeLevel=99时，会移除所有层级，只剩根路径）
       const actualRemoveLevel = Math.min(removeLevel, parts.length);
       // 移除前N个层级，再重新拼接
       const remainingParts = parts.slice(actualRemoveLevel);
-      originalPermalink = remainingParts.length > 0
-        ? `/${remainingParts.join('/')}`
-        : ''; // 移除所有层级后，originalPermalink为 ""
+      originalPermalink = remainingParts.length > 0 ? `/${remainingParts.join("/")}` : ""; // 移除所有层级后，originalPermalink为 ""
     }
 
     // 8. 拼接新 permalink 并返回结果（此时prefix已替换占位符）
     const newPermalink = `${normalizedPrefix}${originalPermalink}`;
-    frontMatter.permalink = newPermalink
+    frontMatter.permalink = newPermalink;
 
     console.log(`原permalink：${frontMatter.permalink} → 新permalink：${newPermalink}`);
   }
-}
+};

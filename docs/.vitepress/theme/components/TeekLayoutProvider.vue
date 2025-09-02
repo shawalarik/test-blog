@@ -15,10 +15,10 @@ import ConfigSwitch from "./ConfigSwitch.vue"; // 右上角布局切换组件
 import ContributeChart from "./ContributeChart.vue"; // 贡献图组件
 import NoticeContent from "./NoticeContent.vue"; //导入公告组件
 import BannerImgArrow from "./BannerImgArrow.vue"; //导入横幅图片箭头组件
-import GlobalGreet from "./GlobalGreet.vue";  //导入全局问候组件
-import TitleChange from "./TitleChange.vue" //导入网页标题变化
+import GlobalGreet from "./GlobalGreet.vue"; //导入全局问候组件
+import TitleChange from "./TitleChange.vue"; //导入网页标题变化
 //import OhMyLive2D from "./OhMyLive2D.vue"  //导入看板娘组件
-import ScrollProgressBar from "./ScrollProgressBar.vue" //导入顶部滚动条组件
+import ScrollProgressBar from "./ScrollProgressBar.vue"; //导入顶部滚动条组件
 import InformationCard from "./InformationCard.vue"; // 主页天气组件
 import APlayer from "./APlayer.vue"; // 音乐组件
 import TextGlitch from "./TextGlitch.vue"; // 首页文字特效组件
@@ -44,13 +44,13 @@ import Fps from "./Fps.vue";
  isDark: Ref<boolean>
  dir: Ref<string>
  localeIndex: Ref<string>*/
-const { frontmatter,title } = useData();
+const { frontmatter, title } = useData();
 
 const configMap = {
   // 文档预设
-  "doc": teekDocConfig,
+  doc: teekDocConfig,
   // 博客预设
-  "blog": teekBlogConfig,
+  blog: teekBlogConfig,
   // 博客小图
   "blog-part": teekBlogParkConfig,
   // 博客大图
@@ -59,7 +59,7 @@ const configMap = {
   "blog-body": teekBlogBodyConfig,
   // 博客卡片
   "blog-card": teekBlogCardConfig,
-}
+};
 
 // 默认大图 useStorage("tk:style", "blog-full")
 const currentStyle = ref("blog-full");
@@ -94,7 +94,7 @@ const watchRuntimeAndRibbon = async (layout, style) => {
   if (!isClient) return;
   await nextTick();
   console.log("watchRuntimeAndRibbon", layout, style);
-  startRuntime()
+  startRuntime();
 };
 
 watch(frontmatter, async newVal => watchRuntimeAndRibbon(newVal.layout, currentStyle.value), { immediate: true });
@@ -106,23 +106,22 @@ const handleConfigSwitch = (config, style) => {
   //watchRuntimeAndRibbon(frontmatter.value.layout, style);
 };
 
-onMounted(()=>{
-  myConsoleInfo(true, import.meta.env.TITLE, import.meta.env.BLOG_URL, '欢迎来访')
-})
-
+onMounted(() => {
+  myConsoleInfo(true, import.meta.env.TITLE, import.meta.env.BLOG_URL, "欢迎来访");
+});
 </script>
 
 <template>
   <Teek.Layout>
     <template #layout-top>
       <!-- 全局右键菜单组件 -->
-      <ContextMenu/>
+      <ContextMenu />
       <!-- 路由切换遮罩动画组件 -->
-      <RouteSwitchingLoading/>
+      <RouteSwitchingLoading />
       <!-- 全局问候组件 -->
       <GlobalGreet />
       <!-- 看板娘组件 -->
-<!--      <OhMyLive2D />-->
+      <!--      <OhMyLive2D />-->
       <!-- 顶部滚动条组件 -->
       <ScrollProgressBar />
       <!-- 网页标题切换组件 -->
@@ -130,16 +129,16 @@ onMounted(()=>{
       <!-- 音乐播放器组件 -->
       <APlayer />
       <!-- 扣子ai组件 -->
-<!--      <CozeAi/>-->
+      <!--      <CozeAi/>-->
     </template>
 
     <template #nav-bar-content-after>
-      <Clock/>
+      <Clock />
     </template>
 
     <!-- 回到顶部组件插槽 -->
     <template #teek-back-top>
-      <BackTop/>
+      <BackTop />
     </template>
 
     <!-- 布局切换组件 -->
@@ -153,7 +152,7 @@ onMounted(()=>{
     </template>
 
     <template #not-found>
-      <NotFound/>
+      <NotFound />
     </template>
 
     <template #teek-notice-content>
@@ -172,12 +171,12 @@ onMounted(()=>{
     </template>
 
     <template #teek-home-banner-name>
-      <TextGlitch :text=title />
+      <TextGlitch :text="title" />
     </template>
 
     <template #teek-home-banner-after>
       <Fps />
-<!--      <InformationCard />-->
+      <!--      <InformationCard />-->
     </template>
 
     <!--  归档页插槽  -->
@@ -185,7 +184,7 @@ onMounted(()=>{
       <ContributeChart />
     </template>
 
-<!--    <template #teek-sidebar-trigger="{ active, icon, toggleSideBar }">
+    <!--    <template #teek-sidebar-trigger="{ active, icon, toggleSideBar }">
       &lt;!&ndash; 如下是 Teek 当前实现的部分内容，这些 class 会激活 Teek 的内置样式 &ndash;&gt;
       <div :class="{ active: active }" class="tk-sidebar-trigger is-active" @click="toggleSideBar">
         <div class="tk-right-bottom-button__button">
@@ -196,5 +195,4 @@ onMounted(()=>{
   </Teek.Layout>
 </template>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>

@@ -1,5 +1,5 @@
 // 页脚信息组配置
-export const Typewriter  = [
+export const Typewriter = [
   "愿每个人都有属于自己的一片星空",
   "书以启智 技于谋生",
   "有一份热，发一份光",
@@ -7,5 +7,5 @@ export const Typewriter  = [
   "也可以在黑暗里发一点光",
   "不必等候炬火",
   "此后如竟没有炬火",
-  "我便是唯一的光",
-]
+  "我便是唯一的光"
+];

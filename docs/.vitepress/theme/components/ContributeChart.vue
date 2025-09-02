@@ -1,21 +1,15 @@
 <!-- 贡献图组件 -->
 <script setup lang="ts" name="ContributeChart">
-import * as echarts from 'echarts/core';
-import { HeatmapChart } from 'echarts/charts';
-import { TooltipComponent, VisualMapComponent, CalendarComponent } from 'echarts/components';
-import { CanvasRenderer } from 'echarts/renderers';
+import * as echarts from "echarts/core";
+import { HeatmapChart } from "echarts/charts";
+import { TooltipComponent, VisualMapComponent, CalendarComponent } from "echarts/components";
+import { CanvasRenderer } from "echarts/renderers";
 import { ref, watch, nextTick, computed, useTemplateRef } from "vue";
 import { useData } from "vitepress";
 import { formatDate, usePosts } from "vitepress-theme-teek";
 
 // 注册需要的组件和图表
-echarts.use([
-  HeatmapChart,
-  TooltipComponent,
-  VisualMapComponent,
-  CalendarComponent,
-  CanvasRenderer
-]);
+echarts.use([HeatmapChart, TooltipComponent, VisualMapComponent, CalendarComponent, CanvasRenderer]);
 
 const { isDark } = useData();
 const posts = usePosts();
@@ -107,12 +101,12 @@ const renderChart = (data: any) => {
 };
 
 watch(
-    contributeList,
-    async newValue => {
-      await nextTick();
-      renderChart(newValue);
-    },
-    { immediate: true }
+  contributeList,
+  async newValue => {
+    await nextTick();
+    renderChart(newValue);
+  },
+  { immediate: true }
 );
 
 watch(isDark, () => {

@@ -1,6 +1,6 @@
 <!-- fps组件 -->
 <script setup lang="ts">
-import {onBeforeUnmount, onMounted, ref} from 'vue';
+import { onBeforeUnmount, onMounted, ref } from "vue";
 
 // ------------------ FPS Hook ------------------
 function useFPS(enabled = true) {
@@ -31,7 +31,7 @@ function useFPS(enabled = true) {
   };
 
   const startFPS = () => {
-    if (enabled && typeof requestAnimationFrame !== 'undefined') {
+    if (enabled && typeof requestAnimationFrame !== "undefined") {
       lastTime = 0;
       frameCount = 0;
       animationFrameId = requestAnimationFrame(updateFPS);
@@ -55,7 +55,7 @@ function useFPS(enabled = true) {
 
 // ------------------ 使用 Hook ------------------
 const showFPS = ref(true);
-const {fps, startFPS} = useFPS(showFPS.value);
+const { fps, startFPS } = useFPS(showFPS.value);
 
 // ------------------ 初始化 ------------------
 onMounted(async () => {
@@ -84,7 +84,7 @@ onMounted(async () => {
   font-weight: bold;
 }
 
-.fps-label{
+.fps-label {
   /* 隔离重绘范围 */
   display: inline-block;
 }

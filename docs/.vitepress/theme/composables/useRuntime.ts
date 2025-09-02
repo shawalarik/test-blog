@@ -1,5 +1,5 @@
 import { computed, type MaybeRef, toValue } from "vue";
-import {clockIcon, isClient, useScopeDispose} from "vitepress-theme-teek";
+import { clockIcon, isClient, useScopeDispose } from "vitepress-theme-teek";
 
 export interface UseRuntimeOptions {
   /**

@@ -40,7 +40,7 @@ const normalize = (path: string) => {
       :class="{
         VPNavBarMenuLink: !subMenu,
         SubMenu: subMenu,
-        active: isActive(page.relativePath, activeMatch || link, !!activeMatch),
+        active: isActive(page.relativePath, activeMatch || link, !!activeMatch)
       }"
       :href="link"
       :target="target"

@@ -1,15 +1,15 @@
 <!-- 欢迎卡片组件 -->
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted, ref } from "vue";
 
 // ------------------ 天气 Hook ------------------
 function useWeather() {
   const weatherData = ref({
-    city: '',
-    temperature: '',
-    type: '',
-    date: '',
-    week: ''
+    city: "",
+    temperature: "",
+    type: "",
+    date: "",
+    week: "",
   });
   const error = ref(false);
   const loading = ref(false);
@@ -18,7 +18,7 @@ function useWeather() {
     loading.value = true;
     error.value = false;
     try {
-      const response = await fetch('https://api.vvhan.com/api/weather');
+      const response = await fetch("https://api.vvhan.com/api/weather");
       const data = await response.json();
       if (data.success) {
         weatherData.value = {
@@ -26,7 +26,7 @@ function useWeather() {
           temperature: `${data.data.low}-${data.data.high}`,
           type: data.data.type,
           date: data.data.date,
-          week: data.data.week
+          week: data.data.week,
         };
       } else {
         error.value = true;
@@ -38,18 +38,18 @@ function useWeather() {
     }
   };
 
-  return {weatherData, error, loading, getWeatherInfo};
+  return { weatherData, error, loading, getWeatherInfo };
 }
 
 // ------------------ 舔狗日记 Hook ------------------
 function useDiary() {
-  const diaryContent = ref('');
+  const diaryContent = ref("");
   const diaryError = ref(false);
 
   const getDiary = async () => {
     diaryError.value = false;
     try {
-      const response = await fetch('https://api.vvhan.com/api/text/dog?type=json');
+      const response = await fetch("https://api.vvhan.com/api/text/dog?type=json");
       const data = await response.json();
       if (data.success) {
         diaryContent.value = data.data.content;
@@ -61,12 +61,12 @@ function useDiary() {
     }
   };
 
-  return {diaryContent, diaryError, getDiary};
+  return { diaryContent, diaryError, getDiary };
 }
 
 // ------------------ 使用 Hook ------------------
-const {weatherData, error, loading, getWeatherInfo} = useWeather();
-const {diaryContent, diaryError, getDiary} = useDiary();
+const { weatherData, error, loading, getWeatherInfo } = useWeather();
+const { diaryContent, diaryError, getDiary } = useDiary();
 
 // ------------------ 初始化 ------------------
 const init = async () => {
@@ -181,7 +181,7 @@ onMounted(async () => {
   }
 }
 
-.diary-container{
+.diary-container {
   max-width: 70vw;
   margin: 0 auto;
 }

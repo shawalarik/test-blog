@@ -44,7 +44,7 @@ class AudioCompressor {
       audioExtensions: [".mp3", ".wav", ".flac", ".aac"],
       skipCompressedDir: true, // 跳过compressed目录
       isCover: false, // 是否覆盖输出
-      ...options,
+      ...options
     };
 
     this.runningTasks = 0;
@@ -134,7 +134,7 @@ class AudioCompressor {
         // 0.316	-10dB	显著降低，适合背景音
         "-af",
         "loudnorm=I=-16:LRA=11:TP=-1.5,volume=0.1",
-        outputPath,
+        outputPath
       ]);
 
       // 处理进程输出（可选：取消注释以显示详细日志）
@@ -273,7 +273,7 @@ class AudioCompressor {
       return {
         totalFiles: this.totalFilesCount,
         compressedFiles: this.compressedFilesCount,
-        skippedFiles: this.skippedFilesCount,
+        skippedFiles: this.skippedFilesCount
       };
     } catch (error) {
       if (error instanceof Error) {
@@ -292,7 +292,7 @@ const compressor = new AudioCompressor({
   outputDir: resolve(__dirname, "../../../../public/music/compressed"),
   concurrency: 10, // 同时压缩3个文件
   skipCompressedDir: true, // 显式设置跳过compressed目录
-  isCover: false,
+  isCover: false
 });
 
 export default compressor;

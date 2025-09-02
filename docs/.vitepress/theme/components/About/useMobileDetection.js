@@ -1,5 +1,4 @@
-
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from "vue";
 
 /**
  * 移动端检测组合函数
@@ -12,7 +11,7 @@ export function useMobileDetection(breakpoint = 600, debounceDelay = 100) {
   let timeoutId = null;
 
   const checkMobile = () => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       isMobile.value = window.innerWidth <= breakpoint;
     }
   };
@@ -27,14 +26,14 @@ export function useMobileDetection(breakpoint = 600, debounceDelay = 100) {
 
   onMounted(() => {
     checkMobile();
-    if (typeof window !== 'undefined') {
-      window.addEventListener('resize', debouncedCheck, { passive: true });
+    if (typeof window !== "undefined") {
+      window.addEventListener("resize", debouncedCheck, { passive: true });
     }
   });
 
   onBeforeUnmount(() => {
-    if (typeof window !== 'undefined') {
-      window.removeEventListener('resize', debouncedCheck);
+    if (typeof window !== "undefined") {
+      window.removeEventListener("resize", debouncedCheck);
     }
     if (timeoutId) {
       clearTimeout(timeoutId);
@@ -56,18 +55,18 @@ export function useMediaQuery(query) {
   const matches = ref(false);
   let mediaQuery = null;
 
-  const updateMatches = (e) => {
+  const updateMatches = e => {
     matches.value = e.matches;
   };
 
   onMounted(() => {
-    if (typeof window !== 'undefined' && 'matchMedia' in window) {
+    if (typeof window !== "undefined" && "matchMedia" in window) {
       mediaQuery = window.matchMedia(query);
       matches.value = mediaQuery.matches;
-      
+
       // 使用现代的 addEventListener 方法
       if (mediaQuery.addEventListener) {
-        mediaQuery.addEventListener('change', updateMatches);
+        mediaQuery.addEventListener("change", updateMatches);
       } else {
         // 兼容旧版本浏览器
         mediaQuery.addListener(updateMatches);
@@ -78,7 +77,7 @@ export function useMediaQuery(query) {
   onBeforeUnmount(() => {
     if (mediaQuery) {
       if (mediaQuery.removeEventListener) {
-        mediaQuery.removeEventListener('change', updateMatches);
+        mediaQuery.removeEventListener("change", updateMatches);
       } else {
         mediaQuery.removeListener(updateMatches);
       }
@@ -89,4 +88,3 @@ export function useMediaQuery(query) {
     matches
   };
 }
-

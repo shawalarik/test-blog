@@ -25,13 +25,13 @@ if (inBrowser) {
       origin: {
         x: Math.random(),
         // since particles fall down, skew start toward the top
-        y: Math.random() * skew - 0.2,
+        y: Math.random() * skew - 0.2
       },
       colors: ["#ffffff"],
       shapes: ["circle"],
       gravity: randomInRange(0.4, 0.6),
       scalar: randomInRange(0.4, 1),
-      drift: randomInRange(-0.4, 0.4),
+      drift: randomInRange(-0.4, 0.4)
     });
 
     if (timeLeft > 0) {
@@ -41,7 +41,7 @@ if (inBrowser) {
   confetti({
     particleCount: 100,
     spread: 170,
-    origin: { y: 0.6 },
+    origin: { y: 0.6 }
   });
 }
 </script>

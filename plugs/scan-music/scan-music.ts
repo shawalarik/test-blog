@@ -95,7 +95,7 @@ export function scanMusicPlugin(options = { musicDir: "music", showDetail: false
         name: name || baseName,
         artist: artist || "未知艺术家",
         url: `/${musicDir}/${file}`, // 直接使用原始文件
-        cover: coverUrl,
+        cover: coverUrl
       });
     }
   }
@@ -151,7 +151,7 @@ export function scanMusicPlugin(options = { musicDir: "music", showDetail: false
         name: name || baseName,
         artist: artist || "未知艺术家",
         url: `/${musicDir}/compressed/${file}`,
-        cover: coverUrl,
+        cover: coverUrl
       });
     }
   }
@@ -190,6 +190,6 @@ export function scanMusicPlugin(options = { musicDir: "music", showDetail: false
           return `export const audio = [];`;
         }
       }
-    },
+    }
   };
 }

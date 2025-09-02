@@ -4,10 +4,7 @@ import { TkIcon } from "vitepress-theme-teek";
 // 将资源引入为字符串
 import ArrowSvg from "/svg/arrow.svg?raw";
 
-import { useData } from "vitepress";
 import { ref } from "vue";
-
-const { theme } = useData();
 
 const namespace = "banner";
 
@@ -21,18 +18,17 @@ const handleClickArrow = () => {
 };
 
 const isMobile = ref(false);
-
-// 移动端不显示箭头，则打开下面注释，并引入 useWindowSize：import { useWindowSize } from "vitepress-theme-teek";
-// useWindowSize(width => {
-//   // if (width <= 719) isMobile.value = true;
-//   // else isMobile.value = false;
-// });
 </script>
 
 <template>
   <div v-if="!isMobile" :class="`${namespace}-arrow tk-wallpaper-outside`">
-    <TkIcon :icon="ArrowSvg" size="50px" color="#ffffff" :class="`${namespace}-arrow__icon`"
-      @click="handleClickArrow" />
+    <TkIcon
+      :icon="ArrowSvg"
+      size="50px"
+      color="#ffffff"
+      :class="`${namespace}-arrow__icon`"
+      @click="handleClickArrow"
+    />
   </div>
 </template>
 

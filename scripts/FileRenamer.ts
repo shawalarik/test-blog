@@ -22,7 +22,7 @@ class FileRenamer {
       numberLength: 2, // 编号最小长度，不足时补零
       dryRun: false, // 预览模式，不实际执行重命名
       sortFiles: true, // 是否按文件修改时间排序
-      ...options,
+      ...options
     };
   }
 
@@ -101,7 +101,7 @@ class FileRenamer {
         oldName: file,
         newName: newFileName,
         oldPath,
-        newPath,
+        newPath
       });
 
       // 如果不是预览模式，则执行实际重命名
@@ -142,7 +142,7 @@ async function main() {
     prefix: "", // 文件名前缀
     startNumber: 1, // 起始编号
     numberLength: 2, // 编号最小长度
-    dryRun: false, // 预览模式，不实际执行重命名
+    dryRun: false // 预览模式，不实际执行重命名
   };
 
   // 创建文件重命名器实例

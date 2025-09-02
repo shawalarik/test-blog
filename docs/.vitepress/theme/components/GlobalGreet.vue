@@ -19,9 +19,9 @@ const greet = () => {
   }, duration);
 
   const now = new Date();
-  let hours = now.getHours();
-  let minutes = now.getMinutes();
-  let seconds = now.getSeconds();
+  const hours = now.getHours();
+  const minutes = now.getMinutes();
+  const seconds = now.getSeconds();
 
   const timeStr = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
     2,
@@ -29,7 +29,7 @@ const greet = () => {
   )}`;
   const message = getGreetingMessage(hours, timeStr);
 
-  TkMessage.primary({showClose: true, message, duration, plain: true, offset: 120 });
+  TkMessage.primary({ showClose: true, message, duration, plain: true, offset: 120 });
 };
 
 const getGreetingMessage = (hours: number, timeStr: string) => {
@@ -60,11 +60,15 @@ const getGreetingMessage = (hours: number, timeStr: string) => {
 };
 
 onMounted(() => {
-  watch(route, (value) => {
-    if (value.path === "/") {
-      greet()
-    }
-  }, { immediate: true });
+  watch(
+    route,
+    value => {
+      if (value.path === "/") {
+        greet();
+      }
+    },
+    { immediate: true }
+  );
 });
 </script>
 

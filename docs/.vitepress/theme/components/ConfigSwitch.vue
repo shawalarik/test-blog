@@ -30,8 +30,7 @@ const tipInfo = {
     },
     {
       title: "说明 2",
-      content:
-        "您可以点击 Copy 按钮来复制配置项到您的项目 config.mts 文件里，这给第一次使用 Teek 的用户提供开箱帮助",
+      content: "您可以点击 Copy 按钮来复制配置项到您的项目 config.mts 文件里，这给第一次使用 Teek 的用户提供开箱帮助",
     },
     {
       title: "说明 3",
@@ -46,7 +45,7 @@ const segmentedOptions = [
   { value: "blog-part", label: "博客小图", title: "首页 Banner 小图" },
   { value: "blog-full", label: "博客大图", title: "首页 Banner 大图 + 评论" },
   { value: "blog-body", label: "博客全图", title: "全站背景图 + 碎片化文章页" },
-  { value: "blog-card", label: "博客卡片", title: "首页卡片文章列表 + 左侧卡片栏列表"},
+  { value: "blog-card", label: "博客卡片", title: "首页卡片文章列表 + 左侧卡片栏列表" },
 ];
 
 const emit = defineEmits<{
@@ -76,8 +75,7 @@ const update = async (style: string) => {
   const navDom = document.querySelector(".VPNavBar") as HTMLElement;
 
   // 兼容 Teek Banner 样式
-  if (["blog-full", "blog-body", "blog-card"].includes(style))
-    navDom?.classList.add("full-img-nav-bar");
+  if (["blog-full", "blog-body", "blog-card"].includes(style)) navDom?.classList.add("full-img-nav-bar");
   else navDom?.classList.remove("full-img-nav-bar");
 };
 
@@ -92,8 +90,14 @@ const handleCopy = async () => {
 </script>
 
 <template>
-  <TkThemeEnhanceBaseTemplate :class="ns" :icon="magicIcon" :title="tipInfo.title" :helper="!isMobile"
-    :helper-desc="tipInfo.desc" :tips="tipInfo.tips">
+  <TkThemeEnhanceBaseTemplate
+    :class="ns"
+    :icon="magicIcon"
+    :title="tipInfo.title"
+    :helper="!isMobile"
+    :helper-desc="tipInfo.desc"
+    :tips="tipInfo.tips"
+  >
     <template #title>
       <div class="flx-justify-between flx-1">
         {{ tipInfo.title }}

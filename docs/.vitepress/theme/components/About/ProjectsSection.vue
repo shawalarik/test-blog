@@ -1,10 +1,16 @@
 <template>
-  <div class="oss-section visible" > <!-- :class="{ visible: isVisible }" -->
+  <div class="oss-section visible">
+    <!-- :class="{ visible: isVisible }" -->
     <h2 class="oss-title">开源项目</h2>
     <div class="oss-list">
-
-      <div class="oss-card" v-for="(item, idx) in ossProjects" :key="item.name" :ref="setOssCardRef(idx)"
-        :class="{ visible: ossCardVisible[idx] }" v-memo="[item, ossCardVisible[idx]]">
+      <div
+        class="oss-card"
+        v-for="(item, idx) in ossProjects"
+        :key="item.name"
+        :ref="setOssCardRef(idx)"
+        :class="{ visible: ossCardVisible[idx] }"
+        v-memo="[item, ossCardVisible[idx]]"
+      >
         <div class="oss-img-wrap">
           <img :src="item.projectsimg" class="oss-img" :alt="item.name" />
         </div>
@@ -25,9 +31,7 @@
               {{ item.View }}
             </span>
           </div>
-          <a class="oss-btn" :href="item.github" target="_blank" rel="noopener noreferrer">
-            查看项目
-          </a>
+          <a class="oss-btn" :href="item.github" target="_blank" rel="noopener noreferrer">查看项目</a>
         </div>
       </div>
     </div>
@@ -35,13 +39,12 @@
 </template>
 
 <script setup>
-import { nextTick, onMounted, onBeforeUnmount } from 'vue';
+import { nextTick, onMounted, onBeforeUnmount } from "vue";
 import { TkIcon } from "vitepress-theme-teek";
-import { useMultipleIntersectionObserver } from './useIntersectionObserver';
-import { ossProjects, Star, Fork, View } from './AboutData';
+import { useMultipleIntersectionObserver } from "./useIntersectionObserver";
+import { ossProjects, Star, Fork, View } from "./AboutData";
 
-const props = defineProps({
-});
+const props = defineProps({});
 
 // 使用多元素观察器组合函数
 const {
@@ -67,7 +70,12 @@ onBeforeUnmount(() => {
   padding: 32px 0;
   opacity: 0;
   transform: scale(0.8);
-  transition: box-shadow 0.22s, transform 0.18s, border 0.18s, opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    box-shadow 0.22s,
+    transform 0.18s,
+    border 0.18s,
+    opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .oss-section.visible {
@@ -97,7 +105,10 @@ onBeforeUnmount(() => {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: box-shadow 0.2s, transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    box-shadow 0.2s,
+    transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   opacity: 0;
   transform: scale(0.8);
@@ -188,7 +199,6 @@ onBeforeUnmount(() => {
 }
 
 @media (max-width: 960px) {
-
   .oss-card {
     width: 362px;
     flex-direction: column;
@@ -214,6 +224,5 @@ onBeforeUnmount(() => {
     height: 100px;
     border-radius: 5px;
   }
-
 }
 </style>

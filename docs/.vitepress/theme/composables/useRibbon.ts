@@ -54,7 +54,7 @@ export const useRibbon = (options: UseRibbonOptions = {}) => {
     zIndex = -1,
     clickReRender = false,
     ribbonDomBindClick = false,
-    immediate = true,
+    immediate = true
   } = options;
 
   const initRibbon = () => {
@@ -93,7 +93,7 @@ export const useRibbon = (options: UseRibbonOptions = {}) => {
       ctx.clearRect(0, 0, width, height);
       path = [
         { x: 0, y: height * 0.7 + size },
-        { x: 0, y: height * 0.7 - size },
+        { x: 0, y: height * 0.7 - size }
       ];
       while (path[1].x < width + size) {
         draw(path[0], path[1]);

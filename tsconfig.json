@@ -2,6 +2,8 @@
   "compilerOptions": {
     "module": "esnext",
     "moduleResolution": "bundler",
+		"esModuleInterop": true,  // 关键配置：开启 CommonJS 与 ES 模块互操作
+		"allowSyntheticDefaultImports": true,  // 通常与 esModuleInterop 一起开启
     "types": ["node", "vite/client"]
   },
   "exclude": ["**/node_modules", "**/dist", "**/*.md"]

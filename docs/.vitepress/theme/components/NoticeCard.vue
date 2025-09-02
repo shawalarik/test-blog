@@ -16,7 +16,11 @@
           <a class="announcement-button" :href="noticeContent.operationButtonPath" :target="getTargetValue()">
             <span>{{ noticeContent.operationButtonName }}</span>
             <svg class="button-icon" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+              <path
+                fill-rule="evenodd"
+                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                clip-rule="evenodd"
+              />
             </svg>
           </a>
         </div>
@@ -39,22 +43,22 @@ interface NoticeContent {
 
 // 公告内容
 const noticeContent: NoticeContent = {
-  title: '📢 重要公告',
-  subtitle: '全网最美博客Teek🎉',
-  content: 'Teek~一款简约、唯美、丝滑且强大的VitePress主题博客(知识库&博客二合一) ，正在持续迭代更新，欢迎交流学习！',
-  operationButtonName: '查看详情',
-  operationButtonPath: 'https://vp.teek.top/',
+  title: "📢 重要公告",
+  subtitle: "全网最美博客Teek🎉",
+  content: "Teek~一款简约、唯美、丝滑且强大的VitePress主题博客(知识库&博客二合一) ，正在持续迭代更新，欢迎交流学习！",
+  operationButtonName: "查看详情",
+  operationButtonPath: "https://vp.teek.top/",
 };
 
 // 判断是否为外链
 const isExternalLink = (): boolean => {
-  const url: string = noticeContent.operationButtonPath
+  const url: string = noticeContent.operationButtonPath;
   return /^(https?:\/\/|\/\/)/.test(url);
 };
 
 // 获取网页打开方式
 const getTargetValue = (): string => {
-  return isExternalLink() ? '_blank' : '_self';
+  return isExternalLink() ? "_blank" : "_self";
 };
 </script>
 

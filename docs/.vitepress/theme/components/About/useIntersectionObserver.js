@@ -1,5 +1,4 @@
-
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from "vue";
 
 /**
  * 通用的 IntersectionObserver 组合函数
@@ -13,7 +12,7 @@ export function useIntersectionObserver(threshold = 0.2, once = false) {
   let observer = null;
 
   const observe = () => {
-    if (!('IntersectionObserver' in window)) {
+    if (!("IntersectionObserver" in window)) {
       // 不支持 IntersectionObserver 的浏览器，直接显示元素
       isVisible.value = true;
       return;
@@ -22,7 +21,7 @@ export function useIntersectionObserver(threshold = 0.2, once = false) {
     if (!targetRef.value) return;
 
     observer = new IntersectionObserver(
-      (entries) => {
+      entries => {
         const [entry] = entries;
         isVisible.value = entry.isIntersecting;
 
@@ -71,8 +70,8 @@ export function useMultipleIntersectionObserver(threshold = 0.2, once = false) {
   const elementsVisible = ref([]);
   let observer = null;
 
-  const setElementRef = (index) => {
-    return (el) => {
+  const setElementRef = index => {
+    return el => {
       elementsRefs.value[index] = el;
     };
   };
@@ -80,32 +79,35 @@ export function useMultipleIntersectionObserver(threshold = 0.2, once = false) {
   const setupObserver = () => {
     cleanup();
 
-    console.log("setupObserver elementsRefs", elementsRefs)
-    const count = elementsRefs.value.length
-    console.log("count", count)
+    console.log("setupObserver elementsRefs", elementsRefs);
+    const count = elementsRefs.value.length;
+    console.log("count", count);
 
-    if (!('IntersectionObserver' in window)) {
+    if (!("IntersectionObserver" in window)) {
       elementsVisible.value = new Array(count).fill(true);
       return;
     }
 
     elementsVisible.value = new Array(count).fill(false);
 
-    observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        const idx = elementsRefs.value.findIndex(el => el === entry.target);
-        if (idx !== -1) {
-          // 无论进入还是离开视口都更新状态
-          elementsVisible.value[idx] = entry.isIntersecting;
+    observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          const idx = elementsRefs.value.findIndex(el => el === entry.target);
+          if (idx !== -1) {
+            // 无论进入还是离开视口都更新状态
+            elementsVisible.value[idx] = entry.isIntersecting;
 
-          if (once && entry.isIntersecting) {
-            observer.unobserve(entry.target);
+            if (once && entry.isIntersecting) {
+              observer.unobserve(entry.target);
+            }
           }
-        }
-      });
-    }, { threshold });
+        });
+      },
+      { threshold }
+    );
 
-    elementsRefs.value.forEach((el) => {
+    elementsRefs.value.forEach(el => {
       if (el) observer.observe(el);
     });
   };
@@ -126,4 +128,3 @@ export function useMultipleIntersectionObserver(threshold = 0.2, once = false) {
     cleanup
   };
 }
-

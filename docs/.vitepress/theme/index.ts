@@ -1,6 +1,6 @@
 import Teek from "vitepress-theme-teek";
 import "vitepress-theme-teek/index.css";
-import {defineComponent, h} from "vue";
+import { defineComponent, h } from "vue";
 import { useData } from "vitepress";
 
 // 主题增强样式
@@ -24,87 +24,83 @@ import "./style/index.scss"; // 引入全局样式
 import "virtual:group-icons.css"; //代码组图标样式
 
 import TeekLayoutProvider from "./components/TeekLayoutProvider.vue"; // 布局组件
-import sendVisitStatistics from './utils/statistics' // 信息统计
-import NProgress from 'nprogress' // 路由进度条
-import 'nprogress/nprogress.css' // 路由进度条样式
+import sendVisitStatistics from "./utils/statistics"; // 信息统计
+import NProgress from "nprogress"; // 路由进度条
+import "nprogress/nprogress.css"; // 路由进度条样式
 //import { useLenis } from "lenis/vue";
-import { useMyLenis } from "./composables/useLenis";
 
 export default {
-    /**
-     * 扩展另一个主题，在我们的主题之前调用它的 `enhanceApp`
-     * @optional
-     */
-    extends: Teek,
-    /**
-     * 每个页面的根布局组件
-     * @required
-     */
-    //Layout: TeekLayoutProvider,
-    Layout: defineComponent({
-        name: "LayoutProvider",
-        setup() {
-            const props: {class?: string} = {};
-            const { frontmatter } = useData();
+  /**
+   * 扩展另一个主题，在我们的主题之前调用它的 `enhanceApp`
+   * @optional
+   */
+  extends: Teek,
+  /**
+   * 每个页面的根布局组件
+   * @required
+   */
+  //Layout: TeekLayoutProvider,
+  Layout: defineComponent({
+    name: "LayoutProvider",
+    setup() {
+      const props: { class?: string } = {};
+      const { frontmatter } = useData();
 
-            // 根据元数据动态应用 CSS 类，实现页面级样式定制
-            if (frontmatter.value?.layoutClass) {
-                props.class = frontmatter.value.layoutClass;
-            }
+      // 根据元数据动态应用 CSS 类，实现页面级样式定制
+      if (frontmatter.value?.layoutClass) {
+        props.class = frontmatter.value.layoutClass;
+      }
 
-            return () => h(TeekLayoutProvider, props);
-        },
-    }),
-    /**
-     * 增强 Vue 应用实例
-     *  app: App // Vue 应用实例
-     *  router: Router // VitePress 路由实例
-     *  siteData: Ref<SiteData> // 站点级元数据
-     * @optional
-     */
-    async enhanceApp({ app, router, siteData }) {
-
-        // 捕获水合错误并打印详细信息
-        app.config.errorHandler = (err, instance, info) => {
-            if (err.message.includes('Hydration')) {
-                console.log('水合错误组件:', instance);
-                console.log('错误信息:', info);
-            }
-            throw err;
-        }
-
-        // @ts-ignore-error
-        if (!import.meta.env.SSR) {
-
-            //const { lenisInstance,onScroll } = useMyLenis()
-            //console.log("lenisInstance", lenisInstance);
-
-            // 开发环境禁用umami统计
-            // @ts-ignore-error
-            if (import.meta.env.DEV){
-                // @ts-ignore-error
-                console.log(import.meta.env)
-                console.log("开发环境禁用umami统计")
-                localStorage.setItem('umami.disabled', "1");
-            }
-
-            // 配置进度条
-            NProgress.configure({ showSpinner: false })
-
-            // 重写路由钩子
-            router.onBeforeRouteChange = (to) => {
-                //console.log("onBeforeRouteChange", decodeURIComponent(to))
-                NProgress.start() // 开始进度条
-            }
-
-            router.onAfterRouteChange = (to) => {
-                //console.log("onAfterRouteChange", decodeURIComponent(to))
-                // 发送访问记录
-                //sendVisitStatistics(router, siteData, fingerprintID)
-                NProgress.done() // 停止进度条
-            }
-            return NProgress
-        }
+      return () => h(TeekLayoutProvider, props);
     },
-};
+  }),
+  /**
+   * 增强 Vue 应用实例
+   *  app: App // Vue 应用实例
+   *  router: Router // VitePress 路由实例
+   *  siteData: Ref<SiteData> // 站点级元数据
+   * @optional
+   */
+  async enhanceApp({ app, router, siteData }) {
+    // 捕获水合错误并打印详细信息
+    app.config.errorHandler = (err, instance, info) => {
+      if (err.message.includes("Hydration")) {
+        console.log("水合错误组件:", instance);
+        console.log("错误信息:", info);
+      }
+      throw err;
+    };
 
+    // @ts-ignore-error
+    if (!import.meta.env.SSR) {
+      //const { lenisInstance,onScroll } = useMyLenis()
+      //console.log("lenisInstance", lenisInstance);
+
+      // 开发环境禁用umami统计
+      // @ts-ignore-error
+      if (import.meta.env.DEV) {
+        // @ts-ignore-error
+        console.log(import.meta.env);
+        console.log("开发环境禁用umami统计");
+        localStorage.setItem("umami.disabled", "1");
+      }
+
+      // 配置进度条
+      NProgress.configure({ showSpinner: false });
+
+      // 重写路由钩子
+      router.onBeforeRouteChange = to => {
+        //console.log("onBeforeRouteChange", decodeURIComponent(to))
+        NProgress.start(); // 开始进度条
+      };
+
+      router.onAfterRouteChange = to => {
+        //console.log("onAfterRouteChange", decodeURIComponent(to))
+        // 发送访问记录
+        //sendVisitStatistics(router, siteData, fingerprintID)
+        NProgress.done(); // 停止进度条
+      };
+      return NProgress;
+    }
+  }
+};

@@ -12,8 +12,8 @@
 </template>
 
 <script setup>
-import {onBeforeMount, onMounted, ref} from 'vue';
-import { useRouter } from 'vitepress';
+import { onBeforeMount, onMounted, ref } from "vue";
+import { useRouter } from "vitepress";
 
 // 路由相关
 const router = useRouter();
@@ -45,21 +45,21 @@ function handleRouteComplete() {
 }
 
 // 监听路由变化
-router.onBeforeRouteChange = (to) => {
+router.onBeforeRouteChange = to => {
   // 调用 VitePress 内部默认逻辑
   if (originalBeforeRouteChange) {
     originalBeforeRouteChange(to);
   }
-  handleRouteStart()
-}
+  handleRouteStart();
+};
 
-router.onAfterRouteChange = (to) => {
+router.onAfterRouteChange = to => {
   // 调用 VitePress 内部默认逻辑
   if (originalAfterRouteChange) {
     originalAfterRouteChange(to);
   }
-  handleRouteComplete()
-}
+  handleRouteComplete();
+};
 
 /* 首次加载遮罩 */
 onBeforeMount(() => {
@@ -68,7 +68,7 @@ onBeforeMount(() => {
 
 onMounted(() => {
   handleRouteComplete();
-})
+});
 </script>
 
 <style>
@@ -88,7 +88,7 @@ onMounted(() => {
 }
 
 .loader {
-  align-content: center;/* 居中显示 */
+  align-content: center; /* 居中显示 */
 }
 
 .spinner {
@@ -102,7 +102,11 @@ onMounted(() => {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>

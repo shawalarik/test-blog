@@ -1,9 +1,9 @@
 import { HeadConfig } from "vitepress/types/shared";
 
 const description = [
-    "欢迎来到 vitepress-theme-teek 使用文档",
-    "Teek 是一个基于 VitePress 构建的主题，是在默认主题的基础上进行拓展，支持 VitePress 的所有功能、配置",
-    "Teek 拥有三种典型的知识管理形态：结构化、碎片化、体系化，可以轻松构建一个结构化知识库，适用个人博客、文档站、知识库等场景",
+  "欢迎来到 vitepress-theme-teek 使用文档",
+  "Teek 是一个基于 VitePress 构建的主题，是在默认主题的基础上进行拓展，支持 VitePress 的所有功能、配置",
+  "Teek 拥有三种典型的知识管理形态：结构化、碎片化、体系化，可以轻松构建一个结构化知识库，适用个人博客、文档站、知识库等场景"
 ].toString();
 
 const noScripTemplate = `
@@ -14,36 +14,35 @@ const noScripTemplate = `
       跳转至百度
     </a>
   </div>
-`
+`;
 
-export const Head:HeadConfig[] =[
-    ['link', { rel: 'icon', href: '/favicon.ico' }],
-    ["meta", { name: "author", content: "威威" }],
-    [
-        "meta",
-        {
-            name: "viewport",
-            content:
-                "width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no",
-        },
-    ],
-    [
-        "meta",
-        {
-            name: "description",
-            description,
-        },
-    ],
-    ["meta", { name: "keywords", description }],
-    // umami统计
-    [
-        "script",
-        {
-            src: "https://umami.dl-web.top/script.js",
-            "data-website-id": "0b67009b-c85f-400f-b4f7-a2db22ee9698"
-        },
-    ],
-/*    // jquery
+export const Head: HeadConfig[] = [
+  ["link", { rel: "icon", href: "/favicon.ico" }],
+  ["meta", { name: "author", content: "威威" }],
+  [
+    "meta",
+    {
+      name: "viewport",
+      content: "width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"
+    }
+  ],
+  [
+    "meta",
+    {
+      name: "description",
+      description
+    }
+  ],
+  ["meta", { name: "keywords", description }],
+  // umami统计
+  [
+    "script",
+    {
+      src: "https://umami.dl-web.top/script.js",
+      "data-website-id": "0b67009b-c85f-400f-b4f7-a2db22ee9698"
+    }
+  ],
+  /*    // jquery
     [
         "script",
         {
@@ -61,8 +60,7 @@ export const Head:HeadConfig[] =[
         },
     ],*/
 
-
-/*    // 阿里在线矢量库
+  /*    // 阿里在线矢量库
     [
         "link",
         {
@@ -79,9 +77,5 @@ export const Head:HeadConfig[] =[
             onload: "this.media='all'",
         },
     ],*/
-    [
-        "noscript",
-        {},
-        noScripTemplate
-    ], // 禁用js跳转
-]
+  ["noscript", {}, noScripTemplate] // 禁用js跳转
+];

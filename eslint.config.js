@@ -11,25 +11,26 @@ import * as parserTypeScript from "@typescript-eslint/parser"; // 导入 TypeScr
 
 export default defineConfig([
   eslint.configs.recommended,
-  { ignores: ["**/.*", "**/dist/*", "*.d.ts", "**/static/*"] }, // 忽略文件配置单独放在一个对象，否则不生效
+  // "**/.*",
+  { ignores: ["**/dist/*", "*.d.ts", "**/static/*"] }, // 忽略文件配置单独放在一个对象，否则不生效
   {
     languageOptions: {
       globals: {
         ...globals.browser, // 包含浏览器环境的全局变量（window、document 等）
         ...globals.es6, // 包含 ES6 全局变量（Promise、Set、Map 等）
-        ...globals.node, // 包含 Node.js 环境的全局变量（process、__dirname 等）
+        ...globals.node // 包含 Node.js 环境的全局变量（process、__dirname 等）
         //...projectGlobals,     // 项目自定义的全局变量（假设提前定义）
-      },
+      }
     },
     plugins: {
-      prettier: pluginPrettier,
+      prettier: pluginPrettier
     },
     // 不指定 files，则默认是所有文件生效
     rules: {
       ...configPrettier.rules,
       ...pluginPrettier.configs.recommended.rules,
       "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off", // 禁用 debugger
-      "no-unused-vars": [process.env.NODE_ENV === "production" ? "warn" : "warn", { vars: "all", args: "none" }], // 禁止出现未使用的变量，函数和函数的参数
+      "no-unused-vars": "off", // 禁止出现未使用的变量，函数和函数的参数
       "no-undef": process.env.NODE_ENV === "production" ? "warn" : "warn", // 禁用未声明的变量，除非它们在 /*global */ 注释中被提到
       "no-console": "off", // 禁用 console
       "accessor-pairs": "error", // 强制 getter 和 setter 在对象中成对出现
@@ -62,8 +63,8 @@ export default defineConfig([
       "no-unreachable": "error", // 禁止在 return、throw、continue 和 break 语句后出现不可达代码
       "no-unreachable-loop": "error", // 禁止循环体允许一次迭代的循环
       "prefer-const": "error", // 要求使用 const 声明那些声明后不再被修改的变量
-      "no-useless-escape": "off", // 取消不必要的转义字符
-    },
+      "no-useless-escape": "off" // 取消不必要的转义字符
+    }
   },
   {
     files: ["**/*.vue"],
@@ -73,14 +74,14 @@ export default defineConfig([
         parser: "@typescript-eslint/parser",
         ecmaVersion: "latest",
         ecmaFeatures: {
-          jsx: true,
+          jsx: true
         },
         extraFileExtensions: [".vue"],
-        sourceType: "module",
-      },
+        sourceType: "module"
+      }
     },
     plugins: {
-      vue: pluginVue,
+      vue: pluginVue
     },
     processor: pluginVue.processors[".vue"],
     rules: {
@@ -102,8 +103,8 @@ export default defineConfig([
       "vue/valid-template-root": "off",
       "vue/singleline-html-element-content-newline": "off", // 在单行元素的内容之前和之后需要换行符
       "vue/multiline-html-element-content-newline": "off", // 在多行元素的内容之前和之后需要换行符
-      "vue/no-v-html": "off", // 禁止使用 v-html 来防止 XSS 攻击
-    },
+      "vue/no-v-html": "off" // 禁止使用 v-html 来防止 XSS 攻击
+    }
   },
   {
     files: ["**/*.?([cm])ts", "**/*.?([cm])tsx"],
@@ -113,11 +114,11 @@ export default defineConfig([
       parserOptions: {
         ecmaVersion: "latest",
         sourceType: "module",
-        warnOnUnsupportedTypeScriptVersion: false,
-      },
+        warnOnUnsupportedTypeScriptVersion: false
+      }
     },
     plugins: {
-      "@typescript-eslint": pluginTypeScript,
+      "@typescript-eslint": pluginTypeScript
     },
     rules: {
       ...pluginTypeScript.configs.strict.rules,
@@ -136,30 +137,30 @@ export default defineConfig([
       "@typescript-eslint/no-namespace": "off",
       "@typescript-eslint/consistent-type-imports": [
         "off",
-        { disallowTypeAnnotations: false, fixStyle: "inline-type-imports" },
+        { disallowTypeAnnotations: false, fixStyle: "inline-type-imports" }
       ],
       "@typescript-eslint/prefer-literal-enum-member": ["error", { allowBitwiseExpressions: true }],
       "@typescript-eslint/no-unused-vars": [
-        "error",
+        "off",
         {
           argsIgnorePattern: "^_",
-          varsIgnorePattern: "^_",
-        },
+          varsIgnorePattern: "^_"
+        }
       ],
-      "@typescript-eslint/no-dynamic-delete": "off",
-    },
+      "@typescript-eslint/no-dynamic-delete": "off"
+    }
   },
   {
     files: ["**/*.d.ts"],
     rules: {
-      "import/no-duplicates": "off",
-    },
-  },
-  {
-    files: ["**/*.?([cm])js"],
+      "import/no-duplicates": "off"
+    }
+  }
+  /*  {
+    files: ["**!/!*.?([cm])js"],
     rules: {
       "@typescript-eslint/no-require-imports": "off",
-      "@typescript-eslint/no-var-requires": "off",
-    },
-  },
+      "@typescript-eslint/no-var-requires": "off"
+    }
+  }*/
 ]);

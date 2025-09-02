@@ -95,6 +95,6 @@ export function cleanDistMusic(): Plugin & { name: string } {
       } catch (error) {
         console.error(`❌ 清理过程出错: ${error.message}`);
       }
-    },
+    }
   };
 }
