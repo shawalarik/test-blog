@@ -24,7 +24,7 @@
             <label>{{ t("annual_salary") }}</label>
             <div class="input-with-symbol">
               <span>{{ getCurrencySymbol() }}</span>
-              <input type="number" v-model="formData.salary" placeholder="0" @input="calculateWorth" />
+              <input type="number" v-model="formData.salary" placeholder="0" />
             </div>
           </div>
 
@@ -41,35 +41,34 @@
         <!-- 工作时间信息 -->
         <section class="form-section">
           <h2>{{ t("work_time") }}</h2>
+          <!-- 每周工作时间 -->
           <div class="form-group">
             <label>{{ t("work_days_per_week") }}</label>
-            <input type="number" v-model.number="workDaysPerWeek" @input="calculateWorth" />
+            <input type="number" v-model.number="workDaysPerWeek" :min="1" :max="7" />
           </div>
 
+          <!-- 每天工作小时数 -->
           <div class="form-group">
             <label>{{ t("daily_work_hours") }}</label>
-            <input type="number" v-model="formData.workHours" min="1" max="24" @input="calculateWorth" />
+            <input type="number" v-model.number="formData.workHours" :min="1" :max="24" />
           </div>
 
+          <!-- 每周通勤小时数 -->
           <div class="form-group">
             <label>{{ t("daily_commute_hours") }}</label>
-            <input type="number" v-model="formData.commuteHours" min="0" max="10" step="0.5" @input="calculateWorth" />
+            <input type="number" v-model="formData.commuteHours" min="0" max="10" step="0.5" />
           </div>
 
+          <!-- 每周远程工作日数 -->
           <div class="form-group">
             <label>{{ t("wfh_days_per_week") }}</label>
-            <input
-              type="number"
-              v-model="formData.wfhDaysPerWeek"
-              min="0"
-              :max="formData.workDaysPerWeek"
-              @input="calculateWorth"
-            />
+            <input type="number" v-model="formData.wfhDaysPerWeek" min="0" :max="formData.workDaysPerWeek" />
           </div>
 
+          <!-- 每周休息时间 -->
           <div class="form-group">
             <label>{{ t("daily_rest_time") }}</label>
-            <input type="number" v-model="formData.restTime" min="0" max="5" step="0.5" @input="calculateWorth" />
+            <input type="number" v-model="formData.restTime" min="0" max="5" step="0.5" />
           </div>
         </section>
 
@@ -78,17 +77,17 @@
           <h2>{{ t("holidays") }}</h2>
           <div class="form-group">
             <label>{{ t("annual_leave") }}</label>
-            <input type="number" v-model="formData.annualLeave" min="0" max="60" @input="calculateWorth" />
+            <input type="number" v-model="formData.annualLeave" min="0" max="60" />
           </div>
 
           <div class="form-group">
             <label>{{ t("paid_sick_leave") }}</label>
-            <input type="number" v-model="formData.paidSickLeave" min="0" max="30" @input="calculateWorth" />
+            <input type="number" v-model="formData.paidSickLeave" min="0" max="30" />
           </div>
 
           <div class="form-group">
             <label>{{ t("public_holidays") }}</label>
-            <input type="number" v-model="formData.publicHolidays" min="0" max="30" @input="calculateWorth" />
+            <input type="number" v-model="formData.publicHolidays" min="0" max="30" />
           </div>
         </section>
 
@@ -105,10 +104,7 @@
                 type="button"
                 class="form-group-button"
                 :class="{ 'form-group-button-active': formData.jobStability === item.rating }"
-                @click="
-                  formData.jobStability = item.rating;
-                  calculateWorth();
-                "
+                @click="formData.jobStability = item.rating"
               >
                 {{ t(item.text) }}
               </button>
@@ -124,10 +120,7 @@
                 type="button"
                 class="form-group-button"
                 :class="{ 'form-group-button-active': formData.cityFactor === item.rating }"
-                @click="
-                  formData.cityFactor = item.rating;
-                  calculateWorth();
-                "
+                @click="formData.cityFactor = item.rating"
               >
                 {{ t(item.text) }}
               </button>
@@ -143,10 +136,7 @@
                 type="button"
                 class="form-group-button"
                 :class="{ 'form-group-button-active': formData.workEnvironment === item.rating }"
-                @click="
-                  formData.workEnvironment = item.rating;
-                  calculateWorth();
-                "
+                @click="formData.workEnvironment = item.rating"
               >
                 {{ item.text }}
               </button>
@@ -162,10 +152,7 @@
                 type="button"
                 class="form-group-button"
                 :class="{ 'form-group-button-active': formData.leadership === item.rating }"
-                @click="
-                  formData.leadership = item.rating;
-                  calculateWorth();
-                "
+                @click="formData.leadership = item.rating"
               >
                 {{ item.text }}
               </button>
@@ -181,10 +168,7 @@
                 type="button"
                 class="form-group-button"
                 :class="{ 'form-group-button-active': formData.teamwork === item.rating }"
-                @click="
-                  formData.teamwork = item.rating;
-                  calculateWorth();
-                "
+                @click="formData.teamwork = item.rating"
               >
                 {{ item.text }}
               </button>
@@ -193,10 +177,18 @@
 
           <div class="form-group">
             <label>{{ t("hometown") }}</label>
-            <select v-model="formData.homeTown" @change="calculateWorth">
-              <option value="yes">{{ t("yes") }}</option>
-              <option value="no">{{ t("no") }}</option>
-            </select>
+            <div class="button-group">
+              <button
+                v-for="(item, index) in formData.homeTownGroup"
+                :key="index"
+                type="button"
+                class="form-group-button"
+                :class="{ 'form-group-button-active': formData.homeTown === item.rating }"
+                @click="formData.homeTown = item.rating"
+              >
+                {{ item.text }}
+              </button>
+            </div>
           </div>
         </section>
 
@@ -206,28 +198,28 @@
           <div class="form-group">
             <label>{{ t("shuttle_service") }}</label>
             <div class="checkbox-group">
-              <input type="checkbox" id="hasShuttle" v-model="formData.hasShuttle" @change="calculateWorth" />
+              <input type="checkbox" id="hasShuttle" v-model="formData.hasShuttle" />
               <label for="hasShuttle">{{ t("has_shuttle") }}</label>
             </div>
-            <select v-model="formData.shuttle" @change="calculateWorth" :disabled="!formData.hasShuttle">
+            <select v-model="formData.shuttle" :disabled="!formData.hasShuttle">
               <option value="1.0">{{ t("shuttle_none") }}</option>
-              <option value="0.9">{{ t("shuttle_inconvenient") }}</option>
-              <option value="0.7">{{ t("shuttle_convenient") }}</option>
-              <option value="0.5">{{ t("shuttle_direct") }}</option>
+              <option value="1.05">{{ t("shuttle_inconvenient") }}</option>
+              <option value="1.1">{{ t("shuttle_convenient") }}</option>
+              <option value="1.15">{{ t("shuttle_direct") }}</option>
             </select>
           </div>
 
           <div class="form-group">
             <label>{{ t("canteen_service") }}</label>
             <div class="checkbox-group">
-              <input type="checkbox" id="hasCanteen" v-model="formData.hasCanteen" @change="calculateWorth" />
+              <input type="checkbox" id="hasCanteen" v-model="formData.hasCanteen" />
               <label for="hasCanteen">{{ t("has_canteen") }}</label>
             </div>
-            <select v-model="formData.canteen" @change="calculateWorth" :disabled="!formData.hasCanteen">
+            <select v-model="formData.canteen" :disabled="!formData.hasCanteen">
               <option value="1.0">{{ t("canteen_none") }}</option>
               <option value="1.05">{{ t("canteen_average") }}</option>
               <option value="1.1">{{ t("canteen_good") }}</option>
-              <option value="1.15">{{ t("canteen_excellent") }}</option>
+              <option value="1.2">{{ t("canteen_excellent") }}</option>
             </select>
           </div>
         </section>
@@ -237,8 +229,8 @@
           <h2>{{ t("personal_factors") }}</h2>
           <div class="form-group">
             <label>{{ t("education") }}</label>
-            <select v-model="formData.degreeType" @change="calculateWorth">
-              <option value="belowBachelor">{{ t("below_bachelor") }}</option>
+            <select v-model="formData.degreeType">
+              <option value="below_bachelor">{{ t("below_bachelor") }}</option>
               <option value="bachelor">{{ t("bachelor") }}</option>
               <option value="masters">{{ t("masters") }}</option>
               <option value="phd">{{ t("phd") }}</option>
@@ -247,7 +239,7 @@
 
           <div class="form-group">
             <label>{{ t("school_type") }}</label>
-            <select v-model="formData.schoolType" @change="calculateWorth">
+            <select v-model="formData.schoolType">
               <option value="secondTier">{{ t("school_second_tier") }}</option>
               <option value="firstTier">{{ t("school_first_tier") }}</option>
               <option value="elite">{{ t("school_elite") }}</option>
@@ -256,7 +248,7 @@
 
           <div class="form-group">
             <label>{{ t("work_experience") }}</label>
-            <select v-model="formData.workYears" @change="calculateWorth">
+            <select v-model="formData.workYears">
               <option value="0">{{ t("fresh_graduate") }}</option>
               <option value="1">{{ t("years_1_3") }}</option>
               <option value="2">{{ t("years_3_5") }}</option>
@@ -342,6 +334,7 @@
             </div>
           </div>
 
+          <!--	个人因素		-->
           <div class="detail-section">
             <h4>{{ t("personal_factors") }}</h4>
             <div class="detail-item">
@@ -441,8 +434,8 @@ const translations = {
     country_region: "国家/地区",
     work_time: "⏱️ 工作时间",
     work_days_per_week: "每周工作天数",
-    daily_work_hours: "每天工作小时数",
-    daily_commute_hours: "每天通勤小时数",
+    daily_work_hours: "每天工作时间(小时)",
+    daily_commute_hours: "每天通勤时间(小时)",
     wfh_days_per_week: "每周远程工作日数",
     daily_rest_time: "每天休息时间(小时)",
     holidays: "🏖️ 假期信息",
@@ -743,7 +736,7 @@ const pppFactors = {
 const currencySymbols = {
   CN: "¥",
   US: "$",
-  JP: "¥",
+  JP: "Ұ",
   GB: "£",
   DE: "€",
   FR: "€",
@@ -817,7 +810,12 @@ const formData = ref({
     { text: "和和睦睦", rating: "1.2" },
     { text: "私交甚好", rating: "1.5" }
   ],
-  homeTown: "no",
+  homeTown: "1.0",
+  homeTownGroup: [
+    { text: "在家乡", rating: "1.3" },
+    { text: "离家乡近", rating: "1.1" },
+    { text: "不在家乡", rating: "1.0" }
+  ],
   hasShuttle: false,
   shuttle: "1.0",
   hasCanteen: false,
@@ -944,18 +942,21 @@ const calculateWorth = () => {
 
   const stabilityFactor = Number(formData.value.jobStability);
 
-  let educationFactor = 1.0;
-  if (formData.value.degreeType === "bachelor") educationFactor = 1.1;
-  if (formData.value.degreeType === "masters") educationFactor = 1.3;
-  if (formData.value.degreeType === "phd") educationFactor = 1.5;
+  // 学历因子
+  let educationFactor = 1.7;
+  if (formData.value.degreeType === "bachelor") educationFactor = 1.4;
+  if (formData.value.degreeType === "masters") educationFactor = 1;
+  if (formData.value.degreeType === "phd") educationFactor = 0.8;
 
-  let schoolFactor = 1.0;
-  if (formData.value.schoolType === "firstTier") schoolFactor = 1.05;
-  if (formData.value.schoolType === "elite") schoolFactor = 1.15;
+  let schoolFactor = 1.3;
+  if (formData.value.schoolType === "firstTier") schoolFactor = 1.2;
+  if (formData.value.schoolType === "elite") schoolFactor = 1;
   const totalEducationFactor = educationFactor * schoolFactor;
 
-  const experienceFactor = 1 + Math.min(parseInt(formData.value.workYears), 10) * 0.05;
-  const hometownFactor = formData.value.homeTown === "yes" ? 1.1 : 1.0;
+  const experienceFactor = 1 / (1 + Math.min(parseInt(formData.value.workYears), 10) * 0.05);
+
+  // 是否在家乡工作
+  const hometownFactor = Number(formData.value.homeTown);
 
   // 11. 综合计算性价比分数（薪资为0时直接返回0）
   const totalHours = Math.max(
@@ -966,7 +967,6 @@ const calculateWorth = () => {
       parseFloat(formData.value.restTime)
   );
 
-  console.log("totalHours", dailySalary, totalHours, dailySalary / totalHours);
   const worthScore = isZeroSalary
     ? 0
     : ((dailySalary / totalHours) *
@@ -1163,10 +1163,18 @@ watch([formData, selectedCountry], calculateWorth, { deep: true, immediate: true
 <style scoped>
 .job-worth-calculator {
   --bg-color: #fff;
+  --button-bg-color: #f9fafb;
+  --button-active-bg-color: #dee9fc;
+  --result-score-bg-color: #f8fafc;
+  --result-main-bg-color: #f1f5f9;
 }
 
 html.dark .job-worth-calculator {
   --bg-color: #202127;
+  --button-bg-color: #1b1b1f;
+  --button-active-bg-color: #060608;
+  --result-score-bg-color: #1b1b1f;
+  --result-main-bg-color: #1b1b1f;
 }
 
 .job-worth-calculator {
@@ -1197,7 +1205,6 @@ html.dark .job-worth-calculator {
   padding: 5px 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
-  background: white;
   cursor: pointer;
 }
 
@@ -1313,7 +1320,7 @@ html.dark .job-worth-calculator {
 }
 
 .form-group-button {
-  background-color: #f9fafb;
+  background-color: var(--button-bg-color);
   padding: 10px 5px;
   font-size: small;
   border-radius: 0.375rem;
@@ -1323,7 +1330,7 @@ html.dark .job-worth-calculator {
 }
 
 .form-group-button-active {
-  background-color: #dee9fc;
+  background-color: var(--button-active-bg-color);
 }
 
 .calculator-result {
@@ -1351,7 +1358,7 @@ html.dark .job-worth-calculator {
   text-align: center;
   margin-bottom: 20px;
   padding: 20px;
-  background: #f8fafc;
+  background: var(--result-score-bg-color);
   border-radius: 8px;
 }
 
@@ -1384,7 +1391,7 @@ html.dark .job-worth-calculator {
 }
 
 .main-stat {
-  background: #f1f5f9;
+  background: var(--result-main-bg-color);
   padding: 15px;
   border-radius: 8px;
 }
