@@ -379,7 +379,7 @@ export default defineConfig({
       //sourcemap: true,
       chunkSizeWarningLimit: 1500, // 限制警告的块大小
       assetsInlineLimit: 4096, // 小于 4KB 的字体转为 base64
-      minify: "terser", // 使用 Terser 进行代码压缩 或 'esbuild'
+      minify: "esbuild", // 使用 Terser 进行代码压缩 或 'esbuild'
       terserOptions: {
         compress: {
           drop_console: false, // 关闭“一刀切”删除所有 console
@@ -394,7 +394,6 @@ export default defineConfig({
         },
         format: {
           comments: false, // 移除所有注释（保留版权声明需使用正则表达式）
-          beautify: false, // 禁用代码美化（进一步减小体积）
           preamble: "/* 项目版本 1.0.0 */" // 文件头部添加版权声明（需遵守 MIT 协议）
         },
         mangle: {
@@ -404,6 +403,13 @@ export default defineConfig({
       },
       rollupOptions: {
         output: {
+          /*          // 自动拆分公共代码（补充手动拆分）
+          chunkFileNames: "assets/[name]-[hash].js",
+          // 缩短文件名（减少体积）
+          entryFileNames: "assets/[hash].js",
+          assetFileNames: "assets/[hash].[ext]",
+          // 移除注释
+          banner: "/!*! My Site *!/", // 仅保留必要注释*/
           manualChunks: id => {
             //console.log("id", id)
             // 排除可能导致问题的主题库和核心依赖
@@ -424,15 +430,8 @@ export default defineConfig({
               return `vendor/${pkg}`;
             }
           }
-        }
-        /*        external: (id) => {
-          // 调试日志：输出匹配的文件路径
-          const isOriginalMusic = /^.*public[/\\]music[/\\](?!compressed[/\\]).*\.(mp3|wav|flac)$/i.test(id);
-          if (isOriginalMusic) {
-            console.log(`忽略原始音频文件: ${id}`);
-          }
-          return isOriginalMusic
-        },*/
+        },
+        plugins: []
       }
     },
     ssr: {

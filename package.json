@@ -41,7 +41,7 @@
     "vite-plugin-inspect": "^11.3.0",
     "vitepress": "^1.6.4",
     "vitepress-plugin-sidebar-permalink": "^1.5.17",
-    "vitepress-theme-teek": "^1.4.5",
+		"vitepress-theme-teek": "file:D:\\DL\\Project\\vitepress-theme-teek\\dist\\vitepress-theme-teek",
     "vue": "^3.5.16",
     "vue-eslint-parser": "^10.1.3"
   },
