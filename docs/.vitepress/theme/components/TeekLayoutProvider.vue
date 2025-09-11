@@ -31,7 +31,7 @@ import NotFound from "./NotFound.vue";
 import BackTop from "./BackTop.vue";
 import NoticeCard from "./NoticeCard.vue";
 import Fps from "./Fps.vue";
-import MyLogoLoop from "./VueBits/My/MyLogoLoop.vue";
+import MyLogoLoop from "./Framework/VueBits/My/MyLogoLoop.vue";
 
 /**
  site: Ref<SiteData<T>> 站点级元数据

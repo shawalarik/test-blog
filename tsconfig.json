@@ -4,7 +4,15 @@
     "moduleResolution": "bundler",
 		"esModuleInterop": true,  // 关键配置：开启 CommonJS 与 ES 模块互操作
 		"allowSyntheticDefaultImports": true,  // 通常与 esModuleInterop 一起开启
-    "types": ["node", "vite/client"]
+    "types": ["node", "vite/client"],
+		// 关键：配置别名映射（与 Vite 保持一致）
+		"baseUrl": ".", // 基础路径（对应 Vite 的 __dirname）
+		"paths": {
+			"@/*": ["*"], // 映射 "@/" 到根目录下的所有文件（对应 Vite 的 "@": ./）
+			"@utils/*": ["theme/utils/*"], // 映射 "@utils/" 到 theme/utils/
+			"@components/*": ["theme/components/*"] // 映射 "@components/" 到 theme/components/
+		}
   },
+	"include": ["docs/**/*.ts", "docs/**/*.d.ts", "docs/**/*.vue", "theme/**/*.vue"],
   "exclude": ["**/node_modules", "**/dist", "**/*.md"]
 }

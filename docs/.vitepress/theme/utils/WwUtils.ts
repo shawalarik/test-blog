@@ -164,3 +164,12 @@ export function myConsoleInfo(isRandom: boolean = false, ...params: string[]) {
   // 输出带样式的日志
   console.info(formatString, ...styles);
 }
+
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
+export type ObjectValues<T> = T[keyof T];
