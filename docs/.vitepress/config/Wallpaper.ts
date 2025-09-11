@@ -1,4 +1,4 @@
-// 首页壁纸
+// 首页壁纸 "https://random.dl-web.top/"
 export const Wallpaper = [
   "/home/bg01.webp",
   "/home/bg02.webp",

@@ -130,6 +130,7 @@ export const Head: HeadConfig[] = [
       "data-website-id": "0b67009b-c85f-400f-b4f7-a2db22ee9698"
     }
   ],
+  ["link", { rel: "stylesheet", href: "https://unpkg.com/primeicons@6.0.1/primeicons.css" }],
   ...share,
   ...weChatShare,
   ["noscript", {}, noScripTemplate], // 禁用js跳转

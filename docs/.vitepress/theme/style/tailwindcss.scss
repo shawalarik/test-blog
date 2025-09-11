@@ -1,7 +1,7 @@
 /* .vitepress/theme/style.css */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@tailwind base;    /* 基础样式：重置默认样式、设置基础字体等 */
+@tailwind components;  /* 组件类：可选，如默认按钮、卡片样式（可自定义） */
+@tailwind utilities;   /* 工具类：核心，如 flex、text-xl、bg-blue-500 等 */
 
 /* 自定义样式 */
 @layer utilities {
