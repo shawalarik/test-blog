@@ -83,16 +83,12 @@ onMounted(() => {
       <RouteSwitchingLoading />
       <!-- 全局问候组件 -->
       <GlobalGreet />
-      <!-- 看板娘组件 -->
-      <!--      <OhMyLive2D />-->
       <!-- 顶部滚动条组件 -->
       <ScrollProgressBar />
       <!-- 网页标题切换组件 -->
       <TitleChange />
       <!-- 音乐播放器组件 -->
       <APlayer />
-      <!-- 扣子ai组件 -->
-      <!--      <CozeAi/>-->
     </template>
 
     <template #nav-bar-content-after>
