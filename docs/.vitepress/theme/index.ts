@@ -28,6 +28,7 @@ import sendVisitStatistics from "./utils/statistics"; // 信息统计
 import NProgress from "nprogress"; // 路由进度条
 import "nprogress/nprogress.css"; // 路由进度条样式
 //import { useLenis } from "lenis/vue";
+import FriendshipLink from "./components/FriendshipLink/index.vue"; // 布局组件
 
 export default {
   /**
@@ -52,7 +53,7 @@ export default {
       }
 
       return () => h(TeekLayoutProvider, props);
-    },
+    }
   }),
   /**
    * 增强 Vue 应用实例
@@ -62,14 +63,14 @@ export default {
    * @optional
    */
   async enhanceApp({ app, router, siteData }) {
-    // 捕获水合错误并打印详细信息
-    app.config.errorHandler = (err, instance, info) => {
-      if (err.message.includes("Hydration")) {
-        console.log("水合错误组件:", instance);
-        console.log("错误信息:", info);
-      }
-      throw err;
-    };
+    // 使用数组统一注册组件，减少重复代码
+    const globalComponents = [
+      { name: "friend-link", component: FriendshipLink } // 注册友链组件
+    ];
+
+    globalComponents.forEach(({ name, component }) => {
+      app.component(name, component); // 全局注册组件
+    });
 
     // @ts-ignore-error
     if (!import.meta.env.SSR) {

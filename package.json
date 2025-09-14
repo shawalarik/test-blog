@@ -62,6 +62,7 @@
     "nprogress": "^0.2.0",
     "picocolors": "^1.1.1",
     "swiper": "^11.2.10",
+    "twikoo": "^1.6.44",
     "vitepress-plugin-auto-frontmatter": "^1.0.10",
     "vitepress-plugin-group-icons": "^1.6.0",
     "vitepress-plugin-permalink": "^1.2.1",
