@@ -62,6 +62,12 @@ const teekConfig = defineTeekConfig({
     showCategory: true, // 是否展示分类
     showTag: true // 是否展示标签
   },
+  breadcrumb: {
+    enabled: true, // 是否启用面包屑
+    showCurrentName: false, // 面包屑最后一列是否显示当前文章的文件名
+    separator: "/", // 面包屑分隔符
+    homeLabel: "首页" // 鼠标悬停首页图标的提示文案
+  },
   //pageStyle: "card-nav",
   backTopDone: TkMessage => TkMessage.success("返回顶部"),
   windowTransition: true,
@@ -249,7 +255,7 @@ const teekConfig = defineTeekConfig({
       // ignoreList: ["nav"], //忽略的文件夹和文件
       ignoreWarn: true, // 忽略警告
       collapsed: true, // 是否默认折叠侧边栏
-      resolveRule: "filePath",
+      resolveRule: "rewrites",
       // 检查同目录下前缀不同的文件（以同目录访问到的第一个文件的permalink的一级前缀作为基准）
       checkRewritesPrefix: true
     },
@@ -311,9 +317,9 @@ export default defineConfig({
     }
   },
   // 使用路由重写
-/*  rewrites: createRewrites({
+  rewrites: createRewrites({
     srcDir: "docs"
-  }),*/
+  }),
   themeConfig: {
     logo: "/avatar/avatar.svg",
     darkModeSwitchLabel: "主题",
