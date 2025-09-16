@@ -420,10 +420,6 @@ html.dark .menu-container {
   background: var(--divider-bg-color);
 }
 
-html[class*="dark"] .menu-divider {
-  background: var(--divider-dark);
-}
-
 .menu-item {
   display: flex;
   align-items: center;
@@ -473,10 +469,6 @@ html[class*="dark"] .menu-divider {
   stroke: var(--vp-c-brand-1);
 }
 
-html[class*="dark"] .submenu-item:hover .submenu-item-icon :deep(svg) {
-  stroke: var(--vp-c-brand-1);
-}
-
 .menu-item-arrow {
   margin-left: auto;
   width: 16px;
@@ -503,7 +495,6 @@ html[class*="dark"] .submenu-item:hover .submenu-item-icon :deep(svg) {
 }
 
 .has-submenu:hover > .submenu {
-  visibility: visible;
   opacity: 1;
   transform: translateX(0);
 }
@@ -554,11 +545,5 @@ html.dark .submenu {
     0 5px 15px rgba(139, 92, 246, 0.4),
     0 2px 5px rgba(236, 72, 153, 0.3);
   //transform: translateY(-2px) translateX(2px);
-}
-
-.menu-footer-item span {
-  color: white;
-  font-weight: 600;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 </style>

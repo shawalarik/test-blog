@@ -1,13 +1,14 @@
 import {
-	About,
-	Exclamation,
-	FriendshipLinks,
-	Home,
-	MessageBoard,
-	Music, Other,
-	PhotoAlbum,
-	Refresh,
-	TreeHollow,
+  About,
+  Exclamation,
+  FriendshipLinks,
+  Home,
+  MessageBoard,
+  Music,
+  Other,
+  PhotoAlbum,
+  Refresh,
+  TreeHollow
 } from "./SvgList";
 
 export const menuData = {
@@ -20,9 +21,6 @@ export const menuData = {
       text: "首页",
       svg: Home,
       click(frontmatter: any, navigateTo: Function) {
-        console.log("click");
-        console.log(frontmatter);
-        console.log(frontmatter.title);
         navigateTo("/");
       }
     },
