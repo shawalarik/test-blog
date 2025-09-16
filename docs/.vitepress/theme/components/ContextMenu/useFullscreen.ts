@@ -1,13 +1,11 @@
-// useFullscreen.mjs
 import { ref, onMounted, onUnmounted } from "vue";
 
 // 检查是否在客户端环境
 const isClient = typeof window !== "undefined" && typeof document !== "undefined";
 
-// 定义 fullscreenApi 结构，但不立即访问 document
-let fullscreenApi = null;
+// 定义 fullscreenApi 结构
+let fullscreenApi: any = null;
 
-// 只在客户端初始化 fullscreenApi
 if (isClient) {
   fullscreenApi = {
     request:
@@ -18,9 +16,9 @@ if (isClient) {
 
     exit: (
       document.exitFullscreen ||
-      document.webkitExitFullscreen ||
-      document.mozCancelFullScreen ||
-      document.msExitFullscreen
+      document.documentElement.webkitExitFullscreen ||
+      document.documentElement.mozCancelFullScreen ||
+      document.documentElement.msExitFullscreen
     )?.bind(document),
 
     element: () =>
@@ -40,8 +38,17 @@ if (isClient) {
 }
 
 export function useFullscreen() {
-  // 服务端渲染时提供默认值
   const isFullScreen = ref(false);
+  // 用组件内部变量存储事件引用（替代window挂载）
+  let eventRefs: {
+    changeEvent: string | null;
+    handleFullscreenChange: (() => void) | null;
+    handleKeydown: ((e: KeyboardEvent) => void) | null;
+  } = {
+    changeEvent: null,
+    handleFullscreenChange: null,
+    handleKeydown: null
+  };
 
   const checkFullscreen = () => {
     if (!isClient || !fullscreenApi) return false;
@@ -64,11 +71,12 @@ export function useFullscreen() {
     }
   };
 
+  // 定义事件处理函数（用变量存储以便卸载）
   const handleFullscreenChange = () => {
     updateStatus();
   };
 
-  const handleKeydown = e => {
+  const handleKeydown = (e: KeyboardEvent) => {
     if (e.key === "F11" || e.keyCode === 122) {
       requestAnimationFrame(updateStatus);
     }
@@ -77,33 +85,42 @@ export function useFullscreen() {
   onMounted(() => {
     updateStatus();
 
-    const changeEvent = fullscreenApi.changeEvent();
-    document.addEventListener(changeEvent, handleFullscreenChange);
-    window.addEventListener("keydown", handleKeydown);
-
-    // 保存事件引用以便清理
-    window._fullscreenEvent = { changeEvent, handleFullscreenChange, handleKeydown };
+    if (isClient && fullscreenApi) {
+      const changeEvent = fullscreenApi.changeEvent();
+      // 存储事件引用到内部变量
+      eventRefs = {
+        changeEvent,
+        handleFullscreenChange,
+        handleKeydown
+      };
+      // 绑定事件
+      document.addEventListener(changeEvent, handleFullscreenChange);
+      window.addEventListener("keydown", handleKeydown);
+    }
   });
 
   onUnmounted(() => {
-    const { changeEvent, handleFullscreenChange, handleKeydown } = window._fullscreenEvent || {};
-    if (changeEvent && handleFullscreenChange) {
-      document.removeEventListener(changeEvent, handleFullscreenChange);
-    }
-    if (handleKeydown) {
-      window.removeEventListener("keydown", handleKeydown);
-    }
-
-    // 清理全局变量
-    if (window._fullscreenEvent) {
-      delete window._fullscreenEvent;
+    if (isClient) {
+      // 从内部变量获取事件引用并卸载
+      const { changeEvent, handleFullscreenChange, handleKeydown } = eventRefs;
+      if (changeEvent && handleFullscreenChange) {
+        document.removeEventListener(changeEvent, handleFullscreenChange);
+      }
+      if (handleKeydown) {
+        window.removeEventListener("keydown", handleKeydown);
+      }
+      // 清空内部变量
+      eventRefs = {
+        changeEvent: null,
+        handleFullscreenChange: null,
+        handleKeydown: null
+      };
     }
   });
 
-  // 返回 API，服务端也能正常工作
   return {
     isFullScreen: isFullScreen,
-    toggleFullscreen: isClient ? toggle : () => {}, // 服务端提供空函数
-    updateFullscreenStatus: isClient ? updateStatus : () => {} // 服务端提供空函数
+    toggleFullscreen: isClient ? toggle : () => {},
+    updateFullscreenStatus: isClient ? updateStatus : () => {}
   };
 }

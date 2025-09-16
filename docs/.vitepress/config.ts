@@ -45,6 +45,24 @@ const teekConfig = defineTeekConfig({
   // 原vitePress风格主页，文档类
   vpHome: false,
   loading: false, // 启用 Loading 动画，为 false 则关闭 Loading 动画
+  articleBanner: {
+    enabled: true, // 是否启用单文章页 Banner
+    showCategory: true, // 是否展示分类
+    showTag: true, // 是否展示标签
+    defaultCoverImg: "", // 默认封面图
+    defaultCoverBgColor: "" // 默认封面背景色，优先级低于 defaultCoverImg
+  },
+  articleAnalyze: {
+    showIcon: true, // 作者、日期、分类、标签、字数、阅读时长、浏览量等文章信息的图标是否显示
+    dateFormat: "yyyy-MM-dd hh:mm:ss", // 文章日期格式，首页和文章页解析日期时使用
+    showInfo: true, // 是否展示作者、日期、分类、标签、字数、阅读时长、浏览量等文章信息，分别作用于首页和文章页
+    showAuthor: true, // 是否展示作者
+    showCreateDate: true, // 是否展示创建日期
+    showUpdateDate: true, // 是否展示更新日期，仅在文章页显示
+    showCategory: true, // 是否展示分类
+    showTag: true // 是否展示标签
+  },
+  //pageStyle: "card-nav",
   backTopDone: TkMessage => TkMessage.success("返回顶部"),
   windowTransition: true,
   /*windowTransition: {
@@ -231,7 +249,7 @@ const teekConfig = defineTeekConfig({
       // ignoreList: ["nav"], //忽略的文件夹和文件
       ignoreWarn: true, // 忽略警告
       collapsed: true, // 是否默认折叠侧边栏
-      resolveRule: "rewrites",
+      resolveRule: "filePath",
       // 检查同目录下前缀不同的文件（以同目录访问到的第一个文件的permalink的一级前缀作为基准）
       checkRewritesPrefix: true
     },
@@ -293,10 +311,9 @@ export default defineConfig({
     }
   },
   // 使用路由重写
-  rewrites: createRewrites({
+/*  rewrites: createRewrites({
     srcDir: "docs"
-  }),
-  //rewrites: rewritesJson.rewrites, // 路由重写
+  }),*/
   themeConfig: {
     logo: "/avatar/avatar.svg",
     darkModeSwitchLabel: "主题",
