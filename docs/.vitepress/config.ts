@@ -106,7 +106,7 @@ const teekConfig = defineTeekConfig({
   },
   // 如果想重写侧边栏展开/折叠触发器组件，则使用 teek-sidebar-trigger 插槽。
   sidebarTrigger: true,
-  comment: Comment,
+  //comment: Comment,
   notice: {
     enabled: true, // 是否启用公告功能
     title: "公告", // 公告标题，支持函数式：需要和国际化搭配使用，根据不同语言环境返回不同标题

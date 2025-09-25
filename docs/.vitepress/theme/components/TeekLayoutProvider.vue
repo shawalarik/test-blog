@@ -1,5 +1,5 @@
 <script setup name="TeekLayoutProvider">
-import { isClient, useEventListener, useStorage } from "vitepress-theme-teek";
+import { isClient, useEventListener, useStorage, TkCommentTwikoo } from "vitepress-theme-teek";
 import Teek, { teekConfigContext } from "vitepress-theme-teek";
 import { useData } from "vitepress";
 import { watch, nextTick, ref, provide, onMounted } from "vue";
@@ -144,15 +144,6 @@ onMounted(() => {
     <template #teek-archives-top-before>
       <ContributeChart />
     </template>
-
-    <!--    <template #teek-sidebar-trigger="{ active, icon, toggleSideBar }">
-      &lt;!&ndash; 如下是 Teek 当前实现的部分内容，这些 class 会激活 Teek 的内置样式 &ndash;&gt;
-      <div :class="{ active: active }" class="tk-sidebar-trigger is-active" @click="toggleSideBar">
-        <div class="tk-right-bottom-button__button">
-          <TkIcon :icon="icon" />
-        </div>
-      </div>
-    </template>-->
   </Teek.Layout>
 </template>
 

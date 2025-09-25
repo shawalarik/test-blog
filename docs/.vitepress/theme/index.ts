@@ -1,6 +1,6 @@
-import Teek from "vitepress-theme-teek";
+import Teek, { teekConfigContext, TkCommentTwikoo, twikooContext, useTeekConfig } from "vitepress-theme-teek";
 import "vitepress-theme-teek/index.css";
-import { defineComponent, h } from "vue";
+import { defineComponent, h, provide } from "vue";
 import { useData } from "vitepress";
 
 // 主题增强样式
@@ -28,7 +28,8 @@ import sendVisitStatistics from "./utils/statistics"; // 信息统计
 import NProgress from "nprogress"; // 路由进度条
 import "nprogress/nprogress.css"; // 路由进度条样式
 //import { useLenis } from "lenis/vue";
-import FriendshipLink from "./components/FriendshipLink/index.vue"; // 布局组件
+import FriendshipLink from "./components/FriendshipLink/index.vue";
+import twikoo from "twikoo";
 
 export default {
   /**
@@ -52,7 +53,28 @@ export default {
         props.class = frontmatter.value.layoutClass;
       }
 
-      return () => h(TeekLayoutProvider, props);
+      provide(teekConfigContext, {
+        comment: {
+          provider: "twikoo", // 明确指定评论系统类型
+          options: {
+            // twikoo 配置，官网：https://twikoo.js.org/
+            envId: "https://twikoo.dl-web.top/" // 换成你自己配置的域名
+          }
+        }
+      });
+
+      // options 为 `provide(teekConfigContext, {})` 的内容
+      provide(twikooContext, (el, options) => twikoo.init({ ...options, el }));
+
+      const { getTeekConfig } = useTeekConfig();
+
+      const twikooOptions = getTeekConfig("comment", {});
+      console.log("twikooOptions", twikooOptions);
+
+      return () =>
+        h(TeekLayoutProvider, props, {
+          "doc-after": () => h(TkCommentTwikoo)
+        });
     }
   }),
   /**
