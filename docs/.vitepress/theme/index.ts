@@ -53,28 +53,7 @@ export default {
         props.class = frontmatter.value.layoutClass;
       }
 
-      provide(teekConfigContext, {
-        comment: {
-          provider: "twikoo", // 明确指定评论系统类型
-          options: {
-            // twikoo 配置，官网：https://twikoo.js.org/
-            envId: "https://twikoo.dl-web.top/" // 换成你自己配置的域名
-          }
-        }
-      });
-
-      // options 为 `provide(teekConfigContext, {})` 的内容
-      provide(twikooContext, (el, options) => twikoo.init({ ...options, el }));
-
-      const { getTeekConfig } = useTeekConfig();
-
-      const twikooOptions = getTeekConfig("comment", {});
-      console.log("twikooOptions", twikooOptions);
-
-      return () =>
-        h(TeekLayoutProvider, props, {
-          "doc-after": () => h(TkCommentTwikoo)
-        });
+      return () => h(TeekLayoutProvider, props);
     }
   }),
   /**

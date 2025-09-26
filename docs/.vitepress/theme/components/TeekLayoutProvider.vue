@@ -1,5 +1,5 @@
 <script setup name="TeekLayoutProvider">
-import { isClient, useEventListener, useStorage, TkCommentTwikoo } from "vitepress-theme-teek";
+import { isClient, useEventListener, useStorage, TkCommentTwikoo, twikooContext } from "vitepress-theme-teek";
 import Teek, { teekConfigContext } from "vitepress-theme-teek";
 import { useData } from "vitepress";
 import { watch, nextTick, ref, provide, onMounted } from "vue";
@@ -32,6 +32,7 @@ import BackTop from "./BackTop.vue";
 import NoticeCard from "./NoticeCard.vue";
 import Fps from "./Fps.vue";
 import MyLogoLoop from "./Framework/VueBits/My/MyLogoLoop.vue";
+import Twikoo from "./Twikoo.vue";
 
 /**
  site: Ref<SiteData<T>> 站点级元数据
@@ -143,6 +144,11 @@ onMounted(() => {
     <!--  归档页插槽  -->
     <template #teek-archives-top-before>
       <ContributeChart />
+    </template>
+
+    <template #doc-after>
+      <!--      <TkCommentTwikoo />-->
+      <Twikoo />
     </template>
   </Teek.Layout>
 </template>
