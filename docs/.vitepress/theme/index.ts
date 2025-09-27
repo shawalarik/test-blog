@@ -1,7 +1,7 @@
 import Teek, { teekConfigContext, TkCommentTwikoo, twikooContext, useTeekConfig } from "vitepress-theme-teek";
 import "vitepress-theme-teek/index.css";
-import { defineComponent, h, provide } from "vue";
-import { useData } from "vitepress";
+import { defineComponent, h, provide, watch } from "vue";
+import { useData, useRouter } from "vitepress";
 
 // 主题增强样式
 import "vitepress-theme-teek/index.css"; // 引入主题样式
@@ -30,6 +30,38 @@ import "nprogress/nprogress.css"; // 路由进度条样式
 //import { useLenis } from "lenis/vue";
 import FriendshipLink from "./components/FriendshipLink/index.vue";
 import twikoo from "twikoo";
+import PasswordProtect from "./components/PasswordProtect/PasswordProtect.vue";
+
+// 配置需要密码保护的URL模式（支持通配符*）
+const protectedRoutes = [
+  "/private/*", // 保护/private下的所有页面
+  "/about-me" // 保护特定页面
+];
+
+// 通配符匹配函数
+const matchPattern = (path: string, pattern: string): boolean => {
+  // 精确匹配
+  if (pattern === path) return true;
+
+  // 通配符匹配
+  if (pattern.endsWith("*")) {
+    const basePattern = pattern.slice(0, -1);
+    return path.startsWith(basePattern);
+  }
+
+  return false;
+};
+
+// 检查路径是否需要密码保护
+const isProtectedPath = (path: string): boolean => {
+  return protectedRoutes.some(pattern => matchPattern(path, pattern));
+};
+
+// 检查页面是否已验证
+const isPageVerified = (pageId: string): boolean => {
+  const verifiedPages = JSON.parse(localStorage.getItem("vpVerifiedPages") || "{}");
+  return !!verifiedPages[pageId];
+};
 
 export default {
   /**
@@ -48,9 +80,63 @@ export default {
       const props: { class?: string } = {};
       const { frontmatter } = useData();
 
+      const router = useRouter();
+
+      // 监听路由变化，检查密码保护
+      watch(
+        () => router.route.path,
+        newPath => {
+          checkPasswordProtection(newPath, frontmatter.password);
+        },
+        { immediate: true }
+      );
+
       // 根据元数据动态应用 CSS 类，实现页面级样式定制
       if (frontmatter.value?.layoutClass) {
         props.class = frontmatter.value.layoutClass;
+      }
+
+      function checkPasswordProtection(currentPath: string, frontmatterPassword?: string) {
+        // 检查是否是密码保护页面
+        const requiresPassword = frontmatterPassword || isProtectedPath(currentPath);
+
+        if (requiresPassword) {
+          const password = frontmatterPassword || "123"; // 可以从配置中获取默认密码
+          const pageId = currentPath;
+
+          // 如果未验证，则显示密码输入组件
+          if (!isPageVerified(pageId)) {
+            // 创建密码验证组件并显示
+            const app = document.querySelector("#app");
+            if (app) {
+              // 保存原始内容
+              const originalContent = app.innerHTML;
+              app.innerHTML = '<div id="password-protect-container"></div>';
+
+              // 挂载密码组件
+              const container = document.querySelector("#password-protect-container");
+              if (container) {
+                const vnode = h(PasswordProtect, {
+                  correctPassword: password,
+                  pageId: pageId,
+                  onVerified: (success: boolean) => {
+                    if (success) {
+                      // 验证成功，恢复原始内容
+                      app.innerHTML = originalContent;
+                      // 触发路由刷新
+                      window.location.reload();
+                    }
+                  }
+                });
+
+                // 手动挂载组件
+                import("vue").then(({ createApp }) => {
+                  createApp(vnode).mount(container);
+                });
+              }
+            }
+          }
+        }
       }
 
       return () => h(TeekLayoutProvider, props);

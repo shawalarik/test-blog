@@ -64,6 +64,7 @@
     "natural-sort": "^1.0.0",
     "nprogress": "^0.2.0",
     "picocolors": "^1.1.1",
+    "qrcode": "^1.5.4",
     "swiper": "^11.2.10",
     "vitepress-plugin-auto-frontmatter": "^1.0.10",
     "vitepress-plugin-group-icons": "^1.6.0",
