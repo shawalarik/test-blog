@@ -52,14 +52,14 @@ export default {
         props.class = frontmatter.value.layoutClass;
       }
 
-      const { showPassword, currentPassword, currentPageId, handleVerified } = usePasswordProtection();
+      const { showPassword, currentPassword, currentVerifyPrefix, handleVerified } = usePasswordProtection();
 
       // 渲染函数
       return () => {
         if (showPassword.value) {
           return h(PasswordProtect, {
             correctPassword: currentPassword.value,
-            pageId: currentPageId.value,
+            pageId: currentVerifyPrefix.value,
             onVerified: handleVerified
           });
         }
