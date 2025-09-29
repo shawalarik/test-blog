@@ -12,9 +12,7 @@ const LOCAL_STORAGE_KEY: string = "tk:vpVerifiedPages";
 // 默认保护规则（你也可以从配置传入）
 export const DEFAULT_PROTECTED_ROUTES: ProtectedRoute[] = [
   { path: "/private/*", password: "secret123" },
-  { path: "/about-me", password: "111" },
-  { path: "/job", password: "222" },
-  { path: "/front/*", password: "222" }
+  { path: "/archives", password: "123" }
 ];
 
 // 通配符匹配函数
