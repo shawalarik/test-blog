@@ -1,5 +1,6 @@
 import { ref, watch } from "vue";
 import { useData, useRouter } from "vitepress";
+import { isClient } from "vitepress-theme-teek";
 
 // 类型定义
 export interface ProtectedRoute {
@@ -53,6 +54,9 @@ const getRequiredPassword = (
 
 // 获取已验证页面集合
 const getVerifiedPages = (): Set<string> => {
+  if (!isClient) {
+    return new Set(); // 服务端渲染时返回空集合
+  }
   try {
     const data = localStorage.getItem(LOCAL_STORAGE_KEY);
     return new Set(data ? JSON.parse(data) : []);
@@ -64,6 +68,9 @@ const getVerifiedPages = (): Set<string> => {
 
 // 标记页面为已验证
 const markPageAsVerified = (pageId: string): void => {
+  if (!isClient) {
+    return; // 服务端渲染时直接返回
+  }
   const verified = getVerifiedPages();
   verified.add(pageId);
   try {
@@ -116,7 +123,9 @@ export function usePasswordProtection(customRoutes?: ProtectedRoute[]) {
   watch(
     () => router.route.path,
     newPath => {
-      checkProtection(newPath);
+      if (isClient) {
+        checkProtection(newPath);
+      }
     },
     { immediate: true }
   );

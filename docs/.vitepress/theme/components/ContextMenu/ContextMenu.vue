@@ -208,6 +208,16 @@ const hideMenu = () => {
 const navigateTo = (path: string) => {
   if (!isClient) return null;
 
+  // 判断是否为外部链接
+  const isExternal = /^https?:\/\//.test(path);
+
+  if (isExternal) {
+    // 外部链接使用 window.open 或 window.location.href
+    window.open(path, "_blank");
+    hideMenu();
+    return;
+  }
+
   const targetPath = withBase(path);
   const currentPath = router.route.path;
 

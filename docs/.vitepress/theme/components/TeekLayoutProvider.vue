@@ -64,9 +64,7 @@ const watchRuntimeAndRibbon = async layout => {
 watch(frontmatter, async newVal => watchRuntimeAndRibbon(newVal.layout), { immediate: true });
 
 const handleConfigSwitch = (config, style) => {
-  console.log("handleConfigSwitch style", style);
   teekConfig.value = config;
-
   //watchRuntimeAndRibbon(frontmatter.value.layout, style);
 };
 

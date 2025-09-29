@@ -1,4 +1,9 @@
-// utils/isEmpty.js
+/**
+ * 判断当前环境是否为客户端
+ */
+export function isClient() {
+  return typeof window !== "undefined" && typeof document !== "undefined";
+}
 
 /**
  * 检查值是否为空（支持多种类型）

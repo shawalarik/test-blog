@@ -10,28 +10,28 @@ if (isClient) {
   fullscreenApi = {
     request:
       document.documentElement.requestFullscreen ||
-      document.documentElement.webkitRequestFullscreen ||
-      document.documentElement.mozRequestFullScreen ||
-      document.documentElement.msRequestFullscreen,
+      (document.documentElement as any).webkitRequestFullscreen ||
+      (document.documentElement as any).mozRequestFullScreen ||
+      (document.documentElement as any).msRequestFullscreen,
 
     exit: (
       document.exitFullscreen ||
-      document.documentElement.webkitExitFullscreen ||
-      document.documentElement.mozCancelFullScreen ||
-      document.documentElement.msExitFullscreen
+      (document.documentElement as any).webkitExitFullscreen ||
+      (document.documentElement as any).mozCancelFullScreen ||
+      (document.documentElement as any).msExitFullscreen
     )?.bind(document),
 
     element: () =>
       document.fullscreenElement ||
-      document.webkitFullscreenElement ||
-      document.mozFullScreenElement ||
-      document.msFullscreenElement,
+      (document as any).webkitFullscreenElement ||
+      (document as any).mozFullScreenElement ||
+      (document as any).msFullscreenElement,
 
     changeEvent: () => {
       if (document.fullscreenElement !== undefined) return "fullscreenchange";
-      if (document.webkitFullscreenElement !== undefined) return "webkitfullscreenchange";
-      if (document.mozFullScreenElement !== undefined) return "mozfullscreenchange";
-      if (document.msFullscreenElement !== undefined) return "MSFullscreenChange";
+      if ((document as any).webkitFullscreenElement !== undefined) return "webkitfullscreenchange";
+      if ((document as any).mozFullScreenElement !== undefined) return "mozfullscreenchange";
+      if ((document as any).msFullscreenElement !== undefined) return "MSFullscreenChange";
       return "fullscreenchange";
     }
   };
