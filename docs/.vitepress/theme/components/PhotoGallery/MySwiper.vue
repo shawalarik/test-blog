@@ -1,35 +1,26 @@
 <template>
-  <div class="swiper-container fixed inset-0 bg-black/95 flex items-center justify-center">
+  <div class="swiper-container">
     <!-- 关闭按钮 -->
-    <button
-      class="absolute top-6 right-6 text-white text-4xl hover:text-gray-300 transition-colors z-10"
-      @click="close"
-    >
-      &times;
-    </button>
+    <button class="close-btn" @click="close">&times;</button>
 
     <!-- Swiper 组件 -->
     <swiper-container
       init="false"
       :initial-slide="initialIndex"
-      class="w-full max-w-7xl"
+      class="swiper-wrapper"
       @swiperslidechange="onSlideChange"
     >
-      <swiper-slide
-        v-for="(photo, index) in photos"
-        :key="photo.id || index"
-        class="max-h-[90vh] max-w-full object-contain"
-      >
-        <div class="flex justify-center items-center h-[90vh]">
-          <img :src="photo.src" :alt="photo.alt" class="max-h-[90vh] max-w-full object-contain" />
+      <swiper-slide v-for="(photo, index) in photos" :key="photo.id || index" class="slide-item">
+        <div class="slide-content">
+          <img :src="photo.src" :alt="photo.alt" class="slide-image" />
         </div>
       </swiper-slide>
     </swiper-container>
 
     <!-- 图片信息 -->
-    <div class="absolute bottom-8 left-0 right-0 text-center text-white z-10 px-4">
-      <h3 class="text-xl font-semibold">{{ currentPhoto.title || "照片" }}</h3>
-      <p class="text-gray-300 mt-1">{{ currentPhoto.description || "" }}</p>
+    <div class="photo-info">
+      <h3 class="photo-title">{{ currentPhoto.title || "照片" }}</h3>
+      <p class="photo-desc">{{ currentPhoto.description || "" }}</p>
     </div>
   </div>
 </template>
@@ -157,8 +148,101 @@ onMounted(() => {
 });
 </script>
 
+<style scoped></style>
+
 <style scoped>
+/* 全屏容器 */
 .swiper-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.95); /* 对应 bg-black/95 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 100;
+}
+
+/* 关闭按钮 */
+.close-btn {
+  position: absolute;
+  top: 1.5rem; /* 对应 top-6 */
+  right: 1.5rem; /* 对应 right-6 */
+  color: white;
+  font-size: 2.5rem; /* 对应 text-4xl */
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s ease; /* 对应 transition-colors */
+  z-index: 10; /* 对应 z-10 */
+}
+
+.close-btn:hover {
+  color: #d1d5db; /* 对应 text-gray-300 */
+}
+
+/* Swiper 容器 */
+.swiper-wrapper {
+  width: 100%;
+  max-width: 87.5rem; /* 对应 max-w-7xl */
+}
+
+/* 轮播项 */
+.slide-item {
+  max-height: 90vh;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+/* 轮播内容容器 */
+.slide-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* 轮播图片 */
+.slide-image {
+  max-height: 90vh;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+/* 图片信息区域 */
+.photo-info {
+  width: fit-content;
+  margin: 0 auto;
+  position: absolute;
+  bottom: 2rem; /* 对应 bottom-8 */
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: white;
+  z-index: 10; /* 对应 z-10 */
+  padding-left: 1rem; /* 对应 px-4 */
+  padding-right: 1rem;
+  transition: opacity 0.3s ease;
+  opacity: 0.5;
+}
+
+.photo-info:hover {
+  opacity: 1;
+}
+
+/* 图片标题 */
+.photo-title {
+  font-size: 1.25rem; /* 对应 text-xl */
+  font-weight: 600; /* 对应 font-semibold */
+  margin: 0;
+}
+
+/* 图片描述 */
+.photo-desc {
+  color: #d1d5db; /* 对应 text-gray-300 */
+  margin-top: 0.25rem; /* 对应 mt-1 */
+  margin-bottom: 0;
 }
 </style>

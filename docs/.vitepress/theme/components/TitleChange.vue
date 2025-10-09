@@ -8,12 +8,12 @@ import { useEventListener } from "vitepress-theme-teek";
 const props = defineProps({
   hiddenTitle: {
     type: String,
-    default: "w(ﾟДﾟ)w 不要走！再看看嘛！",
+    default: "w(ﾟДﾟ)w 不要走！再看看嘛！"
   },
   returnTitle: {
     type: String,
-    default: "♪(^∇^*)欢迎回来！",
-  },
+    default: "♪(^∇^*)欢迎回来！"
+  }
 });
 
 const originTitle = ref("");
