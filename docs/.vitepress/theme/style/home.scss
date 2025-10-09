@@ -74,3 +74,8 @@
 .tk-banner-content{
   padding-top: 0;
 }
+
+/* 导航栏logo宽高保持一致 */
+.VPNav .logo{
+	width: var(--vp-nav-logo-height);
+}
