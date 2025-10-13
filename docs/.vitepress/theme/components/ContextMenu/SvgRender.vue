@@ -12,8 +12,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from "vue";
-
 // 定义Props类型
 defineProps<{
   svg: string; // 可能是SVG字符串或图片地址

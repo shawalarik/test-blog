@@ -20,7 +20,7 @@
       </div>
 
       <!-- 组件信息 -->
-<!--      <div class="component-info">
+      <!--      <div class="component-info">
         <h3 class="info-title">{{ currentComponent.name }}</h3>
         <div class="info-description">
           {{ currentComponent.description }}
