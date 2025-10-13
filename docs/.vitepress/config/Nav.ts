@@ -112,6 +112,10 @@ export const Nav: DefaultTheme.NavItem[] = [
       {
         text: getNav("实用软件", "/svg/appstore.svg"),
         link: "/appstore"
+      },
+      {
+        text: getNav("排序算法", "/svg/sort.svg"),
+        link: "/sort"
       }
     ]
   },
