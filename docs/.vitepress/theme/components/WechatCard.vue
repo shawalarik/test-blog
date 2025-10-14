@@ -5,7 +5,7 @@
       <div class="wechat-content">
         <!-- 公众号图片 -->
         <div class="wechat-qrcode-container">
-          <img class="wechat-qrcode" :src="wechatAccount.qrcodeImage" loading="lazy" />
+          <img class="wechat-qrcode" :src="wechatAccount.qrcodeImage" loading="lazy" alt="公众号图片" />
         </div>
 
         <!-- 公众号描述 -->

@@ -1,23 +1,16 @@
 <script setup name="TeekLayoutProvider">
-import { isClient, useEventListener, useStorage, TkCommentTwikoo, twikooContext } from "vitepress-theme-teek";
+import { isClient } from "vitepress-theme-teek";
 import Teek, { teekConfigContext } from "vitepress-theme-teek";
 import { useData } from "vitepress";
 import { watch, nextTick, ref, provide, onMounted } from "vue";
-import {
-  teekDocConfig,
-  teekBlogConfig,
-  teekBlogParkConfig,
-  teekBlogFullConfig,
-  teekBlogBodyConfig,
-  teekBlogCardConfig
-} from "../../config/TeekConfig";
+import { useRuntime } from "../composables/useRuntime";
+import { myConsoleInfo } from "../utils/WwUtils";
 import ConfigSwitch from "./ConfigSwitch.vue"; // 右上角布局切换组件
 import ContributeChart from "./ContributeChart.vue"; // 贡献图组件
 import NoticeContent from "./NoticeContent.vue"; //导入公告组件
 import BannerImgArrow from "./BannerImgArrow.vue"; //导入横幅图片箭头组件
 import GlobalGreet from "./GlobalGreet.vue"; //导入全局问候组件
 import TitleChange from "./TitleChange.vue"; //导入网页标题变化
-//import OhMyLive2D from "./OhMyLive2D.vue"  //导入看板娘组件
 import ScrollProgressBar from "./ScrollProgressBar.vue"; //导入顶部滚动条组件
 import InformationCard from "./InformationCard.vue"; // 主页天气组件
 import APlayer from "./APlayer.vue"; // 音乐组件
@@ -25,15 +18,12 @@ import TextGlitch from "./TextGlitch.vue"; // 首页文字特效组件
 import Clock from "./Clock.vue"; // 时钟组件
 import ContextMenu from "./ContextMenu/ContextMenu.vue"; // 右键菜单组件
 import RouteSwitchingLoading from "./RouteSwitchingLoading.vue"; // 过渡动画组件
-import { useRuntime } from "../composables/useRuntime";
-import { myConsoleInfo } from "../utils/WwUtils";
-import NotFound from "./NotFound.vue";
-import BackTop from "./BackTop.vue";
-import NoticeCard from "./NoticeCard.vue";
-import Fps from "./Fps.vue";
-import MyLogoLoop from "./Framework/VueBits/My/MyLogoLoop.vue";
-import Twikoo from "./Twikoo.vue";
-import WechatCard from "./WechatCard.vue";
+import NotFound from "./NotFound.vue"; // 404页面组件
+import BackTop from "./BackTop.vue"; // 返回顶部组件
+import NoticeCard from "./NoticeCard.vue"; // 公告组件
+import Fps from "./Fps.vue"; // 帧率组件
+import Twikoo from "./Twikoo.vue"; // 评论组件
+import WechatCard from "./WechatCard.vue"; // 微信二维码组件
 
 /**
  site: Ref<SiteData<T>> 站点级元数据

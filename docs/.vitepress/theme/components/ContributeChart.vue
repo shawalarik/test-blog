@@ -44,15 +44,15 @@ const option = {
   tooltip: {
     formatter: function (params) {
       return `${params.value[0]} <br/> ${params.value[1]} 篇文章`;
-    },
+    }
   },
   visualMap: {
     show: false,
     min: 0,
     max: 5,
     inRange: {
-      color: ["#ebedf0", "#c6e48b", "#7bc96f", "#239a3b", "#196127", "#196127"],
-    },
+      color: ["#ebedf0", "#c6e48b", "#7bc96f", "#239a3b", "#196127", "#196127"]
+    }
   },
   calendar: {
     left: "center",
@@ -60,7 +60,7 @@ const option = {
       color: "#ebedf0",
       borderWidth: 5,
       borderColor: "#fff",
-      shadowBlur: 0,
+      shadowBlur: 0
     },
     cellSize: [20, 20],
     range: [beforeOnYear, today],
@@ -68,24 +68,24 @@ const option = {
     dayLabel: {
       firstDay: 7,
       nameMap: "ZH",
-      color: "#3c3c43",
+      color: "#3c3c43"
     },
     monthLabel: {
-      color: "#3c3c43",
+      color: "#3c3c43"
     },
     yearLabel: {
       show: true,
-      position: "right",
+      position: "right"
     },
     silent: {
-      show: false,
-    },
+      show: false
+    }
   },
   series: {
     type: "heatmap",
     coordinateSystem: "calendar",
-    data: [],
-  },
+    data: []
+  }
 };
 
 // 渲染贡献图

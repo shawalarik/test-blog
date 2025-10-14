@@ -89,15 +89,18 @@ const teekConfig = defineTeekConfig({
     // 博主信息，显示在首页侧边栏
     avatar: "/avatar/avatar.webp",
     // 头像风格：square 为方形头像，circle 为圆形头像，circle-rotate 可支持鼠标悬停旋转，circle-rotate-last 将会持续旋转 59s
-    shape: "circle",
+    shape: "circle-rotate",
     name: "威威",
-    slogan: "人心中的成见是一座大山~",
+    slogan: "书以启智 技于谋生",
     circleBgImg: "/avatar/avatarBg.webp", // 头像圆形背景图
+    circleBgMask: false, // 头像圆形背景图是否显示遮罩层
     circleSize: 100,
+    color: "#fff",
+    // 状态，仅当 shape 为 circle 相关值时有效
     status: {
-      icon: "😪",
-      size: 24,
-      title: "困"
+      icon: "😪", // 状态图标
+      size: 24, // 图标大小
+      title: "困" // 鼠标悬停图标的提示语
     }
   },
   toComment: {

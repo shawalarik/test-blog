@@ -26,7 +26,7 @@ function useWeather() {
           temperature: `${data.data.low}-${data.data.high}`,
           type: data.data.type,
           date: data.data.date,
-          week: data.data.week,
+          week: data.data.week
         };
       } else {
         error.value = true;
