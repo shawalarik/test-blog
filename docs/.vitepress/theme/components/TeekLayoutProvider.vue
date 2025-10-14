@@ -33,6 +33,7 @@ import NoticeCard from "./NoticeCard.vue";
 import Fps from "./Fps.vue";
 import MyLogoLoop from "./Framework/VueBits/My/MyLogoLoop.vue";
 import Twikoo from "./Twikoo.vue";
+import WechatCard from "./WechatCard.vue";
 
 /**
  site: Ref<SiteData<T>> 站点级元数据
@@ -121,6 +122,11 @@ onMounted(() => {
     <!-- 自定义公告卡片 -->
     <template #teek-home-card-my-after>
       <NoticeCard />
+    </template>
+
+    <!-- 自定义微信公众号卡片 -->
+    <template #teek-home-card-doc-analysis-after>
+      <WechatCard />
     </template>
 
     <template #teek-home-banner-feature-after>
