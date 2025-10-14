@@ -84,7 +84,7 @@ const scrollToTop = () => {
   // 立即开始滚动，同时触发发射动画
   window.scrollTo({
     top: 0,
-    behavior: "smooth",
+    behavior: "smooth"
   });
 
   // 监听滚动结束，重置发射状态
@@ -139,6 +139,8 @@ onBeforeUnmount(() => window.removeEventListener("scroll", onScroll));
 
 <style lang="css" scoped>
 .vitepress-backTop-main {
+  --back-top-size: 48px;
+
   z-index: 999;
   position: relative;
   cursor: pointer;
@@ -153,6 +155,11 @@ onBeforeUnmount(() => window.removeEventListener("scroll", onScroll));
   transition: all 0.3s ease;
 }
 
+@media (max-width: 820px) {
+  .vitepress-backTop-main {
+    --back-top-size: 38px;
+  }
+}
 /* 通过 home.scss 的--back-top-size进行控制 */
 /*@media (max-width: 720px) {
    !*  低宽度下缩小尺寸 *!
