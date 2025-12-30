@@ -29,6 +29,8 @@ import "nprogress/nprogress.css"; // 路由进度条样式
 import FriendshipLink from "./components/FriendshipLink/index.vue";
 import PasswordProtect from "./components/PasswordProtect/PasswordProtect.vue";
 import { usePasswordProtection } from "./components/PasswordProtect/util";
+import "./composables/guangbiaoTX/guangbiaoTX.scss"; // 鼠标拖尾样式scss
+import { useGuangbiaoTX } from "./composables/guangbiaoTX/useGuangbiaoTX"; // 鼠标拖尾样式功能
 
 export default {
   /**
@@ -99,6 +101,8 @@ export default {
         console.log("开发环境禁用umami统计");
         localStorage.setItem("umami.disabled", "1");
       }
+
+			useGuangbiaoTX(); // ⬅️ 调用鼠标拖尾星星动画
 
       // 配置进度条
       NProgress.configure({ showSpinner: false });

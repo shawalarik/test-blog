@@ -1,151 +1,194 @@
 <template>
-  <TkPageCard :title="wechatAccount.title">
-    <div class="wechat-card">
-      <!-- 公众号内容 -->
-      <div class="wechat-content">
-        <!-- 公众号图片 -->
-        <div class="wechat-qrcode-container">
-          <img class="wechat-qrcode" :src="wechatAccount.qrcodeImage" loading="lazy" alt="公众号图片" />
-        </div>
+  <div class="tk-page-card card-widget right-widget" id="card-wechat">
+    <div id="flip-wrapper">
+      <!-- 正面：公众号引导图 -->
+      <div class="front face"></div>
 
-        <!-- 公众号描述 -->
-        <div class="wechat-description">
-          <h3 class="wechat-name"></h3>
-          <p class="wechat-intro">
-            {{ wechatAccount.description }}
-          </p>
+      <!-- 背面：文字+二维码 -->
+      <div class="back face">
+        <div class="back-text">
+          <span class="scan-text">扫一扫</span>
+          <br />
+          <span>不错过精彩文章</span>
         </div>
-
-        <!-- 底部操作区 -->
-        <div class="wechat-footer">
-          <a class="follow-link" :href="wechatAccount.followLink" :target="getTargetValue()"></a>
+        <div class="qrcode-container">
+          <img src="/img/wechat/qrcode.jpg" alt="公众号二维码" />
         </div>
       </div>
     </div>
-  </TkPageCard>
+  </div>
 </template>
 
-<script setup lang="ts">
-import { TkPageCard } from "vitepress-theme-teek";
-
-// 公众号内容类型
-interface WechatAccount {
-  title: string; // 卡片标题
-  //   subtitle: string; // 公众号名称
-  description: string; // 公众号简介
-  qrcodeImage: string; // 公众号二维码图片路径
-  followLink: string; // 关注链接
-}
-
-// 公众号内容 - 请替换为您自己的信息
-const wechatAccount: WechatAccount = {
-  title: "📱 关注公众号",
-  //   subtitle: "我的公众号", // 替换为您的公众号名称
-  description: "分享前端开发技巧、运维知识、VitePress使用经验和技术成长心得，欢迎关注交流！", // 替换为您的公众号简介
-  qrcodeImage: "/img/wechat/qrcode.jpg", // 替换为您的公众号二维码图片URL
-  followLink: "" // 可以替换为公众号文章链接或相关页面
-};
-
-// 判断是否为外链
-const isExternalLink = (): boolean => {
-  const url: string = wechatAccount.followLink;
-  return /^(https?:\/\/|\/\/)/.test(url);
-};
-
-// 获取网页打开方式
-const getTargetValue = (): string => {
-  return isExternalLink() ? "_blank" : "_self";
-};
+<script setup>
+// 此处无需额外逻辑，保持组件简洁
 </script>
 
 <style scoped>
-.wechat-card {
-  --link-color: #888;
-  --link-hover: #6366f1;
+/* 外层容器样式 */
+.card-widget.right-widget#card-wechat {
+  width: 280px;
+  height: 110px;
+  perspective: 1000px;
+  cursor: pointer;
+  background-color: #57bd6a;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 10px;
 }
 
-html.dark .wechat-card {
-  --link-color: #aaa;
-  --link-hover: #818cf8;
-}
-
-.wechat-content {
-  padding: 10px;
-  text-align: center;
-}
-
-/* 公众号二维码样式 */
-.wechat-qrcode-container {
-  margin: 0 auto 16px;
-  padding: 8px;
-  background: #fff;
-  border-radius: 8px;
-  display: inline-block;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-}
-
-html.dark .wechat-qrcode-container {
-  background: #2d2d2d;
-}
-
-.wechat-qrcode {
+/* 翻转容器样式 */
+#flip-wrapper {
   width: 100%;
-  max-width: 200px;
-  height: auto;
-  border-radius: 4px;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease;
 }
 
-/* 公众号描述样式 */
-.wechat-description {
-  margin-bottom: 16px;
+/* 正反面通用样式 */
+.face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
 }
 
-.wechat-name {
-  margin: 0 0 8px 0;
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--text-color);
+/* 正面样式（保持图片） */
+.front.face {
+  background: url(/img/wechat/text.png) center center / contain no-repeat;
 }
 
-.wechat-intro {
-  margin: 0;
-  color: var(--text-color);
-  line-height: 1.6;
-  font-size: 14px;
-  padding: 0 4px;
-}
-
-/* 底部操作区样式 */
-.wechat-footer {
+/* 背面样式（改为文字+二维码布局） */
+.back.face {
+  transform: rotateY(180deg);
   display: flex;
-  justify-content: center;
-}
-
-.follow-link {
-  display: inline-flex;
   align-items: center;
-  padding: 4px 12px;
-  color: var(--link-color);
-  font-size: 14px;
-  font-weight: 500;
-  text-decoration: none;
-  transition: all 0.2s ease;
-  gap: 6px;
-  border-radius: 4px;
+  padding: 0 15px;
+  box-sizing: border-box;
 }
 
-.follow-link:hover {
-  color: var(--link-hover);
-  background-color: rgba(99, 102, 241, 0.1);
+/* 背面文字容器样式 */
+.back-text {
+  flex: 1;
+  color: #fff;
+  line-height: 1.5;
 }
 
-.link-icon {
-  width: 16px;
-  height: 16px;
-  transition: transform 0.2s ease;
+/* "扫一扫"文字样式（更大且加粗） */
+.scan-text {
+  font-size: 28px;
+  font-weight: 700;
 }
 
-.follow-link:hover .link-icon {
-  transform: translateY(-2px);
+/* "不错过精彩文章"文字样式 */
+.back-text span:last-child {
+  font-size: 18px;
+}
+
+/* 二维码容器样式 */
+.qrcode-container {
+  width: 80px;
+  height: 80px;
+  background-color: #fff;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.qrcode-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* 鼠标悬浮翻转效果 */
+#card-wechat:hover #flip-wrapper {
+  transform: rotateY(180deg);
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .card-widget.right-widget#card-wechat {
+    width: 100%;
+    height: 100px;
+    margin: 0 auto 15px;
+    max-width: none;
+  }
+
+  .back.face {
+    padding: 0 20px;
+    justify-content: space-between;
+  }
+
+  .scan-text {
+    font-size: 24px;
+  }
+
+  .back-text span:last-child {
+    font-size: 16px;
+  }
+
+  .qrcode-container {
+    width: 70px;
+    height: 70px;
+    padding: 4px;
+    flex-shrink: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-widget.right-widget#card-wechat {
+    height: 90px;
+  }
+
+  .back.face {
+    padding: 0 15px;
+  }
+
+  .scan-text {
+    font-size: 22px;
+  }
+
+  .back-text span:last-child {
+    font-size: 14px;
+  }
+
+  .qrcode-container {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+@media (max-width: 375px) {
+  .card-widget.right-widget#card-wechat {
+    height: 80px;
+  }
+
+  .back.face {
+    padding: 0 12px;
+  }
+
+  .scan-text {
+    font-size: 20px;
+  }
+
+  .back-text span:last-child {
+    font-size: 13px;
+  }
+
+  .qrcode-container {
+    width: 55px;
+    height: 55px;
+  }
+}
+
+/* 触摸设备适配 */
+@media (hover: none) and (pointer: coarse) {
+  #card-wechat {
+    cursor: pointer;
+  }
+
+  #card-wechat:active #flip-wrapper {
+    transform: rotateY(180deg);
+  }
 }
 </style>

@@ -54,7 +54,7 @@
 import { useData } from "vitepress";
 import LinkItem from "./LinkItem.vue";
 // 导入Twikoo评论组件
-import Twikoo from "../Twikoo.vue";
+import Twikoo from "../Twikoo/Twikoo.vue";
 import { computed } from "vue";
 
 /**

@@ -1,5 +1,5 @@
 <template>
-  <TkPageCard :title="noticeContent.title">
+  <TkPageCard :title="noticeContent.title" style="margin-top: 10px">
     <div class="announcement-card">
       <!-- 公告内容 -->
       <div class="announcement-content">
@@ -47,7 +47,7 @@ const noticeContent: NoticeContent = {
   subtitle: "全网最美博客Teek🎉",
   content: "Teek~一款简约、唯美、丝滑且强大的VitePress主题博客(知识库&博客二合一) ，正在持续迭代更新，欢迎交流学习！",
   operationButtonName: "查看详情",
-  operationButtonPath: "https://vp.teek.top/",
+  operationButtonPath: "https://vp.teek.top/"
 };
 
 // 判断是否为外链

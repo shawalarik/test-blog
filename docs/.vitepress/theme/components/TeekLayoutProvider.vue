@@ -13,7 +13,7 @@ import GlobalGreet from "./GlobalGreet.vue"; //导入全局问候组件
 import TitleChange from "./TitleChange.vue"; //导入网页标题变化
 import ScrollProgressBar from "./ScrollProgressBar.vue"; //导入顶部滚动条组件
 import InformationCard from "./InformationCard.vue"; // 主页天气组件
-import APlayer from "./APlayer.vue"; // 音乐组件
+//import APlayer from "./APlayer.vue"; // 音乐组件
 import TextGlitch from "./TextGlitch.vue"; // 首页文字特效组件
 import Clock from "./Clock.vue"; // 时钟组件
 import ContextMenu from "./ContextMenu/ContextMenu.vue"; // 右键菜单组件
@@ -22,8 +22,11 @@ import NotFound from "./NotFound.vue"; // 404页面组件
 import BackTop from "./BackTop.vue"; // 返回顶部组件
 import NoticeCard from "./NoticeCard.vue"; // 公告组件
 import Fps from "./Fps.vue"; // 帧率组件
-import Twikoo from "./Twikoo.vue"; // 评论组件
+import Twikoo from "./Twikoo/Twikoo.vue"; // 评论组件
 import WechatCard from "./WechatCard.vue"; // 微信二维码组件
+import WelcomeCard from "./WelcomeCard.vue";
+import CalendarCard from "./CalendarCard.vue";
+import ScheduleCard from "./ScheduleCard.vue";
 
 /**
  site: Ref<SiteData<T>> 站点级元数据
@@ -78,7 +81,7 @@ onMounted(() => {
       <!-- 网页标题切换组件 -->
       <TitleChange />
       <!-- 音乐播放器组件 -->
-      <APlayer />
+      <!--      <APlayer />-->
     </template>
 
     <template #nav-bar-content-after>
@@ -109,14 +112,13 @@ onMounted(() => {
       <NoticeContent />
     </template>
 
-    <!-- 自定义公告卡片 -->
+    <!-- 自定义卡片 -->
     <template #teek-home-card-my-after>
-      <NoticeCard />
-    </template>
-
-    <!-- 自定义微信公众号卡片 -->
-    <template #teek-home-card-doc-analysis-after>
       <WechatCard />
+      <WelcomeCard />
+      <NoticeCard />
+      <CalendarCard />
+      <ScheduleCard />
     </template>
 
     <template #teek-home-banner-feature-after>
@@ -140,9 +142,13 @@ onMounted(() => {
       <ContributeChart />
     </template>
 
+    <!-- 文章末尾评论组件 -->
     <template #doc-after>
-      <!--      <TkCommentTwikoo />-->
       <Twikoo />
+    </template>
+
+    <template #teek-doc-after-appreciation-before>
+      <!--      <h1>123131313131</h1>-->
     </template>
   </Teek.Layout>
 </template>

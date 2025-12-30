@@ -5,7 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  vite: ^7.0.4
+  vite: 7.0.4
 
 importers:
 
@@ -61,7 +61,7 @@ importers:
         version: 1.0.13
       vitepress-plugin-group-icons:
         specifier: ^1.6.0
-        version: 1.6.3(markdown-it@14.1.0)(vite@7.1.7(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1))
+        version: 1.6.3(markdown-it@14.1.0)(vite@7.0.4(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1))
       vitepress-plugin-permalink:
         specifier: ^1.2.1
         version: 1.2.1(vitepress@1.6.4(@algolia/client-search@5.38.0)(@types/node@24.5.2)(jiti@1.21.7)(nprogress@0.2.0)(postcss@8.5.6)(qrcode@1.5.4)(sass-embedded@1.93.2)(sass@1.93.2)(search-insights@2.17.3)(terser@5.44.0)(typescript@5.9.2)(yaml@2.8.1))
@@ -90,6 +90,9 @@ importers:
       autoprefixer:
         specifier: ^10.4.21
         version: 10.4.21(postcss@8.5.6)
+      baseline-browser-mapping:
+        specifier: ^2.9.11
+        version: 2.9.11
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -138,24 +141,21 @@ importers:
       tw-animate-css:
         specifier: ^1.3.8
         version: 1.4.0
-      twikoo:
-        specifier: ^1.6.44
-        version: 1.6.44
       typescript:
         specifier: ^5.8.3
         version: 5.9.2
       vite:
-        specifier: ^7.0.4
-        version: 7.1.7(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1)
+        specifier: 7.0.4
+        version: 7.0.4(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1)
       vite-plugin-compression:
         specifier: ^0.5.1
-        version: 0.5.1(vite@7.1.7(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1))
+        version: 0.5.1(vite@7.0.4(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1))
       vite-plugin-image-optimizer:
         specifier: ^2.0.1
-        version: 2.0.2(sharp@0.34.4)(svgo@4.0.0)(vite@7.1.7(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1))
+        version: 2.0.2(sharp@0.34.4)(svgo@4.0.0)(vite@7.0.4(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1))
       vite-plugin-inspect:
         specifier: ^11.3.0
-        version: 11.3.3(vite@7.1.7(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1))
+        version: 11.3.3(vite@7.0.4(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1))
       vitepress:
         specifier: ^1.6.4
         version: 1.6.4(@algolia/client-search@5.38.0)(@types/node@24.5.2)(jiti@1.21.7)(nprogress@0.2.0)(postcss@8.5.6)(qrcode@1.5.4)(sass-embedded@1.93.2)(sass@1.93.2)(search-insights@2.17.3)(terser@5.44.0)(typescript@5.9.2)(yaml@2.8.1)
@@ -1077,7 +1077,7 @@ packages:
     resolution: {integrity: sha512-7Yx/SXSOcQq5HiiV3orevHUFn+pmMB4cgbEkDYgnkUWb0WfeQ/wa2yFv6D5ICiCQOVpjA7vYDXrC7AGO8yjDHA==}
     engines: {node: ^18.0.0 || >=20.0.0}
     peerDependencies:
-      vite: ^7.0.4
+      vite: 7.0.4
       vue: ^3.2.25
 
   '@vue/compiler-core@3.5.22':
@@ -1254,8 +1254,8 @@ packages:
   balloon-css@0.5.2:
     resolution: {integrity: sha512-zheJpzwyNrG4t39vusA67v3BYg1HTVXOF8cErPEHzWK88PEOFwgo6Ea9VHOgOWNMgeuOtFVtB73NE2NWl9uDyQ==}
 
-  baseline-browser-mapping@2.8.7:
-    resolution: {integrity: sha512-bxxN2M3a4d1CRoQC//IqsR5XrLh0IJ8TCv2x6Y9N0nckNz/rTjZB3//GGscZziZOxmjP55rzxg/ze7usFI9FqQ==}
+  baseline-browser-mapping@2.9.11:
+    resolution: {integrity: sha512-Sg0xJUNDU1sJNGdfGWhVHX0kkZ+HWcvmVymJbj6NSgZZmW/8S9Y2HQ5euytnIgakgxN6papOAWiwDo1ctFDcoQ==}
     hasBin: true
 
   binary-extensions@2.3.0:
@@ -2610,9 +2610,6 @@ packages:
   tw-animate-css@1.4.0:
     resolution: {integrity: sha512-7bziOlRqH0hJx80h/3mbicLW7o8qLsH5+RaLR2t+OHM3D0JlWGODQKQ4cxbK7WlvmUxpcj6Kgu6EKqjrGFe3QQ==}
 
-  twikoo@1.6.44:
-    resolution: {integrity: sha512-Y3YfGtMelWT+1XxZS8SmGXkHZ6/26ry1ZteKKBNTYV0oA+o5/2ELUMi4ta2zYD/V0wGZGv6EXJ6HJU8GTPVh4g==}
-
   type-check@0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
     engines: {node: '>= 0.8.0'}
@@ -2678,17 +2675,17 @@ packages:
   vite-dev-rpc@1.1.0:
     resolution: {integrity: sha512-pKXZlgoXGoE8sEKiKJSng4hI1sQ4wi5YT24FCrwrLt6opmkjlqPPVmiPWWJn8M8byMxRGzp1CrFuqQs4M/Z39A==}
     peerDependencies:
-      vite: ^7.0.4
+      vite: 7.0.4
 
   vite-hot-client@2.1.0:
     resolution: {integrity: sha512-7SpgZmU7R+dDnSmvXE1mfDtnHLHQSisdySVR7lO8ceAXvM0otZeuQQ6C8LrS5d/aYyP/QZ0hI0L+dIPrm4YlFQ==}
     peerDependencies:
-      vite: ^7.0.4
+      vite: 7.0.4
 
   vite-plugin-compression@0.5.1:
     resolution: {integrity: sha512-5QJKBDc+gNYVqL/skgFAP81Yuzo9R+EAf19d+EtsMF/i8kFUpNi3J/H01QD3Oo8zBQn+NzoCIFkpPLynoOzaJg==}
     peerDependencies:
-      vite: ^7.0.4
+      vite: 7.0.4
 
   vite-plugin-image-optimizer@2.0.2:
     resolution: {integrity: sha512-BYK27SpSScRIaveJVjbP7EjSrawuCc+ffESGvKVRhByAu6RGvwE3EyGg9ZeqQiLUE8e1hKSCr8v5ZfvQNiqvJQ==}
@@ -2696,7 +2693,7 @@ packages:
     peerDependencies:
       sharp: '>=0.34.0'
       svgo: '>=4'
-      vite: ^7.0.4
+      vite: 7.0.4
     peerDependenciesMeta:
       sharp:
         optional: true
@@ -2708,13 +2705,13 @@ packages:
     engines: {node: '>=14'}
     peerDependencies:
       '@nuxt/kit': '*'
-      vite: ^7.0.4
+      vite: 7.0.4
     peerDependenciesMeta:
       '@nuxt/kit':
         optional: true
 
-  vite@7.1.7:
-    resolution: {integrity: sha512-VbA8ScMvAISJNJVbRDTJdCwqQoAareR/wutevKanhR2/1EkoXVZVkkORaYm/tNVCjP/UDTKtcw3bAkwOUdedmA==}
+  vite@7.0.4:
+    resolution: {integrity: sha512-SkaSguuS7nnmV7mfJ8l81JGBFV7Gvzp8IzgE8A8t23+AxuNX61Q5H1Tpz5efduSN7NHC8nQXD3sKQKZAu5mNEA==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -2771,7 +2768,7 @@ packages:
     resolution: {integrity: sha512-bvPD4lhraLJw3rPtLhUIVsOvNfnHnF+F1LH7BKHekEzeZ4uqdTdqnwEyaT580AoKjjT6/F8En6hVJj7takPKDA==}
     peerDependencies:
       markdown-it: '>=14'
-      vite: ^7.0.4
+      vite: 7.0.4
 
   vitepress-plugin-md-h1@1.0.11:
     resolution: {integrity: sha512-oZhS8NwsMk+chZBul4RzvbEUdDEVxJXorgLHf2S2U/eAyq8XENXFLhpGa3MKV0rVVA4WiN5K5eBv4ZOCmzxI7A==}
@@ -3701,9 +3698,9 @@ snapshots:
 
   '@ungap/structured-clone@1.3.0': {}
 
-  '@vitejs/plugin-vue@5.2.4(vite@7.1.7(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1))(vue@3.5.22(typescript@5.9.2))':
+  '@vitejs/plugin-vue@5.2.4(vite@7.0.4(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1))(vue@3.5.22(typescript@5.9.2))':
     dependencies:
-      vite: 7.1.7(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1)
+      vite: 7.0.4(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1)
       vue: 3.5.22(typescript@5.9.2)
 
   '@vue/compiler-core@3.5.22':
@@ -3899,7 +3896,7 @@ snapshots:
 
   balloon-css@0.5.2: {}
 
-  baseline-browser-mapping@2.8.7: {}
+  baseline-browser-mapping@2.9.11: {}
 
   binary-extensions@2.3.0: {}
 
@@ -3922,7 +3919,7 @@ snapshots:
 
   browserslist@4.26.2:
     dependencies:
-      baseline-browser-mapping: 2.8.7
+      baseline-browser-mapping: 2.9.11
       caniuse-lite: 1.0.30001745
       electron-to-chromium: 1.5.224
       node-releases: 2.0.21
@@ -5241,8 +5238,6 @@ snapshots:
 
   tw-animate-css@1.4.0: {}
 
-  twikoo@1.6.44: {}
-
   type-check@0.4.0:
     dependencies:
       prelude-ls: 1.2.1
@@ -5309,35 +5304,35 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.3
 
-  vite-dev-rpc@1.1.0(vite@7.1.7(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1)):
+  vite-dev-rpc@1.1.0(vite@7.0.4(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1)):
     dependencies:
       birpc: 2.6.1
-      vite: 7.1.7(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1)
-      vite-hot-client: 2.1.0(vite@7.1.7(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1))
+      vite: 7.0.4(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1)
+      vite-hot-client: 2.1.0(vite@7.0.4(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1))
 
-  vite-hot-client@2.1.0(vite@7.1.7(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1)):
+  vite-hot-client@2.1.0(vite@7.0.4(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1)):
     dependencies:
-      vite: 7.1.7(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1)
+      vite: 7.0.4(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1)
 
-  vite-plugin-compression@0.5.1(vite@7.1.7(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1)):
+  vite-plugin-compression@0.5.1(vite@7.0.4(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1)):
     dependencies:
       chalk: 4.1.2
       debug: 4.4.3
       fs-extra: 10.1.0
-      vite: 7.1.7(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1)
+      vite: 7.0.4(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1)
     transitivePeerDependencies:
       - supports-color
 
-  vite-plugin-image-optimizer@2.0.2(sharp@0.34.4)(svgo@4.0.0)(vite@7.1.7(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1)):
+  vite-plugin-image-optimizer@2.0.2(sharp@0.34.4)(svgo@4.0.0)(vite@7.0.4(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1)):
     dependencies:
       ansi-colors: 4.1.3
       pathe: 2.0.3
-      vite: 7.1.7(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1)
+      vite: 7.0.4(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1)
     optionalDependencies:
       sharp: 0.34.4
       svgo: 4.0.0
 
-  vite-plugin-inspect@11.3.3(vite@7.1.7(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1)):
+  vite-plugin-inspect@11.3.3(vite@7.0.4(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1)):
     dependencies:
       ansis: 4.1.0
       debug: 4.4.3
@@ -5347,12 +5342,12 @@ snapshots:
       perfect-debounce: 2.0.0
       sirv: 3.0.2
       unplugin-utils: 0.3.0
-      vite: 7.1.7(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1)
-      vite-dev-rpc: 1.1.0(vite@7.1.7(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1))
+      vite: 7.0.4(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1)
+      vite-dev-rpc: 1.1.0(vite@7.0.4(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1))
     transitivePeerDependencies:
       - supports-color
 
-  vite@7.1.7(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1):
+  vite@7.0.4(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1):
     dependencies:
       esbuild: 0.25.10
       fdir: 6.5.0(picomatch@4.0.3)
@@ -5392,13 +5387,13 @@ snapshots:
       tinyglobby: 0.2.15
       vitepress: 1.6.4(@algolia/client-search@5.38.0)(@types/node@24.5.2)(jiti@1.21.7)(nprogress@0.2.0)(postcss@8.5.6)(qrcode@1.5.4)(sass-embedded@1.93.2)(sass@1.93.2)(search-insights@2.17.3)(terser@5.44.0)(typescript@5.9.2)(yaml@2.8.1)
 
-  vitepress-plugin-group-icons@1.6.3(markdown-it@14.1.0)(vite@7.1.7(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1)):
+  vitepress-plugin-group-icons@1.6.3(markdown-it@14.1.0)(vite@7.0.4(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1)):
     dependencies:
       '@iconify-json/logos': 1.2.9
       '@iconify-json/vscode-icons': 1.2.30
       '@iconify/utils': 3.0.2
       markdown-it: 14.1.0
-      vite: 7.1.7(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1)
+      vite: 7.0.4(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -5449,7 +5444,7 @@ snapshots:
       '@shikijs/transformers': 2.5.0
       '@shikijs/types': 2.5.0
       '@types/markdown-it': 14.1.2
-      '@vitejs/plugin-vue': 5.2.4(vite@7.1.7(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1))(vue@3.5.22(typescript@5.9.2))
+      '@vitejs/plugin-vue': 5.2.4(vite@7.0.4(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1))(vue@3.5.22(typescript@5.9.2))
       '@vue/devtools-api': 7.7.7
       '@vue/shared': 3.5.22
       '@vueuse/core': 12.8.2(typescript@5.9.2)
@@ -5458,7 +5453,7 @@ snapshots:
       mark.js: 8.11.1
       minisearch: 7.2.0
       shiki: 2.5.0
-      vite: 7.1.7(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1)
+      vite: 7.0.4(@types/node@24.5.2)(jiti@1.21.7)(sass-embedded@1.93.2)(sass@1.93.2)(terser@5.44.0)(yaml@2.8.1)
       vue: 3.5.22(typescript@5.9.2)
     optionalDependencies:
       postcss: 8.5.6

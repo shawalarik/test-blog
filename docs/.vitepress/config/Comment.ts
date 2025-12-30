@@ -1,13 +1,14 @@
 // 评论配置
 import { CommentConfig } from "vitepress-theme-teek/es/config/interface";
 
-export const Comment: CommentConfig<"twikoo"> = {
-  provider: "twikoo",
+export const Comment: CommentConfig<"render"> = {
+  //provider: "twikoo",
+  provider: "render", // 自定义评论区必须指定 render
   options: {
     // twikoo 配置，官网：https://twikoo.js.org/
     envId: "https://twikoo.dl-web.top/",
     // link: "https://cdn.jsdelivr.net/npm/twikoo@1.6.41/dist/twikoo.all.min.js", //teek主题内置
-    version: "1.6.41"
+    version: "1.6.44"
 
     // waline 配置，官网：https://waline.js.org/
     // serverURL: "https://tk.waline.youngkbt.cn/",

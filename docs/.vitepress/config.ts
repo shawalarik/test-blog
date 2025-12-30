@@ -5,7 +5,7 @@ import { defineTeekConfig, createRewrites } from "vitepress-theme-teek/config";
 //import {teekConfig} from "./config/TeekConfig";
 import { Head } from "./config/Head"; // 导入页面head配置
 import { Nav } from "./config/Nav"; // 导入Nav模块
-import { Comment } from "./config/Comment"; // 导入Nav模块
+import { Comment } from "./config/Comment"; // 导入评论模块
 import { SocialLinks } from "./config/SocialLinks.js";
 import { generateEnvDefines } from "./theme/utils/WwUtils.js"; // 工具类
 import config from "./env"; // 全局变量
@@ -45,6 +45,7 @@ const teekConfig = defineTeekConfig({
   // 原vitePress风格主页，文档类
   vpHome: false,
   loading: false, // 启用 Loading 动画，为 false 则关闭 Loading 动画
+  themeSize: "large",
   articleBanner: {
     enabled: true, // 是否启用单文章页 Banner
     showCategory: true, // 是否展示分类
@@ -109,7 +110,7 @@ const teekConfig = defineTeekConfig({
   },
   // 如果想重写侧边栏展开/折叠触发器组件，则使用 teek-sidebar-trigger 插槽。
   sidebarTrigger: true,
-  //comment: Comment,
+  comment: Comment,
   notice: {
     enabled: true, // 是否启用公告功能
     title: "公告", // 公告标题，支持函数式：需要和国际化搭配使用，根据不同语言环境返回不同标题

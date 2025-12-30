@@ -24,7 +24,12 @@ export const plugins: PluginOption[] = [
             return frontMatter;
         },
     }),*/
-  cleanDistMusic(),
+  /*  cleanDistMusic(),
+  scanMusicPlugin({
+    showDetail: false, // 是否展示音频数据信息，默认为 false
+    musicDir: "music" // 音乐文件存放目录
+    //outputFile: '' // 输出数据文件路径
+  }),*/
   /*    visualizer({
         filename: "stats.html",
         open: false, // 打包后自动打开报告
@@ -61,11 +66,6 @@ export const plugins: PluginOption[] = [
     // 构建控制配置
     //include: ['src/assets/images/**/*'], // 只优化指定目录
     //exclude: ['src/assets/images/ignore/*.png'], // 排除特定文件
-  }),
-  scanMusicPlugin({
-    showDetail: false, // 是否展示音频数据信息，默认为 false
-    musicDir: "music" // 音乐文件存放目录
-    //outputFile: '' // 输出数据文件路径
   }),
   isEnableInspectPluging &&
     inspect({
