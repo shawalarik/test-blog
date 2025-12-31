@@ -27,6 +27,7 @@ import WechatCard from "./WechatCard.vue"; // 微信二维码组件
 import WelcomeCard from "./WelcomeCard.vue";
 import CalendarCard from "./CalendarCard.vue";
 import ScheduleCard from "./ScheduleCard.vue";
+import NeteaseMusicPlayer from "./NeteaseMusicPlayer.vue";
 
 /**
  site: Ref<SiteData<T>> 站点级元数据
@@ -82,6 +83,11 @@ onMounted(() => {
       <TitleChange />
       <!-- 音乐播放器组件 -->
       <!--      <APlayer />-->
+    </template>
+
+    <!-- 全局网易云音乐播放器组件 -->
+    <template #layout-bottom>
+      <NeteaseMusicPlayer />
     </template>
 
     <template #nav-bar-content-after>
