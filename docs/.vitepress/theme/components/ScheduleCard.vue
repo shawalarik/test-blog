@@ -1,3 +1,4 @@
+<!-- 节假日倒计时组件 -->
 <template>
   <TkPageCard>
     <div class="card-widget" id="card-widget-schedule">

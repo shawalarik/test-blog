@@ -380,7 +380,9 @@ export default defineConfig({
     footer: {
       /*      message: 'Released under the MIT License.',
       copyright: 'Copyright © 2025-present Evan You'*/
-    }
+    },
+    darkModeSwitchTitle: "切换到深色模式",
+    lightModeSwitchTitle: "切换到浅色模式"
   },
   vue: {
     template: {

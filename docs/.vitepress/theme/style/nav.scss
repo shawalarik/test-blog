@@ -1,49 +1,137 @@
+:root .DocSearch-Button, :root .VPNavBar:not(.has-sidebar):not(.home.top) {
+	backdrop-filter: blur(15px);
+	background-color: hsla(0, 0%, 100%, 0);
+
+	border-bottom: 1px solid rgba(0, 0, 0, 8%);
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 8%);
+}
+
 // 减小菜单分组间距
-.VPNav .VPNavBarMenuGroup .button{
-  padding: 0 10px;
+.VPNav .VPNavBarMenuGroup .button {
+	padding: 0 10px;
+}
+
+// 增加菜单项间距
+.VPMenu .items {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.VPMenuLink .VPLink {
+	font-size: 15px;
+	transition: all .2s ease, color .2s ease;
+}
+
+// 导航栏hover上移
+.VPNavBar .VPNavBarMenuGroup .button:hover .text span {
+	transform: translateY(-2px);
+}
+
+.VPMenuLink .VPLink:hover {
+	box-shadow: 0 10px 20px rgba(15, 23, 42, 8%);
+	transform: translateY(-1px);
+	background: linear-gradient(135deg, rgba(8, 145, 178, .14), rgba(6, 182, 212, .18));
+}
+
+.VPNavBar .VPNavBarMenuGroup .button .text span,
+.VPNavBar .VPNavBarMenuLink .link span,
+.VPNavBar .VPMenuLink .link span,
+.VPNavBar .nav-link span {
+	display: inline-block;
+	transition: transform .25s ease;
+}
+
+/* 1. 定义全局默认CSS变量（无 .full-img-nav-bar 时的颜色） */
+:root {
+	/* 命名语义化：sun-icon-bg 表示太阳图标背景色 */
+	--icon-bg-color: black;
+}
+
+/* 2. 当存在 .full-img-nav-bar 时，覆盖CSS变量值 */
+.full-img-nav-bar {
+	--icon-bg-color: white;
+}
+
+.dark {
+	--icon-bg-color: white;
+}
+
+// 调整颜色模式切换按钮
+.VPNavBarAppearance .VPSwitch {
+	border: none;
+	background-color: transparent;
+
+	.check{
+		background-color: transparent;
+		box-shadow: none;
+	}
+
+	.icon {
+		.vpi-sun {
+			--icon: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22256%22%20height%3D%22256%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cg%20stroke%3D%22currentColor%22%20stroke-linecap%3D%22round%22%20stroke-width%3D%222%22%20data-swindex%3D%220%22%3E%3Cpath%20fill%3D%22currentColor%22%20fill-opacity%3D%220%22%20stroke-dasharray%3D%2234%22%20stroke-dashoffset%3D%2234%22%20d%3D%22M12%207C14.76%207%2017%209.24%2017%2012C17%2014.76%2014.76%2017%2012%2017C9.24%2017%207%2014.76%207%2012C7%209.24%209.24%207%2012%207%22%3E%3Canimate%20fill%3D%22freeze%22%20attributeName%3D%22stroke-dashoffset%22%20dur%3D%220.4s%22%20values%3D%2234%3B0%22%2F%3E%3Canimate%20fill%3D%22freeze%22%20attributeName%3D%22fill-opacity%22%20begin%3D%220.9s%22%20dur%3D%220.5s%22%20values%3D%220%3B1%22%2F%3E%3C%2Fpath%3E%3Cg%20fill%3D%22none%22%20stroke-dasharray%3D%222%22%20stroke-dashoffset%3D%222%22%3E%3Cpath%20d%3D%22M0%200%22%3E%3Canimate%20fill%3D%22freeze%22%20attributeName%3D%22d%22%20begin%3D%220.5s%22%20dur%3D%220.2s%22%20values%3D%22M12%2019v1M19%2012h1M12%205v-1M5%2012h-1%3BM12%2021v1M21%2012h1M12%203v-1M3%2012h-1%22%2F%3E%3Canimate%20fill%3D%22freeze%22%20attributeName%3D%22stroke-dashoffset%22%20begin%3D%220.5s%22%20dur%3D%220.2s%22%20values%3D%222%3B0%22%2F%3E%3C%2Fpath%3E%3Cpath%20d%3D%22M0%200%22%3E%3Canimate%20fill%3D%22freeze%22%20attributeName%3D%22d%22%20begin%3D%220.7s%22%20dur%3D%220.2s%22%20values%3D%22M17%2017l0.5%200.5M17%207l0.5%20-0.5M7%207l-0.5%20-0.5M7%2017l-0.5%200.5%3BM18.5%2018.5l0.5%200.5M18.5%205.5l0.5%20-0.5M5.5%205.5l-0.5%20-0.5M5.5%2018.5l-0.5%200.5%22%2F%3E%3Canimate%20fill%3D%22freeze%22%20attributeName%3D%22stroke-dashoffset%22%20begin%3D%220.7s%22%20dur%3D%220.2s%22%20values%3D%222%3B0%22%2F%3E%3C%2Fpath%3E%3CanimateTransform%20attributeName%3D%22transform%22%20dur%3D%2230s%22%20repeatCount%3D%22indefinite%22%20type%3D%22rotate%22%20values%3D%220%2012%2012%3B360%2012%2012%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E);
+		}
+
+		.vpi-moon {
+			--icon: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22256%22%20height%3D%22256%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20stroke-width%3D%222%22%20data-swindex%3D%220%22%3E%3Cg%20stroke-dasharray%3D%222%22%3E%3Cpath%20d%3D%22M12%2021v1M21%2012h1M12%203v-1M3%2012h-1%22%3E%3Canimate%20fill%3D%22freeze%22%20attributeName%3D%22stroke-dashoffset%22%20dur%3D%220.2s%22%20values%3D%224%3B2%22%2F%3E%3C%2Fpath%3E%3Cpath%20d%3D%22M18.5%2018.5l0.5%200.5M18.5%205.5l0.5%20-0.5M5.5%205.5l-0.5%20-0.5M5.5%2018.5l-0.5%200.5%22%3E%3Canimate%20fill%3D%22freeze%22%20attributeName%3D%22stroke-dashoffset%22%20begin%3D%220.2s%22%20dur%3D%220.2s%22%20values%3D%224%3B2%22%2F%3E%3C%2Fpath%3E%3C%2Fg%3E%3Cpath%20fill%3D%22currentColor%22%20d%3D%22M7%206%20C7%2012.08%2011.92%2017%2018%2017%20C18.53%2017%2019.05%2016.96%2019.56%2016.89%20C17.95%2019.36%2015.17%2021%2012%2021%20C7.03%2021%203%2016.97%203%2012%20C3%208.83%204.64%206.05%207.11%204.44%20C7.04%204.95%207%205.47%207%206%20Z%22%20opacity%3D%220%22%3E%3Cset%20attributeName%3D%22opacity%22%20begin%3D%220.5s%22%20to%3D%221%22%2F%3E%3C%2Fpath%3E%3C%2Fg%3E%3Cg%20fill%3D%22currentColor%22%20fill-opacity%3D%220%22%3E%3Cpath%20d%3D%22m15.22%206.03l2.53-1.94L14.56%204L13.5%201l-1.06%203l-3.19.09l2.53%201.94l-.91%203.06l2.63-1.81l2.63%201.81z%22%3E%3Canimate%20id%3D%22lineMdSunnyFilledLoopToMoonFilledLoopTransition0%22%20fill%3D%22freeze%22%20attributeName%3D%22fill-opacity%22%20begin%3D%220.6s%3BlineMdSunnyFilledLoopToMoonFilledLoopTransition0.begin%2B6s%22%20dur%3D%220.4s%22%20values%3D%220%3B1%22%2F%3E%3Canimate%20fill%3D%22freeze%22%20attributeName%3D%22fill-opacity%22%20begin%3D%22lineMdSunnyFilledLoopToMoonFilledLoopTransition0.begin%2B2.2s%22%20dur%3D%220.4s%22%20values%3D%221%3B0%22%2F%3E%3C%2Fpath%3E%3Cpath%20d%3D%22M13.61%205.25L15.25%204l-2.06-.05L12.5%202l-.69%201.95L9.75%204l1.64%201.25l-.59%201.98l1.7-1.17l1.7%201.17z%22%3E%3Canimate%20fill%3D%22freeze%22%20attributeName%3D%22fill-opacity%22%20begin%3D%22lineMdSunnyFilledLoopToMoonFilledLoopTransition0.begin%2B3s%22%20dur%3D%220.4s%22%20values%3D%220%3B1%22%2F%3E%3Canimate%20fill%3D%22freeze%22%20attributeName%3D%22fill-opacity%22%20begin%3D%22lineMdSunnyFilledLoopToMoonFilledLoopTransition0.begin%2B5.2s%22%20dur%3D%220.4s%22%20values%3D%221%3B0%22%2F%3E%3C%2Fpath%3E%3Cpath%20d%3D%22M19.61%2012.25L21.25%2011l-2.06-.05L18.5%209l-.69%201.95l-2.06.05l1.64%201.25l-.59%201.98l1.7-1.17l1.7%201.17z%22%3E%3Canimate%20fill%3D%22freeze%22%20attributeName%3D%22fill-opacity%22%20begin%3D%22lineMdSunnyFilledLoopToMoonFilledLoopTransition0.begin%2B0.4s%22%20dur%3D%220.4s%22%20values%3D%220%3B1%22%2F%3E%3Canimate%20fill%3D%22freeze%22%20attributeName%3D%22fill-opacity%22%20begin%3D%22lineMdSunnyFilledLoopToMoonFilledLoopTransition0.begin%2B2.8s%22%20dur%3D%220.4s%22%20values%3D%221%3B0%22%2F%3E%3C%2Fpath%3E%3Cpath%20d%3D%22m20.828%209.731l1.876-1.439l-2.366-.067L19.552%206l-.786%202.225l-2.366.067l1.876%201.439L17.601%2012l1.951-1.342L21.503%2012z%22%3E%3Canimate%20fill%3D%22freeze%22%20attributeName%3D%22fill-opacity%22%20begin%3D%22lineMdSunnyFilledLoopToMoonFilledLoopTransition0.begin%2B3.4s%22%20dur%3D%220.4s%22%20values%3D%220%3B1%22%2F%3E%3Canimate%20fill%3D%22freeze%22%20attributeName%3D%22fill-opacity%22%20begin%3D%22lineMdSunnyFilledLoopToMoonFilledLoopTransition0.begin%2B5.6s%22%20dur%3D%220.4s%22%20values%3D%221%3B0%22%2F%3E%3C%2Fpath%3E%3C%2Fg%3E%3Cmask%20id%3D%22lineMdSunnyFilledLoopToMoonFilledLoopTransition1%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%2212%22%20fill%3D%22%23fff%22%2F%3E%3Ccircle%20cx%3D%2222%22%20cy%3D%222%22%20r%3D%223%22%20fill%3D%22%23fff%22%3E%3Canimate%20fill%3D%22freeze%22%20attributeName%3D%22cx%22%20begin%3D%220.1s%22%20dur%3D%220.4s%22%20values%3D%2222%3B18%22%2F%3E%3Canimate%20fill%3D%22freeze%22%20attributeName%3D%22cy%22%20begin%3D%220.1s%22%20dur%3D%220.4s%22%20values%3D%222%3B6%22%2F%3E%3Canimate%20fill%3D%22freeze%22%20attributeName%3D%22r%22%20begin%3D%220.1s%22%20dur%3D%220.4s%22%20values%3D%223%3B12%22%2F%3E%3C%2Fcircle%3E%3Ccircle%20cx%3D%2222%22%20cy%3D%222%22%20r%3D%221%22%3E%3Canimate%20fill%3D%22freeze%22%20attributeName%3D%22cx%22%20begin%3D%220.1s%22%20dur%3D%220.4s%22%20values%3D%2222%3B18%22%2F%3E%3Canimate%20fill%3D%22freeze%22%20attributeName%3D%22cy%22%20begin%3D%220.1s%22%20dur%3D%220.4s%22%20values%3D%222%3B6%22%2F%3E%3Canimate%20fill%3D%22freeze%22%20attributeName%3D%22r%22%20begin%3D%220.1s%22%20dur%3D%220.4s%22%20values%3D%221%3B10%22%2F%3E%3C%2Fcircle%3E%3C%2Fmask%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%226%22%20fill%3D%22currentColor%22%20mask%3D%22url%28%23lineMdSunnyFilledLoopToMoonFilledLoopTransition1%29%22%3E%3Cset%20attributeName%3D%22opacity%22%20begin%3D%220.5s%22%20to%3D%220%22%2F%3E%3Canimate%20fill%3D%22freeze%22%20attributeName%3D%22r%22%20begin%3D%220.1s%22%20dur%3D%220.4s%22%20values%3D%226%3B10%22%2F%3E%3C%2Fcircle%3E%3C%2Fsvg%3E);
+		}
+
+		[class^='vpi-'] {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 18px;
+			height: 18px;
+			color: var(--vp-c-text-2);
+
+			background-color: var(--icon-bg-color);
+			mask: var(--icon) no-repeat;
+			mask-size: 100% 100%;
+		}
+	}
 }
 
 @media (max-width: 1200px) {
-  // 隐藏省略号
-  .VPNavBarExtra{
-    display: none!important;
-  }
+	// 隐藏省略号
+	.VPNavBarExtra {
+		display: none !important;
+	}
 }
 
 @media (max-width: 1050px) {
-  // 隐藏搜索框
-  .VPNavBarSearch{
-    display: none;
-  }
+	// 隐藏搜索框
+	.VPNavBarSearch {
+		display: none;
+	}
 }
 
 /* 视口宽度 ≤ 960px 时生效（移动端） */
 @media (max-width: 950px) {
-  // 移动端导航栏吸顶
-  .VPNav{
-    position: sticky!important;
-  }
+	// 移动端导航栏吸顶
+	.VPNav {
+		position: sticky !important;
+	}
 }
 
 @media (max-width: 910px) {
-  // 缩小间距
-  .VPNavBar .wrapper {
-    padding: 0 8px 0 24px;
-  }
+	// 缩小间距
+	.VPNavBar .wrapper {
+		padding: 0 8px 0 24px;
+	}
 
-  .VPNavBarMenu button{
-    padding: 0 5px!important;
-  }
+	.VPNavBarMenu button {
+		padding: 0 5px !important;
+	}
 
-  .tk-theme-enhance.is-top:before{
-    margin-left: 8px;
-    margin-right: 8px;
-  }
+	.tk-theme-enhance.is-top:before {
+		margin-left: 8px;
+		margin-right: 8px;
+	}
 }
 
 @media (max-width: 780px) {
-  // 缩小间距
-  .VPNavBar .wrapper {
-    padding: 0 8px 0 12px;
-  }
+	// 缩小间距
+	.VPNavBar .wrapper {
+		padding: 0 8px 0 12px;
+	}
 }

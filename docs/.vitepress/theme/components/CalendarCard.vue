@@ -1,3 +1,4 @@
+<!-- 日历组件 -->
 <template>
   <TkPageCard>
     <div class="card-widget" id="card-widget-calendar">
@@ -42,13 +43,26 @@
 
 <script setup>
 import { TkPageCard } from "vitepress-theme-teek";
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, onUnmounted, computed } from "vue";
 
 // 星期几中文映射
 const weekDays = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
 
-// 当前日期
-const today = ref(new Date());
+// 获取当前时间的函数
+const getCurrentTime = () => {
+  // 客户端环境：直接使用本地时间，这会是用户当前时区的时间
+  // 对于中国用户，这通常是北京时间
+  if (typeof window !== "undefined") {
+    return new Date();
+  }
+
+  // 服务器环境：返回一个占位时间
+  // 这个时间会在客户端被立即替换
+  return new Date();
+};
+
+// 当前日期 - 使用一个函数返回，确保每次获取都是最新的
+const today = ref(getCurrentTime());
 
 // 生成当前月份的日历数据
 const calendarWeeks = computed(() => {
@@ -74,6 +88,7 @@ const calendarWeeks = computed(() => {
   const weeks = [];
   const currentDay = new Date(startDay);
 
+  // eslint-disable-next-line no-unmodified-loop-condition
   while (currentDay <= endDay) {
     const week = [];
     for (let i = 0; i < 7; i++) {
@@ -174,6 +189,7 @@ const lunarDays = [
 
 // 转换为农历
 const getLunarDate = date => {
+  // 直接使用传入的日期，不再进行时区转换，因为日期已经正确
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
   const day = date.getDate();
@@ -189,8 +205,10 @@ const getLunarDate = date => {
   let lunarMonthIdx = 0;
   let lunarDayIdx = 0;
 
-  // 简化的农历计算，实际应用可能需要更复杂的算法
-  const offset = Math.floor((date - new Date(year, 0, 0)) / 86400000);
+  // 计算今年的第几天
+  const yearStart = new Date(year, 0, 0);
+  const offset = Math.floor((date - yearStart) / 86400000);
+
   let days = 0;
   let i = 0;
 
@@ -209,11 +227,13 @@ const getLunarDate = date => {
   const zhiIndex = (year - 3) % 12;
   const lunarYearStr = `${gan[ganIndex]}${zhi[zhiIndex]}${animals[zhiIndex]}年`;
 
-  return {
+  const result = {
     lunarYear: lunarYearStr,
     lunarMonth: lunarMonths[lunarMonthIdx],
     lunarDay: lunarDays[lunarDayIdx]
   };
+
+  return result;
 };
 
 // 响应式农历数据
@@ -222,18 +242,44 @@ const lunarYear = computed(() => lunarDate.value.lunarYear);
 const lunarMonth = computed(() => lunarDate.value.lunarMonth);
 const lunarDay = computed(() => lunarDate.value.lunarDay);
 
-// 每天更新一次日历
+// 更新时间的函数
+const updateTime = () => {
+  const newTime = getCurrentTime();
+  const currentTimeString = newTime.toDateString();
+  const todayString = today.value.toDateString();
+
+  // 检查日期是否变化（跨天）
+  if (currentTimeString !== todayString) {
+    today.value = newTime;
+  } else if (newTime.getHours() !== today.value.getHours() || newTime.getMinutes() !== today.value.getMinutes()) {
+    // 即使是同一天，也更新时间，确保分钟级别的时间变化能反映
+    today.value = newTime;
+  }
+};
+
+// 组件挂载时初始化和设置更新机制
 onMounted(() => {
-  // 检查是否需要更新（跨天）
-  const checkUpdate = () => {
-    const now = new Date();
-    if (now.toDateString() !== today.value.toDateString()) {
-      today.value = now;
+  // 立即更新时间，确保显示正确的当前时间
+  updateTime();
+
+  // 设置定时器，每分钟检查一次
+  const intervalId = setInterval(updateTime, 60000);
+
+  // 监听页面可见性变化，当页面重新可见时更新时间
+  // 这解决了用户切换标签页或浏览器后回来时时间不准确的问题
+  const handleVisibilityChange = () => {
+    if (!document.hidden) {
+      updateTime();
     }
   };
 
-  // 每分钟检查一次
-  setInterval(checkUpdate, 60000);
+  document.addEventListener("visibilitychange", handleVisibilityChange);
+
+  // 组件卸载时清理
+  onUnmounted(() => {
+    clearInterval(intervalId);
+    document.removeEventListener("visibilitychange", handleVisibilityChange);
+  });
 });
 </script>
 
@@ -241,8 +287,14 @@ onMounted(() => {
 body {
   background-color: #f5f7fa;
   padding: 20px;
-  --calendar-main-a-clolr: #333;
-  --other-month-clolr: #ccc;
+}
+
+:root {
+  --other-month-bg: #fa0000;
+}
+
+.dark {
+  --other-month-bg: #0080ff;
 }
 
 .tk-page-card {

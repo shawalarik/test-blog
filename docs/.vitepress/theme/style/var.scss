@@ -16,9 +16,12 @@
 
   --tk-spotlight-under-bg-color: rgba(100, 108, 255, .14);
 
+	// 菜单背景颜色
+	--vp-c-bg-elv: rgba(255,255,255,.92)
 }
 
 .dark {
+	--vp-c-bg-elv: #202127
 }
 
 @mixin text-clip-common {
