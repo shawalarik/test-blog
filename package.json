@@ -6,7 +6,7 @@
   "packageManager": "pnpm@10.7.1",
   "scripts": {
     "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
+    "docs:build": "node --require ./scripts/crypto-hash-polyfill.cjs node_modules/vitepress/bin/vitepress.js build docs",
     "docs:preview": "vitepress preview docs"
   },
   "pnpm": {

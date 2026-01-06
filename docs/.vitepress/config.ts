@@ -295,7 +295,7 @@ export default defineConfig({
   extends: teekConfig,
   base: "/",
   lang: "zh-CN",
-  outDir: "../dist",
+  outDir: ".vitepress/dist",
   title: "威威 Blog",
   head: Head,
   description: "A VitePress Site",
