@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vitepress";
-import { myConsoleInfo } from "../../utils/WwUtils.js";
+import { myConsoleInfo } from "../../utils/WwUtils.ts";
 
 const envId = "https://twikoo.dl-web.top";
 const twikooJs = ref(null);
